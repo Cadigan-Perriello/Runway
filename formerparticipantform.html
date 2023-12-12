@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="formerparticipantform.css" rel="stylesheet" type="text/css" />
+  <title>Submissions</title>
+  <script type="module" src="garments.js"></script>
+  <script type="module">
+    import { passCheck } from './garments.js';
+    window.passCheck = passCheck;
+  </script>
+</head>
+  
+<body onload="passCheck()">
+
+  <script type="module" src="formerparticipantform.js">  </script>
+
+<!-- creates navbar -->
+  <nav>
+      <div class="navbar">
+        <div class="logo">St. Anne's-Belfield School</div>
+          <ul class="menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="garments.html">All Garments</a></li>
+            <li class="navbar_specific"><a href="participant.html">Submissions</a></li>
+          </ul>
+        </div>
+  </nav>
+
+
+  <!-- This creates a form with different inputs -->
+  
+<form id = "formerform">
+  <h1>Submit Runway Information</h1>
+
+  <!-- Creates a text input for first name -->
+        <p>
+            <label for="fname">First Name:</label><br>
+            <input class="form" type="text" id="firstName" name="firstName" required> 
+        </p>
+  <!-- Creates a text input for last name -->
+        <p>
+            <label for="fname">Last Name:</label><br>
+            <input class="form" type="text" id="lastName" name="lastName" required>
+        </p>
+
+  <br>
+
+    <!-- Creates an image input for their photo of the garment -->
+  
+<p>Photo:
+    <input type="file"  accept="image/*" name="image" id="file"   style="display: none;" required>
+  <br>
+  <label id = "UploadImage" for="file" >Upload Image</label>
+  <p><img id="output" width="200" /></p>
+</p>
+
+    <!-- Creates a text input for their inspiration -->
+  
+  <p>
+    <label for="fname">Inspiration:</label><br>
+    <input class="form" type="text" id="inspiration" name="inspiration" required>
+        </p>
+
+  <!-- Creates a text input for the year they participated -->
+  
+  <p>
+    <label for="fname">Year:</label><br>
+    <input class="form" type="text" id="year" name="year" required>
+        </p>
+  <!-- Creates a text input for the material of their garment -->
+  
+  <p>
+    <label for="fname">Material:</label><br>
+    <input class="form" type="text" id="material" name="material" required>
+        </p>
+  
+  <!-- Creates a submit button -->
+  <button id = "submit" type = "submit">SUBMIT FORM</button>
+
+</form>
+
+  <!-- </div> -->
+
+  <br>
+
+                                                    
+</body>
+</html>

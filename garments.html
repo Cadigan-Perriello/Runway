@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="garments.css" rel="stylesheet" type="text/css"/>
+  <link href="home.css" rel="stylesheet" type="text/css" />
+  <title>Document</title>
+</head>
+<body>
+  <!-- Codes the top navbar for navigation to various locations -->
+<nav>
+    <div class="navbar">
+      <div class="logo">St. Anne's-Belfield School</div>
+        <ul class="menu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="garments.html">All Garments</a></li>
+          <li class="navbar_specific"><a href="participant.html">Submissions</a></li>
+        </ul>
+      </div>
+</nav>
+<!-- Calls the javascript functions that allow for the appearance of the garments -->
+<script type="module" src="garments.js"></script>
+    <script type="module">
+        import{year_list_add, showItems} from './garments.js';
+        window.year_list_add = year_list_add;
+        window.showItems = showItems;
+      year_list_add();
+      showItems();
+  </script>
+
+
+ <p style="padding-top:80px" id = "filter">Filter Garments By Year:</p>
+
+  <!-- Creates the checkboxes that filter the tutors by subject -->
+  <div id="checkboxes">
+    <input type="checkbox" id="2023" name="2023" value="2023" onclick="year_list_add()">
+    <label for="2023"> 2023</label><br>
+    
+    <input type="checkbox" id="2022" name="2022" value="2022" onclick="year_list_add()">
+    <label for="2022"> 2022</label><br>
+    
+    <input type="checkbox" id="2021" name="2021" value="2021" onclick="year_list_add()">
+    <label for="2021"> 2021</label><br>
+    
+    <input type="checkbox" id="2020" name="2020" value="2020" onclick="year_list_add()">
+    <label for="2020"> 2020</label><br>
+    
+    <input type="checkbox" id="2019" name="2019" value="2019" onclick="year_list_add()">
+    <label for="2019">2019</label><br>
+    <input type="checkbox" id="2018" name="2018" value="2018" onclick="year_list_add()">
+    <label for="2018">2018</label><br>
+  </div>
+
+  <br>
+  <!-- Creates the searchbar to search for tutors -->
+  <div id="searchbar">
+    <input type="text" id="filter_search" oninput="showItems()" placeholder="Search by Material/Name...">
+  </div>
+
+</div>  
+
+<div id = "garments">
+   
+  </div>
+</body>
+</html>

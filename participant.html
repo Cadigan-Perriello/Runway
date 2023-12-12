@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="participant.css" rel="stylesheet" type="text/css" />
+  <script type="module" src="garments.js"></script>
+  <script type="module">
+    import { AnniePassCheck } from './garments.js';
+    window.AnniePassCheck = AnniePassCheck;
+  </script>
+</head>
+
+<body>
+  <!-- creates navbar -->
+  <nav>
+    <div class="navbar">
+      <div class="logo">St. Anne's-Belfield School</div>
+        <ul class="menu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="garments.html">All Garments</a></li>
+          <li class="navbar_specific"><a href="participant.html">Submissions</a></li>
+        </ul>
+      </div>
+</nav>
+
+  <script type="module" src="garments.js"></script>
+  <script type="module">
+    import { AnniePassCheck } from './garments.js';
+    window.AnniePassCheck = AnniePassCheck;
+  </script>
+  
+  
+  <!-- creates three login buttons for current/former participants and Annie -->
+  <p style="padding-top:80px" >
+    <div class="participant_row">
+    <a class="participant_tile" href ="currentparticipantform.html">I am a current runway participant.</a>
+
+  <a class="participant_tile" href ="formerparticipantform.html">I am a former runway participant.</a>
+
+      <a class="participant_tile" href ="annie.html" onclick="AnniePassCheck()">I am Annie.</a>
+  </div>
+
+
+  
+</body>
+</html>

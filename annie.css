@@ -1,0 +1,143 @@
+/* sets the color of the background */
+html{
+    background-image: url('runway.png'); 
+}
+
+h1{
+  text-align: center;
+  font-size: 20px;
+}
+
+/* sets font, text alignment, padding, and display for the home page */
+body{
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-align: center;
+  padding-bottom: 15px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* sets the position, size, color, border, and margins for each garment, or "row" */
+.row{
+  text-align: left; 
+  margin: auto;
+  aspect-ratio: 1 / 1;
+  background-color: black;
+  width: 95%;
+  min-width: 300px;
+  height:200px;
+  color: white;
+  border: 10px #793140 solid;
+  border-radius: 10px;
+   margin-left: 4%;
+  margin-right: 4%;
+  margin-top: 50px;
+    float: center; 
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  *{
+    box-sizing: border-box;
+}
+
+.tile{
+  min-height: 5%;
+  width: 18%;
+  border-radius: 5%;
+  border-style: solid;
+  border-width: 5px;
+  border-color: white;
+  background-color: maroon;
+  color: white;
+  float: center; 
+  padding: 20px;
+  margin-left: 1%;
+  margin-right: 1%;
+  }
+/* sets positioning settings to the garment divs */
+#garments{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+
+/* sets the size of the garment picture */
+img{
+  width: 20%;
+  height:20%;
+  object-fit: cover;
+  object-position: 25% 25%;
+  margin-left: 25%;
+}
+
+/* sets color and size for STAB logo on navbar */
+.logo{
+  font-family:'Tilt Prism';
+  color:#793140;
+  font-weight: 800;
+}
+
+/* sets color and size for navbar text */
+.navbar a {
+  font-family:'Tilt Prism';
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* sets color and size for navbar text */
+nav{
+  font-family:'Tilt Prism';
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 50 px;
+  background: #000000;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+/* sets position for navbar text */
+nav .navbar{
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  max-width: 90%;
+  background: #000000;
+  margin: auto;
+}
+
+/* sets color and size for navbar text when on hover*/
+.navbar a:hover{
+  background-color: #793140;
+}
+
+/* sets position for navbar*/
+nav .navbar .menu{
+  display: flex;
+}
+
+/* sets styling for navbar text */
+.navbar .menu li{
+  list-style: none;
+  margin: 0 15px;
+}
+
+/* sets color and size for navbar text */
+.navbar .menu li a{
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 500;
+  text-decoration: none;
+}

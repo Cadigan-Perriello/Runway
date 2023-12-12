@@ -1,0 +1,60 @@
+html {
+  height: 100%;
+  width: 100%;
+  background-color: maroon;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins',sans-serif;
+  scroll-behavior: smooth;
+}
+
+/* sets font, text alignment, padding, and display for the home page */
+body{
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: white;
+  text-align: center;
+  padding-bottom: 15px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* styles upload image button */
+#UploadImage{
+  cursor: pointer;
+  background: maroon;
+  color: white;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 30px;
+}
+
+/* styles submit button */
+#submit{
+  cursor: pointer;
+  background: maroon;
+  color: white;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 30px;
+  border: none;
+}
+
+.form {
+  width: 200px;
+  height: 20px;
+}
+
+#description {
+  width: 400px;
+  height: 30px;
+}
+
+h1{
+  padding-top:100px
+}

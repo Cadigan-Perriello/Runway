@@ -1,0 +1,66 @@
+/* sets the collage of past runway participants as the background */
+html{
+  background-image: url('pastrunway.png'); 
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  color: white;
+  font-size: 20px;
+}
+
+/* sets font, text alignment, padding, and display for the home page */
+body{
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-align: center;
+  padding-bottom: 15px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+/* sets the position, size, color, border, and margins for each garment, or "row" */
+.row{
+  /* margin: auto; */
+  /* aspect-ratio: 1 / 1; */
+  background-color: black;
+  width: 30%;
+  min-width: 300px;
+  height:400px;
+  /* padding: 2%; */
+  color: white;
+  border: 10px #793140 solid;
+  /* border-radius: 10px; */
+  margin-left: 4%;
+  margin-right: 4%;
+  margin-top: 40px; 
+  justify-content: center;
+  align-items: center;
+}
+
+/* sets styling for tile headings */
+.row h1{
+  font-family: monospace;
+  margin-top: 0%;
+}
+
+/* sets positioning settings to the garment divs */
+#garments{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+}
+
+
+/* sets the size of the garment picture */
+#garments img{
+  width: 40%;
+  height:40%;
+  object-fit: cover;
+  display: block;
+  /* object-position: 25% 25%; */
+  /* margin-left: 25%; */
+}
