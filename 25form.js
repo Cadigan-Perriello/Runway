@@ -25,58 +25,22 @@ form.addEventListener("submit", (e) => {
 //sets js variables from the form
   let firstName = document.getElementById("firstName25");
   let lastName = document.getElementById("lastName25");
-  let email = document.getElementById("email25");
-  //creates sketch object from the above variables
-   add25(firstName.value, lastName.value, email.value, photo25);
-  //reset form
+  //creates form object from the above variables
+  add25(firstName, lastName, photo25);
+  //reset form inputs
   form.reset();
 }
 );
-//adds the sketch to the firebase
-export const add25 = async function(firstName, lastName, email, photo25){
-
-  const databaseItems = await getDocs(collection(db, "runway"));
-  try {
-      var added = false;
-      databaseItems.forEach((item) => {
-        console.log(item.id);
-        if (item.id != "password" && item.id != "admin-password"  
-            && item.id != "25CompletitionDate" && item.id != "50CompletitionDate" 
-            && item.id != "75CompletitionDate" && item.id != "100CompletitionDate" 
-            && item.id != "FirstYearWorkshopDate" && item.id != "CatwalkSongSelectionDate" 
-            && item.id != "FirstYearWorkshopDate" && item.id != "initialSketchesDate"){
-                if (item.data().isPublic == false) {
-                  console.log(item.data().lastName.toLowerCase(), item.data().firstName.toLowerCase(), item.data().email.toLowerCase());
-                  console.log(lastName.toLowerCase(), firstName.toLowerCase(), email.toLowerCase());
-                  if (item.data().firstName.toLowerCase().includes(firstName.toLowerCase()) &&
-                item.data().lastName.toLowerCase().includes(lastName.toLowerCase()) &&     
-                item.data().email.toLowerCase().includes(email.toLowerCase())){
-                    const itemToUpdate = doc(db, "runway", item.id);
-                    console.log("updating doc");
-                    updateDoc(itemToUpdate, {
-                      photo25: photo25
-                    });
-                    console.log("hello");
-                    added = true;
-                    
-        }
-      }
-      }
-      });
-      console.log(added);
-      if (added == false) {
-        console.log("adding doc");
-        const docRef = await addDoc(collection(db, "runway"), {
-          firstName: firstName,
-          lastName:lastName,
-          email:email,
-          sketch: "",
-          photo25: photo25,
-          photo50: "",
-          photo75: "",
-          isPublic: false
-        });
-      }
+//adds the form to the firebase
+export const add25 = async function(firstName, lastName, photo25){
+  try{
+    console.log("adding document");
+    const docRef = await addDoc(collection(db, "runway"), {
+      firstName: firstName.value,
+      lastName:lastName.value,
+      photo25: photo25,
+      isPublic: false
+    });
   }
   catch(e){
     console.log("Error adding item to the database: ", e);
@@ -98,11 +62,10 @@ const fileInput = document.getElementById('photo25');
         reader.addEventListener('load', () => {
             // Get the data URL string
             photo25 = reader.result
+          console.log(photo25);
         });
     }
 });
-
-
 
 //WIPES FIREBASE
 //DO NOT RUN
@@ -112,4 +75,3 @@ const fileInput = document.getElementById('photo25');
 //     databaseItems.forEach((item) => {
 //       deleteDoc(doc(db, "runway", item.id));
 //     });
-
