@@ -40,7 +40,9 @@ export const addSketch = async function(firstName, lastName, email, sketch){
         if (item.data().isPublic == false && item.id != "password" && item.id != "admin-password" && item.data().firstName.toLowerCase().includes(firstName.value.toLowerCase()) &&
               item.data().lastName.toLowerCase().includes(firstName.value.toLowerCase()) &&     
               item.data().email.toLowerCase().includes(email.value.toLowerCase()) ){
-            item.update("sketch", sketch);
+            updateDoc(item, {
+              sketch: sketch
+            });
             console.log("hello");
             return;
         }
