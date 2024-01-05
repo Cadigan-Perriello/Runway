@@ -14,7 +14,6 @@ body{
   font-family: Georgia, 'Times New Roman', Times, serif;
   color: white;
   text-align: center;
-  padding-bottom: 15px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -25,29 +24,39 @@ body{
   cursor: pointer;
   background: maroon;
   color: white;
-  padding: 10px 15px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  margin-top: 30px;
 }
 
 /* styles submit button */
-#submit{
+button{
   cursor: pointer;
-  background: maroon;
-  color: white;
+  background: white;
+  color: black;
   padding: 10px 15px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  margin-top: 30px;
+  border: none;
+}
+
+#UploadImage{
+  cursor: pointer;
+  background: white;
+  color: black;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 10px;
   border: none;
 }
 
 .form {
   width: 200px;
   height: 20px;
+  border: 2px solid black; /* add a border */
 }
 
 #description {
