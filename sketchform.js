@@ -37,7 +37,7 @@ export const addSketch = async function(firstName, lastName, email, sketch){
   const databaseItems = await getDocs(collection(db, "runway"));
   try {
       databaseItems.forEach((item) => {
-        console.log(
+        console.log(item.id);
         if (item.data().isPublic == false && item.id != "password" && item.id != "admin-password" && item.data().firstName.toLowerCase().includes(firstName.value.toLowerCase()) &&
               item.data().lastName.toLowerCase().includes(lastName.value.toLowerCase()) &&     
               item.data().email.toLowerCase().includes(email.value.toLowerCase()) ){
