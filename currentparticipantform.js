@@ -16,9 +16,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const uploadPictureButton = document.querySelector(".photo");
+const sketch = document.getElementByID("sketch");
 
-  uploadPictureButton.addEventListener('change', function () {
+  sketch.addEventListener('change', function () {
     displayPicture(this);
   });
 
