@@ -18,29 +18,27 @@ display: flex;
 flex-direction: column;
 }
 
-
 /* sets the position, size, color, border, and margins for each garment, or "row" */
 .row{
 text-align: left; 
-margin: auto;
+/* margin: auto; */
 aspect-ratio: 1 / 1;
 background-color: black;
-width: 95%;
-min-width: 300px;
-height:200px;
+width: 100%;
+min-width: 500px;
+min-height:500px;
 color: white;
 border: #793140;
-border-width: 10px;
-border-radius: 10px;
- margin-left: 4%;
+border-width: 1%;
+border-radius: 1%;
+margin-left: 4%;
 margin-right: 4%;
-margin-top: 50px;
+margin-top: 4%;
   float: center; 
-  padding: 20px;
+  padding: 1%;
   display: flex;
   flex-wrap: wrap;
 }
-
 *{
   box-sizing: border-box;
 }
@@ -50,7 +48,7 @@ min-height: 5%;
 width: 18%;
 border-radius: 5%;
 border-style: solid;
-border-width: 5px;
+border-width: 1%;
 border-color: white;
 background-color: #793140;
 color: white;
