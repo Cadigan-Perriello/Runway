@@ -22,6 +22,8 @@
   <script type="module" src="75form.js">  </script>
   <script type="module" src="finalForm.js">  </script>
   <script type="module" src="catwalkForm.js">  </script>
+  <script type="module" src="currentparticipantform.js">  </script>
+
 
 <!-- creates navbar -->
   <nav>
@@ -40,7 +42,6 @@
   
 <form id = "sketchForm">
   <h1>Submit Sketch Photo</h1>
-
   <!-- Creates a text input for first name -->
         <p>
             <label for="fname">First Name:</label><br>
@@ -56,17 +57,16 @@
       <label for="fname">Email:</label><br>
       <input class="form" type="text" id="emailS" required name="emailS">
   </p>
-
-  <br>
-
   <!-- Creates an image input for their sketch -->
-  
 <p>Sketch:
-    <input type="file"  accept="image/*" name="image" id="sketch"   style="display: none;">
   <br>
+    <input type="file" class = "photo" accept="image/*" name="image" id="sketch"  style="display: none;">
   <label id = "UploadImage" for="sketch" >Upload Image</label>
-  <p><img id="output" width="200" /></p>
+  <br>
+  <br>
+  <img id="sketchimg" alt="your image" width ="200" />
 </p>
+<br>
   <button id = "submitSketch" type = "submit">SUBMIT SKETCH</button>
 </form>
     <!-- Creates an image input for their 25% complete garment -->
@@ -74,7 +74,6 @@
 
 <form id = "25form">
   <h1>Submit 25% Deadline Photo</h1>
-
   <!-- Creates a text input for first name -->
         <p>
             <label for="fname">First Name:</label><br>
@@ -90,16 +89,15 @@
       <label for="fname">Email:</label><br>
       <input class="form" type="text" id="email25" required name="email25">
   </p>
-
-  <br>
   <p>25% Picture:
-    
-    <input type="file"  accept="image/*" name="image" id="photo25"   style="display: none;">
-  <br>
+    <br>
+    <input type="file" class = "photo" accept="image/*" name="image" id="photo25"   style="display: none;">
   <label id = "UploadImage" for="photo25" >Upload Image</label>
-  <p><img id="output" width="200" /></p>
-  
+  <br>
+  <br>
+  <img id="img25" alt="your image" width ="200" />
 </p>
+<br>
   <button id = "submit25" type = "submit">SUBMIT FORM</button>
 </form>
     <!-- Creates an image input for their 50% complete garment -->
@@ -123,15 +121,13 @@
       <label for="fname">Email:</label><br>
       <input class="form" type="text" id="email50" required name="email50">
   </p>
-
-  <br>
   <p>50% Picture:
-    <input type="file"  accept="image/*" name="image" id="photo50"   style="display: none;">
+    <input type="file" class = "photo" accept="image/*" name="image" id="photo50"   style="display: none;">
   <br>
   <label id = "UploadImage" for="photo50" >Upload Image</label>
-  <p><img id="output" width="200" /></p>
 </p>
-  <button id = "submit50" type = "submit">SUBMIT FORM</button>
+<br>
+<button id = "submit50" type = "submit">SUBMIT FORM</button>
 </form>
     <!-- Creates an image input for their 75% complete garment -->
 
@@ -155,14 +151,13 @@
       <input class="form" type="text" id="email75" required name="email75">
   </p>
 
-  <br>
   <p>75% Picture:
-    <input type="file"  accept="image/*" name="image" id="photo75"   style="display: none;">
+    <input type="file" class = "photo" accept="image/*" name="image" id="photo75"   style="display: none;">
   <br>
   <label id = "UploadImage" for="photo75" >Upload Image</label>
-  <p><img id="output" width="200" /></p>
 </p>
-  <button id = "submit75" type = "submit">SUBMIT FORM</button>
+<br>
+<button id = "submit75" type = "submit">SUBMIT FORM</button>
 </form>
     <!-- Creates an image input for their final garment -->
 
@@ -185,13 +180,12 @@
       <input class="form" type="text" id="emailF" required name="emailF">
   </p>
 
-  <br>
   <p>Final Picture:
-    <input type="file"  accept="image/*" name="image" id="finalPhoto"   style="display: none;">
+    <input type="file" class = "photo" accept="image/*" name="image" id="finalPhoto"   style="display: none;">
   <br>
   <label id = "UploadImage" for="finalPhoto" >Upload Image</label>
-  <p><img id="output" width="200" /></p>
 </p>
+<br>
   <button id = "submitFinal" type = "submit">SUBMIT FORM</button>
 </form>
     <!-- Creates a text input for their catwalk song -->
@@ -215,13 +209,13 @@
         <input class="form" type="text" id="emailC" required name="emailC">
     </p>
 
-  <br>
   <p>
     <label for="fname">Catwalk Song:</label><br>
     <input class="form" type="text" id="catwalk" required name="lastName">
         </p>
 
   <!-- Creates a submit button -->
+  <br>
   <button id = "submitCatwalk" type = "submit">SUBMIT FORM</button>
 
 </form>
@@ -229,6 +223,7 @@
   <!-- </div> -->
 
   <br>
-                                              
+
+                                                    
 </body>
 </html>
