@@ -25,16 +25,16 @@ body{
   /* margin: auto; */
   /* aspect-ratio: 1 / 1; */
   background-color: black;
-  width: 30%;
+  width: 40%;
   min-width: 300px;
-  height:400px;
+  min-height:400px;
   /* padding: 2%; */
   color: white;
   border: 10px #793140 solid;
   /* border-radius: 10px; */
   margin-left: 4%;
   margin-right: 4%;
-  margin-top: 40px; 
+  margin-top: 3%; 
   justify-content: center;
   align-items: center;
 }
