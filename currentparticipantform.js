@@ -17,17 +17,29 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const sketch = document.getElementByID("sketch");
+const twenty_five = document.getElementByID("photo25");
+const fifty = document.getElementByID("photo50");
+const seventy_five = document.getElementByID("photo75");
 
   sketch.addEventListener('change', function () {
-    displayPicture(this);
+    displayPicture(this, sketch);
+  });
+  twenty_five.addEventListener('change', function () {
+    displayPicture(this, photo25);
+  });
+  fifty.addEventListener('change', function () {
+    displayPicture(this, photo50);
+  });
+  seventy_five.addEventListener('change', function () {
+    displayPicture(this, photo75);
   });
 
- function displayPicture(input) {
+ function displayPicture(input, image) {
     if (input.files && input.files[0]) {
     var reader = new FileReader();
 
     reader.onload = function (e) {
-      document.getElementById('sketchimg').setAttribute('src', e.target.result);
+      document.getElementById('image').setAttribute('src', e.target.result);
     };
 
     reader.readAsDataURL(input.files[0]);
