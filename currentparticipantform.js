@@ -21,27 +21,27 @@ let twenty_five = document.getElementByID("photo25");
 let fifty = document.getElementByID("photo50");
 let seventy_five = document.getElementByID("photo75");
 
-  sketch.addEventListener('change', function () {
-    displayPicture(this, sketch);
-  });
-  twenty_five.addEventListener('change', function () {
-    displayPicture(this, photo25);
-  });
-  fifty.addEventListener('change', function () {
-    displayPicture(this, photo50);
-  });
-  seventy_five.addEventListener('change', function () {
-    displayPicture(this, photo75);
-  });
+ //  sketch.addEventListener('change', function () {
+ //    displayPicture(this, sketch);
+ //  });
+ //  twenty_five.addEventListener('change', function () {
+ //    displayPicture(this, photo25);
+ //  });
+ //  fifty.addEventListener('change', function () {
+ //    displayPicture(this, photo50);
+ //  });
+ //  seventy_five.addEventListener('change', function () {
+ //    displayPicture(this, photo75);
+ //  });
 
- function displayPicture(input, image) {
-    if (input.files && input.files[0]) {
-    var reader = new FileReader();
+ // function displayPicture(input, image) {
+ //    if (input.files && input.files[0]) {
+ //    var reader = new FileReader();
 
-    reader.onload = function (e) {
-      document.getElementById('image').setAttribute('src', e.target.result);
-    };
+ //    reader.onload = function (e) {
+ //      document.getElementById('image').setAttribute('src', e.target.result);
+ //    };
 
-    reader.readAsDataURL(input.files[0]);
-  }
- }
+ //    reader.readAsDataURL(input.files[0]);
+ //  }
+ // }
