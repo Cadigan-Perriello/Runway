@@ -25,22 +25,55 @@ form.addEventListener("submit", (e) => {
 //sets js variables from the form
   let firstName = document.getElementById("firstName75");
   let lastName = document.getElementById("lastName75");
-  //creates form object from the above variables
-  add75(firstName, lastName, photo75);
-  //resets form inputs
+  let email = document.getElementById("email75");
+  //creates sketch object from the above variables
+   add75(firstName.value, lastName.value, email.value, photo75);
+  //reset form
   form.reset();
 }
 );
-//adds the form to the firebase
-export const add75 = async function(firstName, lastName, photo75){
-  try{
-    console.log("adding document");
-    const docRef = await addDoc(collection(db, "runway"), {
-      firstName: firstName.value,
-      lastName:lastName.value,
-      photo: photo75,
-      isPublic: false
-    });
+//adds the sketch to the firebase
+export const add75 = async function(firstName, lastName, email, photo75){
+
+  const databaseItems = await getDocs(collection(db, "runway"));
+  try {
+      var added = false;
+      databaseItems.forEach((item) => {
+        console.log(item.id);
+        if (item.id != "password" && item.id != "admin-password"  
+            && !item.id.includes("Date")){
+                if (item.data().isPublic == false) {
+                  console.log(item.data().lastName.toLowerCase(), item.data().firstName.toLowerCase(), item.data().email.toLowerCase());
+                  console.log(lastName.toLowerCase(), firstName.toLowerCase(), email.toLowerCase());
+                  if (item.data().firstName.toLowerCase().includes(firstName.toLowerCase()) &&
+                item.data().lastName.toLowerCase().includes(lastName.toLowerCase()) &&     
+                item.data().email.toLowerCase().includes(email.toLowerCase())){
+                    const itemToUpdate = doc(db, "runway", item.id);
+                    console.log("updating doc");
+                    updateDoc(itemToUpdate, {
+                      photo75: photo75
+                    });
+                    console.log("hello");
+                    added = true;
+
+        }
+      }
+      }
+      });
+      console.log(added);
+      if (added == false) {
+        console.log("adding doc");
+        const docRef = await addDoc(collection(db, "runway"), {
+          firstName: firstName,
+          lastName:lastName,
+          email:email,
+          sketch: "",
+          photo25: "",
+          photo50: "",
+          photo75: photo75,
+          isPublic: false
+        });
+      }
   }
   catch(e){
     console.log("Error adding item to the database: ", e);
@@ -65,6 +98,7 @@ const fileInput = document.getElementById('photo75');
         });
     }
 });
+
 
 
 //WIPES FIREBASE
