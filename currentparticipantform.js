@@ -16,10 +16,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const sketch = document.getElementByID("sketch");
-const twenty_five = document.getElementByID("photo25");
-const fifty = document.getElementByID("photo50");
-const seventy_five = document.getElementByID("photo75");
+let sketch = document.getElementByID("sketch");
+let twenty_five = document.getElementByID("photo25");
+let fifty = document.getElementByID("photo50");
+let seventy_five = document.getElementByID("photo75");
 
   sketch.addEventListener('change', function () {
     displayPicture(this, sketch);
