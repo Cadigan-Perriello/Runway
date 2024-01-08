@@ -27,37 +27,53 @@ form.addEventListener("submit", (e) => {
   let lastName = document.getElementById("lastNameS");
   let email = document.getElementById("emailS");
   //creates sketch object from the above variables
-  addSketch(firstName, lastName, email, sketch);
+   addSketch(firstName.value, lastName.value, email.value, sketch);
   //reset form
   form.reset();
 }
 );
 //adds the sketch to the firebase
 export const addSketch = async function(firstName, lastName, email, sketch){
+
   const databaseItems = await getDocs(collection(db, "runway"));
   try {
+      var added = false;
       databaseItems.forEach((item) => {
         console.log(item.id);
-        if (item.data().isPublic == false && item.id != "password" && item.id != "admin-password" && item.data().firstName.toLowerCase().includes(firstName.value.toLowerCase()) &&
-              item.data().lastName.toLowerCase().includes(lastName.value.toLowerCase()) &&     
-              item.data().email.toLowerCase().includes(email.value.toLowerCase()) ){
-            updateDoc(item, {
-              sketch: sketch
-            });
-            console.log("hello");
-            return;
+        if (item.id != "password" && item.id != "admin-password"  
+            && !item.id.includes("Date")){
+                if (item.data().isPublic == false) {
+                  console.log(item.data().lastName.toLowerCase(), item.data().firstName.toLowerCase(), item.data().email.toLowerCase());
+                  console.log(lastName.toLowerCase(), firstName.toLowerCase(), email.toLowerCase());
+                  if (item.data().firstName.toLowerCase().includes(firstName.toLowerCase()) &&
+                item.data().lastName.toLowerCase().includes(lastName.toLowerCase()) &&     
+                item.data().email.toLowerCase().includes(email.toLowerCase())){
+                    const itemToUpdate = doc(db, "runway", item.id);
+                    console.log("updating doc");
+                    updateDoc(itemToUpdate, {
+                      sketch: sketch
+                    });
+                    console.log("hello");
+                    added = true;
+
         }
+      }
+      }
       });
-    const docRef = await addDoc(collection(db, "runway"), {
-      firstName: firstName.value,
-      lastName:lastName.value,
-      email:email.value,
-      sketch: sketch,
-      photo25: "",
-      photo50: "",
-      photo75: "",
-      isPublic: false
-    });
+      console.log(added);
+      if (added == false) {
+        console.log("adding doc");
+        const docRef = await addDoc(collection(db, "runway"), {
+          firstName: firstName,
+          lastName:lastName,
+          email:email,
+          sketch: sketch,
+          photo25: "",
+          photo50: "",
+          photo75: "",
+          isPublic: false
+        });
+      }
   }
   catch(e){
     console.log("Error adding item to the database: ", e);
