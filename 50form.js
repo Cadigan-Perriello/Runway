@@ -25,21 +25,55 @@ form.addEventListener("submit", (e) => {
 //sets js variables from the form
   let firstName = document.getElementById("firstName50");
   let lastName = document.getElementById("lastName50");
-  //creates garment object from the above variables
-  add50(firstName, lastName, photo50);
+  let email = document.getElementById("email50");
+  //creates sketch object from the above variables
+   add50(firstName.value, lastName.value, email.value, photo50);
+  //reset form
   form.reset();
 }
 );
-//adds the form to the firebase
-export const add50 = async function(firstName, lastName, photo50){
-  try{
-    console.log("adding document");
-    const docRef = await addDoc(collection(db, "runway"), {
-      firstName: firstName.value,
-      lastName:lastName.value,
-      photo50: photo50,
-      isPublic: false
-    });
+//adds the sketch to the firebase
+export const add50 = async function(firstName, lastName, email, photo50){
+
+  const databaseItems = await getDocs(collection(db, "runway"));
+  try {
+      var added = false;
+      databaseItems.forEach((item) => {
+        console.log(item.id);
+        if (item.id != "password" && item.id != "admin-password"  
+            && !item.id.includes("Date")){
+                if (item.data().isPublic == false) {
+                  console.log(item.data().lastName.toLowerCase(), item.data().firstName.toLowerCase(), item.data().email.toLowerCase());
+                  console.log(lastName.toLowerCase(), firstName.toLowerCase(), email.toLowerCase());
+                  if (item.data().firstName.toLowerCase().includes(firstName.toLowerCase()) &&
+                item.data().lastName.toLowerCase().includes(lastName.toLowerCase()) &&     
+                item.data().email.toLowerCase().includes(email.toLowerCase())){
+                    const itemToUpdate = doc(db, "runway", item.id);
+                    console.log("updating doc");
+                    updateDoc(itemToUpdate, {
+                      photo50: photo50
+                    });
+                    console.log("hello");
+                    added = true;
+
+        }
+      }
+      }
+      });
+      console.log(added);
+      if (added == false) {
+        console.log("adding doc");
+        const docRef = await addDoc(collection(db, "runway"), {
+          firstName: firstName,
+          lastName:lastName,
+          email:email,
+          sketch: "",
+          photo25: "",
+          photo50: photo50,
+          photo75: "",
+          isPublic: false
+        });
+      }
   }
   catch(e){
     console.log("Error adding item to the database: ", e);
