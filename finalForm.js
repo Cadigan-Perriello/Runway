@@ -30,6 +30,8 @@ form.addEventListener("submit", (e) => {
   addFinal(firstName, lastName, finalPhoto);
   //reset form inputs
   form.reset();
+  let previewimg = document.getElementById("finalPhotoimg");
+  previewimg.style.display = "none";
 }
 );
 //adds the form to the firebase
