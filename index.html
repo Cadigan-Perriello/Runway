@@ -16,7 +16,15 @@
       background-position: center;
     }
   </style>
+
+<script type="module" src="garments.js"></script>
+  <script type="module">
+    import {displayEventsHome} from './garments.js';
+    window.displayEventsHome = displayEventsHome; displayEventsHome();
+
+  </script>
 </head>
+
 
 <body>
 
@@ -48,70 +56,17 @@
         to the date.</p>
       <h2 class="header_about">Runway Deadlines for Participants</h2>
       <div class="deadline_row">
+      
+      <div id="homepage_events" class="deadline_row">
+
+        
+      </div>
+
 
         <!-- creates tiles with information about runway -->
-        <div class="deadline_tile">
-          <h3 class="deadline">Initial Sketches:</h3>
-          <h4 class="date"> Thursday, September 7th</h3>
-        </div>
-        <div class="deadline_tile">
-          <h3 class="deadline">25% Completion Due Date:</h3>
-          <h4 class="date"> Thursday, October 19th</h3>
-        </div>
-        <div class="deadline_tile">
-          <h3 class="deadline">50% Completion Due Date:</h3>
-          <h4 class="date"> Thursday, November 18th</h3>
-        </div>
-      </div>
-      <div class="deadline_row">
-        <div class="deadline_tile">
-          <h3 class="deadline">Catwalk Song Selection due:</h3>
-          <h4 class="date"> Thursday, November 30th</h3>
-        </div>
-        <div class="deadline_tile">
-          <h3 class="deadline">75% Completion Due Date:</h3>
-          <h4 class="date"> Tuesday, December 12th</h3>
-        </div>
-        <div class="deadline_tile">
-          <h3 class="deadline">100% Completion Due Date:</h3>
-          <h4 class="date"> Friday, January 12th</h3>
-        </div>
-      </div>
+        
 
-
-      <h2 class="header_about">Runway Workshops for Participants</h2>
-      <div class="deadline_row">
-
-        <div class="deadline_tile">
-          <h3 class="deadline">First Year Runway Workshop:</h3>
-          <h4 class="date">Sunday, September 17th, 1-4 pm </h3>
-        </div>
-        <div class="deadline_tile">
-          <h3 class="deadline">Headwear Design Workshop:</h3>
-          <h4 class="date">Sunday, September 24th, 1-4pm</h3>
-        </div>
-        <div class="deadline_tile">
-          <h3 class="deadline">Bodice construction workshop:</h3>
-          <h4 class="date">Sunday, October 15th, 1-4 pm</h3>
-        </div>
-      </div>
-      <div class="deadline_row">
-        <div class="deadline_tile">
-          <h3 class="deadline">Material in-person Workshop:</h3>
-          <h4 class="date">Sunday, October 22th, 1-4pm</h3>
-        </div>
-        <div class="deadline_tile">
-          <h3 class="deadline">Workshop structure, problem solving, support:</h3>
-          <h4 class="date">Sunday, November 19th, 1-4pm</h3>
-        </div>
-        <div class="deadline_tile">
-          <h3 class="deadline">Mandatory Dress Rehearsal:</h3>
-          <h4 class="date">Friday, January 19th</h3>
-        </div>
-      </div>
-
-    </div>
-  </div>
+      
 
 
   <!--<div class="runway_participant">
