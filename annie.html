@@ -8,218 +8,117 @@
   <title>Document</title>
   <style>
 
-  .sidenav {
-    height: 100%;
-    width: 200px;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #793140;
-    overflow-x: hidden;
-    padding-top: 20px;
-  }
+    /* The side navigation menu */
+    .sidenav {
+      height: 100%; /* 100% Full-height */
+      width: 0; /* 0 width - change this with JavaScript */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Stay on top */
+      top: 0; /* Stay at the top */
+      left: 0;
+      background-color: #793140; /* Black*/
+      overflow-x: hidden; /* Disable horizontal scroll */
+      padding-top: 60px; /* Place content 60px from the top */
+      transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+    }
 
-  .sidenav a {
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-  }
+    /* The navigation menu links */
+    .sidenav a {  
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 25px;
+      color: #818181;
+      display: block;
+      transition: 0.3s;
+    }
 
-  .sidenav a:hover {
-    color: #f1f1f1;
-  }
+    /* Position and style the close button (top right corner) */
+    .sidenav .closebtn {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+    }
 
-  .main {
-    margin-left: 160px; /* Same as the width of the sidenav */
-    font-size: 28px; /* Increased text to enable scrolling */
-    padding: 0px 10px;
-  }
+    /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+    #main {
+      transition: margin-left .5s;
+      padding: 20px;
+    }
 
-  @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
-  }
   </style>
   <script type="module" src="garments.js"></script>
   <script type="module">
-    import { AnniePassCheck } from './garments.js';
+    import { AnniePassCheck, changeAdminPassword, changeParticipantPassword, changeDate, addEvent, displayEvents} from './garments.js';
     window.AnniePassCheck = AnniePassCheck;
+    window.changeAdminPassword = changeAdminPassword;
+    window.changeParticipantPassword = changeParticipantPassword;
+    window.changeDate = changeDate;
+    window.addEvent = addEvent;
+    window.displayEvents = displayEvents; displayEvents();
+
   </script>
 </head>
 <body>
 
-<!-- creates the navbar for Annie -->
-<nav>
+
+
+
+  <!-- creates the navbar for Annie -->
+  <nav>
     <div class="navbar">
       <div class="logo">St. Anne's-Belfield School</div>
         <ul class="menu">
           <li><a href="index.html">Home</a></li>
-          <li><a href="garments.html">All Garments</a></li>
+          <li><a href="style.html">All Garments</a></li>
           <li><a href="participant.html">Student Submissions</a></li>
         </ul>
       </div>
-</nav>
+  </nav>
 
   
-  <div class="sidenav">
-    
-    <!--Import change Admin password function from js -->
-    <script type="module" src="garments.js"></script>
-    <script type="module">
-      import { changeAdminPassword } from './garments.js';
-      window.changeAdminPassword = changeAdminPassword;
-    </script>
-      
-    <!-- creates creates input and submit button for new Adminpassword -->
-    <input  style="margin-top: 80px;" type="text" id="new_admin_password" placeholder="New Admin Password">
-    <br>
-    <button onclick='changeAdminPassword(document.getElementById("new_admin_password"))'>Submit</button>
 
-    <!--Imports change Participant password function -->
-    <script type="module" src="garments.js"></script>
-    <script type="module">
-      import { changeParticipantPassword } from './garments.js';
-      window.changeParticipantPassword = changeParticipantPassword;
-    </script>
+ 
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="padding-top: 80px;">&times;</a>
   
-    <!-- creates input and submit button for new password -->
-    <input  style="margin-top: 50px;" type="text" id="new_password" placeholder="New Participant Password">
-    <br>
-    <button onclick='changeParticipantPassword(document.getElementById("new_password"))'>Submit</button>
-    <br>
-
-    <!-- Imports change date function -->
-    <script type="module" src="garments.js"></script>
-    <script type="module">
-      import { initialSketchesDate } from './garments.js';
-      window.initialSketchesDate = initialSketchesDate;
-    </script>
-    
-    <!-- Creates input and submit button for initial sketches date -->
-    <label style="margin-top: 50px;">Inital Sketches Date</label>
-    <br>
-    <input type="date" id="initial_sketch_date" placeholder="Initial Sketches">
-    <br>
-    <button onclick='initialSketchesDate(document.getElementById("initial_sketch_date"))'>Submit</button>
-    <br>
-
-    <!-- Imports change 25% completition date function -->
-    <script type="module" src="garments.js"></script>
-    <script type="module">
-      import { date25 } from './garments.js';
-      window.date25 = date25;
-    </script>
-
-    <!-- Creates input and submit button for 25% completition date -->
-    <label style="margin-top: 50px;">25% Completition Date</label>
-    <br>
-    <input type="date" id="date25" placeholder="25% Completition">
-    <br>
-    <button onclick='date25(document.getElementById("date25"))'>Submit</button>
-    <br>
-
-    <!-- Imports change 50% completition date function -->
-    <script type="module" src="garments.js"></script>
-    <script type="module">
-      import { date50 } from './garments.js';
-      window.date50 = date50;
-    </script>
-
-    <!-- Creates input and submit button for 50% completition date -->
-    <label style="margin-top: 50px;">50% Completition Date</label>
-    <br>
-    <input type="date" id="date50" placeholder="50% Completition">
-    <br>
-    <button onclick='date50(document.getElementById("date50"))'>Submit</button>
-    <br>
-
-    <!-- Imports change 75% completition date function -->
-    <script type="module" src="garments.js"></script>
-    <script type="module">
-      import { date75 } from './garments.js';
-      window.date75 = date75;
-    </script>
-
-    <!-- Creates input and submit button for 75% completition date -->
-    <label style="margin-top: 50px;">75% Completition Date</label>
-    <br>
-    <input type="date" id="date75" placeholder="75% Completition">
-    <br>
-    <button onclick='date75(document.getElementById("date75"))'>Submit</button>
-    <br>
-
-    <!-- Imports change 100% completition date function -->
-    <script type="module" src="garments.js"></script>
-    <script type="module">
-      import { date100 } from './garments.js';
-      window.date100 = date100;
-    </script>
-
-    <!-- Creates input and submit button for 100% completition date -->
-    <label style="margin-top: 50px;">100% Completition Date</label>
-    <br>
-    <input type="date" id="date100" placeholder="100% Completition">
-    <br>
-    <button onclick='date100(document.getElementById("date100"))'>Submit</button>
-    <br>
-    
-    <!-- Imports change Catwalk Song Submission date function -->
-      <script type="module" src="garments.js"></script>
-      <script type="module">
-        import { songDate } from './garments.js';
-        window.songDate = songDate;
-      </script>
-
-    <!-- Creates input and submit button for catwalk song submission date -->
-    <label style="margin-top: 50px;">Catwalk Song Submission Date</label>
-    <br>
-    <input type="date" id="songDate" placeholder="Catwalk Song Submission">
-    <br>
-    <button onclick='songDate(document.getElementById("songDate"))'>Submit</button>
-    <br>
-
-    <!-- Imports change First Year Runway Workshop date function -->
-      <script type="module" src="garments.js"></script>
-      <script type="module">
-        import { firstYearWorkshop } from './garments.js';
-        window.firstYearWorkshop = firstYearWorkshop;
-      </script>
-
-    <!-- Creates input and submit button for First Year Runway Workshop date -->
-    <label style="margin-top: 50px;">First Year Runway Workshop Date</label>
-    <br>
-    <input type="date" id="firstYearWorkshop" placeholder="First Year Runway Workshop">
-    <br>
-    <button onclick='firstYearWorkshop(document.getElementById("firstYearWorkshop"))'>Submit</button>
-    <br>
   </div>
 
+
+  <script>
+    /* Set the width of the side navigation to 250px and the left margin of the page content to 250px and add a black background color to body */
+    function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    /* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
+    function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+    }
+  </script>
+
+<!-- Use any element to open the sidenav -->
+<span onclick="openNav()" style="padding-top: 80px;">open</span>
+      
+<div id="main">
   
-
-
-
-<script type="module" src="annie.js"></script>
+  <script type="module" src="annie.js"></script>
     <script type="module">
         import{showItems} from './annie.js';
         window.showItems = showItems;
         showItems();
   </script>
 
-
- <p style="padding-top:100px"></p>
-
-  <br>
   <!-- Creates the searchbar to search for tutors -->
   <div id="searchbar">
     <input type="text" id="filter_search" oninput="showItems()" placeholder="Search by Name...">
   </div>
 
-</div>  
-
-<div id = "annie_garments">
+  <div id = "annie_garments"></div>
 </div>
+
 </body>
 </html>
