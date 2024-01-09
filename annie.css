@@ -21,9 +21,10 @@ flex-direction: column;
 /* sets the position, size, color, border, and margins for each garment, or "row" */
 .row{
 text-align: left; 
+background-image: url('pastrunway.png'); 
 /* margin: auto; */
 aspect-ratio: 1 / 1;
-background-color: black;
+/* background-color: black; */
 width: 100%;
 min-width: 500px;
 min-height:500px;
