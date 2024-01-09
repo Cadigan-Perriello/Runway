@@ -22,26 +22,26 @@ let fifty = document.getElementById("photo50");
 let seventy_five = document.getElementById("photo75");
 
   sketch.addEventListener('change', function () {
-    displayPicture(this, sketch);
+    displayPicture(this);
   });
   twenty_five.addEventListener('change', function () {
-    displayPicture(this, photo25);
+    displayPicture(this);
   });
   fifty.addEventListener('change', function () {
-    displayPicture(this, photo50);
+    displayPicture(this);
   });
   seventy_five.addEventListener('change', function () {
-    displayPicture(this, photo75);
+    displayPicture(this);
   });
 
- function displayPicture(input, image) {
+ function displayPicture(input) {
     if (input.files && input.files[0]) {
     var reader = new FileReader();
 
     reader.onload = function (e) {
-      document.getElementById('image').setAttribute('src', e.target.result);
+      document.getElementById(input.id + 'img').setAttribute('src', e.target.result);
     };
 
     reader.readAsDataURL(input.files[0]);
-   }
   }
+ }
