@@ -169,10 +169,12 @@ img {
 /*Allows for the tiles to wrap around into multiple rows  */
 .deadline_row {
   font-family:'Tilt Prism';
-  float: center; 
+  /*float: center;*/
   padding: 20px;
   display: flex;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
+  justify-content: space-around;
+ 
 }
 *{
   box-sizing: border-box;
@@ -186,5 +188,7 @@ img {
   background-color: #793140;
   outline-width: 7px;
   width: 30%;
-  margin: auto;
+  height: 250px;
+  float: left;
+  margin: 20px;
 }
