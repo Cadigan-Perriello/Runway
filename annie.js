@@ -37,7 +37,7 @@ export const showItems = async function(){
           name.for = item.id;
          row.appendChild(name);
 
-        row.appendChild(document.createElement("br"));
+        // row.appendChild(document.createElement("br"));
         //creates a new div for the row containing the sketch. We then check if there is an image submitted, and if so, it created a new image for the sketch and added it to the sketch div.
         var sketch  = document.createElement("div");
         sketch.setAttribute('class', "tile");
@@ -48,7 +48,7 @@ export const showItems = async function(){
           sketch.appendChild(sketch_img);
         }
         row.appendChild(sketch);
-        row.appendChild(document.createElement("br"));
+        // row.appendChild(document.createElement("br"));
         //creates a new div for the row containing the twenty five percent completion photo. We then check if there is an image submitted, and if so, it created a new image for the 25 photo and added it to the 25 photo div.
         var twenty_five  = document.createElement("div");
         twenty_five.setAttribute('class', "tile");
@@ -59,7 +59,7 @@ export const showItems = async function(){
           twenty_five.appendChild(twenty_five_img);
          }
         row.appendChild(twenty_five);
-        row.appendChild(document.createElement("br"));
+        // row.appendChild(document.createElement("br"));
         //creates a new div for the row containing the fifty percent completion photo. We then check if there is an image submitted, and if so, it created a new image for the 50 photo and added it to the 25 photo div.
         var fifty  = document.createElement("div");
         fifty.setAttribute('class', "tile");
@@ -70,7 +70,7 @@ export const showItems = async function(){
           fifty.appendChild(fifty_img);
         }
         row.appendChild(fifty);
-        row.appendChild(document.createElement("br"));
+        // row.appendChild(document.createElement("br"));
         //creates a new div for the row containing the seventy five percent completion photo. We then check if there is an image submitted, and if so, it created a new image for the 75 photo and added it to the 75 photo div.
         var seventy_five  = document.createElement("div");
         seventy_five.setAttribute('class', "tile");
@@ -81,7 +81,7 @@ export const showItems = async function(){
           seventy_five.appendChild(seventy_five_img);
         }
         row.appendChild(seventy_five);
-        row.appendChild(document.createElement("br"));
+        // row.appendChild(document.createElement("br"));
 
 
         // var final_row = document.createElement("div");
