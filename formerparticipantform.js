@@ -37,6 +37,8 @@ form.addEventListener("submit", (e) => {
   addGarment(firstName, lastName, inspiration, year, material);
 
     form.reset();
+    let previewimg = document.getElementById("finalimg");
+    previewimg.style.display = "none";
   
 }
 );
@@ -63,7 +65,7 @@ export const addGarment = async function(firstName, lastName, inspiration, year,
 
 const fileInput = document.getElementById('file');
 
-// Lister to the change event on the <input> element
+// Listener to the change event on the <input> element
     fileInput.addEventListener('change', (event) => {
     // Get the selected image file
     const imageFile = event.target.files[0];
@@ -82,6 +84,25 @@ const fileInput = document.getElementById('file');
         });
     }
 });
+
+let final = document.getElementById("final");
+
+  final.addEventListener('change', function () {
+    displayPicture(this);
+  });
+
+ function displayPicture(input) {
+    if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+      document.getElementById(input.id + 'img').setAttribute('src', e.target.result);
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+ }
+
 
 
 
