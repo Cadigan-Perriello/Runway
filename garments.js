@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
 // TODO: import libraries for Cloud Firestore Database
 // https://firebase.google.com/docs/firestore
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDLCmQ9Wv-VJcczaPZlSKSDA-rYbxtDyt4",
@@ -17,75 +17,117 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 //changes date
-export const initialSketchesDate = async function(initial_sketch_date){
+export const changeDate = async function(selectDate, id){
 
-    console.log("changing date");
-    const docRef =   doc(db, "runway", "25CompletitionDate");
-    await updateDoc(docRef, {
-      date: String(initial_sketch_date.value)
-    });
+  console.log("changing date");
+  const docRef =   doc(db, "runway", id);
+  await updateDoc(docRef, {
+    date: String(selectDate.value)
+  });
 }
 
-//changes 25% completion due date
-export const date25 = async function(date25){
-
-    console.log("changing date");
-    const docRef =   doc(db, "runway", "25CompletitionDate");
-    await updateDoc(docRef, {
-      date: String(date25.value)
-    });
+//adds Event
+export const addEvent = async function(EventName, SelectDate){
+  console.log(EventName.value.toLowerCase())
+  var EventNameValueId = EventName.value;
+  if (!EventName.value.toLowerCase().includes("date")){
+    EventNameValueId = EventName.value + "Date";
+  }
+  const docRef = await setDoc(doc(db, "runway", (EventNameValueId)), {
+    name: (EventName.value),
+    date: (SelectDate.value)
+  });
 }
 
-//changes 50% completion due date
-export const date50 = async function(date50){
 
-    console.log("changing date");
-    const docRef =   doc(db, "runway", "50CompletitionDate");
-    await updateDoc(docRef, {
-      date: String(date50.value)
-    });
+//displays Events on Homepage
+export const displayEventsHome = async function (){
+    console.log("displaying events on homepage")
+    const databaseItems = await getDocs(collection(db, "runway"));
+    var homeEvents = document.getElementById("homepage_events");
+      homeEvents.innerHTML="";
+
+    databaseItems.forEach((item) => {
+      if (item.id.toLowerCase().includes("date")) {
+      var row = document.createElement("div");
+      row.setAttribute('class', "deadline_tile");
+      var title = document.createElement("p");
+      title.innerHTML = item.data().name;
+      title.setAttribute('class', "deadline");
+      var date = document.createElement("p");
+      date.innerHTML = item.data().date;
+      date.setAttribute('class', "date");
+      
+      
+      row.appendChild(title);
+      row.appendChild(date);
+      homeEvents.appendChild(row);
+    }
+    
+    })
 }
 
-//changes 75% completion due date
-export const date75 = async function(date75){
 
-    console.log("changing date");
-    const docRef =   doc(db, "runway", "75CompletitionDate");
-    await updateDoc(docRef, {
-      date: String(date75.value)
-    });
-}
 
-//changes 100% completion due date
-export const date100 = async function(date100){
+//displays Event on Navbar
+export const displayEvents = async function(){
+  console.log("displayingEvents")
+  const databaseItems = await getDocs(collection(db, "runway"));
+  var Sidenav = document.getElementById("mySidenav");
+    Sidenav.innerHTML="";
 
-    console.log("changing date");
-    const docRef =   doc(db, "runway", "100CompletitionDate");
-    await updateDoc(docRef, {
-      date: String(date100.value)
-    });
-}
+    //creates input for name and date and submit button for adding an Event
+    var row = document.createElement("div");
+    row.setAttribute('class', "sidenav_row");
+    var description = document.createElement("p");
+    description.innerHTML = "add Event";
+    var name_event = document.createElement("input");
+    name_event.setAttribute ('type', "text");
+    var date_event = document.createElement("input");
+    date_event.setAttribute ('type', "date");
+    const addEventButton = document.createElement('button');
+    addEventButton.textContent = 'addEvent';
+    addEventButton.addEventListener('click', () => {
+      console.log ("adding Event");
+      addEvent(name_event, date_event);
+    })
 
-//changes Catwalk Song Selection due date
-export const songDate = async function(songDate){
+    row.appendChild(description);
+    row.appendChild(name_event);
+    row.appendChild(date_event);
+    row.appendChild(addEventButton);
 
-    console.log("changing date");
-    const docRef =   doc(db, "runway", "CatwalkSongSelectionDate");
-    await updateDoc(docRef, {
-      date: String(songDate.value)
-    });
-}
+    //goes through firebase and displays all items on the sidebar
+    databaseItems.forEach((item) => {
+      if (item.id.toLowerCase().includes("date")) {
+        var text = document.createElement("p");
+        text.innerHTML = item.data().name;
+        var date = document.createElement("input");
+        date.setAttribute('type', "date");
+        const submitButton = document.createElement('button');
+        submitButton.textContent = 'submit';
+        submitButton.addEventListener('click', () => {
+          console.log("New button clicked!");
+          changeDate(date, item.id);
+        });
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'delete event';
+        deleteButton.addEventListener('click', () =>{
+          console.log("deleting event");
+          deleteDoc(doc(db, "runway", (item.id)))
+        })
 
-//changes First Year Runway Workshop date
-export const firstYearWorkshop = async function(firstYearWorkshop){
+      row.setAttribute('class', "sidenav_row");
+      row.appendChild(text);
+      row.appendChild(date);
+      row.appendChild(submitButton);
+      row.appendChild(deleteButton);
+      document.getElementById("mySidenav").appendChild(row);
+      }
+ 
+    })
 
-    console.log("changing date");
-    const docRef =   doc(db, "runway", "FirstYearWorkshopDate");
-    await updateDoc(docRef, {
-      date: String(firstYearWorkshop.value)
-    });
-}
-
+  }
 
 //changes particpant password
 export const changeParticipantPassword = async function(password){
