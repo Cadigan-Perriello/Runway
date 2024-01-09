@@ -30,6 +30,8 @@ form.addEventListener("submit", (e) => {
    add50(firstName.value, lastName.value, email.value, photo50);
   //reset form
   form.reset();
+  let previewimg = document.getElementById("photo50img");
+  previewimg.style.display = "none";
 }
 );
 //adds the sketch to the firebase
