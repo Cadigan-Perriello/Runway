@@ -33,9 +33,13 @@ export const showItems = async function(){
         var row = document.createElement("div");
            row.setAttribute('class', "row");
         var name = document.createElement("h1");
+        var email = document.createElement("h1");
+          email.innerHTML = item.data().email;
+        email.for = item.id;
           name.innerHTML = item.data().firstName + " " + item.data().lastName.substring(0,1);
           name.for = item.id;
          row.appendChild(name);
+        row.appendChild(email);
 
         // row.appendChild(document.createElement("br"));
         //creates a new div for the row containing the sketch. We then check if there is an image submitted, and if so, it created a new image for the sketch and added it to the sketch div.
