@@ -33,10 +33,10 @@ export const showItems = async function(){
         var row = document.createElement("div");
            row.setAttribute('class', "row");
         var name = document.createElement("h1");
-        var email = document.createElement("h1");
+        var email = document.createElement("p");
           email.innerHTML = item.data().email;
         email.for = item.id;
-          name.innerHTML = item.data().firstName + " " + item.data().lastName.substring(0,1);
+          name.innerHTML = item.data().firstName + " " + item.data().lastName.substring(0,1) + "  ";
           name.for = item.id;
          row.appendChild(name);
         row.appendChild(email);
