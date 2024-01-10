@@ -17,17 +17,18 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 //changes date
-export const changeDate = async function(selectDate, id){
+export const changeDate = async function(selectDate, selectInfo, id){
 
   console.log("changing date");
   const docRef =   doc(db, "runway", id);
   await updateDoc(docRef, {
-    date: String(selectDate.value)
+    date: String(selectDate.value),
+    info: String(selectInfo.value)
   });
 }
 
 //adds Event
-export const addEvent = async function(EventName, SelectDate){
+export const addEvent = async function(EventName, SelectDate, EventInfo){
   console.log(EventName.value.toLowerCase())
   var EventNameValueId = EventName.value;
   if (!EventName.value.toLowerCase().includes("date")){
@@ -35,7 +36,8 @@ export const addEvent = async function(EventName, SelectDate){
   }
   const docRef = await setDoc(doc(db, "runway", (EventNameValueId)), {
     name: (EventName.value),
-    date: (SelectDate.value)
+    date: (SelectDate.value),
+    info: (EventInfo.value)
   });
 }
 
@@ -57,10 +59,15 @@ export const displayEventsHome = async function (){
       var date = document.createElement("p");
       date.innerHTML = item.data().date;
       date.setAttribute('class', "date");
+      var info = document.createElement("p");
+      info.innerHTML = item.data().info;
+      info.setAttribute('class', "date");
+
       
       
       row.appendChild(title);
       row.appendChild(date);
+      row.appendChild(info);
       homeEvents.appendChild(row);
     }
     
@@ -82,19 +89,24 @@ export const displayEvents = async function(){
     var description = document.createElement("p");
     description.innerHTML = "add Event";
     var name_event = document.createElement("input");
+    name_event.placeholder = "event name";
     name_event.setAttribute ('type', "text");
     var date_event = document.createElement("input");
     date_event.setAttribute ('type', "date");
+    var info_event = document.createElement("input");
+    info_event.placeholder = "additional information"
+    info_event.setAttribute ('type', "text");
     const addEventButton = document.createElement('button');
     addEventButton.textContent = 'addEvent';
     addEventButton.addEventListener('click', () => {
       console.log ("adding Event");
-      addEvent(name_event, date_event);
+      addEvent(name_event, date_event, info_event);
     })
 
     row.appendChild(description);
     row.appendChild(name_event);
     row.appendChild(date_event);
+    row.appendChild(info_event);
     row.appendChild(addEventButton);
 
     //goes through firebase and displays all items on the sidebar
@@ -104,11 +116,14 @@ export const displayEvents = async function(){
         text.innerHTML = item.data().name;
         var date = document.createElement("input");
         date.setAttribute('type', "date");
+        var info = document.createElement("input");
+        info.placeholder = "additional information";
+        info.setAttribute('type', "text");
         const submitButton = document.createElement('button');
         submitButton.textContent = 'submit';
         submitButton.addEventListener('click', () => {
           console.log("New button clicked!");
-          changeDate(date, item.id);
+          changeDate(date, info, item.id);
         });
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'delete event';
@@ -120,6 +135,7 @@ export const displayEvents = async function(){
       row.setAttribute('class', "sidenav_row");
       row.appendChild(text);
       row.appendChild(date);
+      row.appendChild(info);
       row.appendChild(submitButton);
       row.appendChild(deleteButton);
       document.getElementById("mySidenav").appendChild(row);
