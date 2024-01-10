@@ -188,7 +188,7 @@ img {
   background-color: #793140;
   outline-width: 7px;
   width: 30%;
-  height: 250px;
+  height: auto;
   float: left;
   margin: 20px;
 }
