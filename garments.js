@@ -108,6 +108,7 @@ export const displayEvents = async function(){
     row.appendChild(date_event);
     row.appendChild(info_event);
     row.appendChild(addEventButton);
+    Sidenav.appendChild(row);
 
     //goes through firebase and displays all items on the sidebar
     databaseItems.forEach((item) => {
