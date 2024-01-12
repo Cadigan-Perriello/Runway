@@ -25,7 +25,7 @@ text-align: left;
 aspect-ratio: 1 / 1;
  width: 95%; 
 min-width: 300px;
-height: 200px;
+height: 350px;
 color: white;
 border: #793140;
 background-color: black;
@@ -45,9 +45,9 @@ margin-top: 4%;
 
 .tile{
 min-height: 5%;
-height: 170px;
+height: 300px;
 /* max-height: 10%; */
-width: 15%;
+width: 18%;
 border-radius: 5%;
 border-style: solid;
 border-width: 5px;
@@ -60,8 +60,8 @@ margin-right: 1%;
 }
 
 .tile img{
-height: 50%;
-width: 50%;
+height: 85%;
+width: 85%;
 
 } 
 /* sets positioning settings to the garment divs */
