@@ -73,6 +73,7 @@ export const addSketch = async function(firstName, lastName, email, sketch){
           photo25: "",
           photo50: "",
           photo75: "",
+          catwalk: "",
           isPublic: false
         });
       }
