@@ -35,7 +35,7 @@ export const showItems = async function(){
         var info = document.createElement("div");
         info.setAttribute('class', "tile");
         var name = document.createElement("h1");
-        var email = document.createElement("p");
+        var email = document.createElement("a");
           email.innerHTML = item.data().email;
         email.for = item.id;
           name.innerHTML = item.data().firstName + " " + item.data().lastName.substring(0,1) + "  ";
