@@ -228,6 +228,7 @@ export const showItems = async function(){
                       name.for = item.id;
                       row.appendChild(name);
                       row.appendChild(document.createElement("br"));
+                      row.appendChild(document.createElement("br"));
 
                       var image = document.createElement("img");
                       image.src = item.data().img;
