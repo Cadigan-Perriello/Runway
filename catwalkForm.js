@@ -28,7 +28,7 @@ form.addEventListener("submit", (e) => {
   let email = document.getElementById("emailC");
   let catwalk = document.getElementById("catwalk");
   //creates sketch object from the above variables
-   addCatwalk(firstName.value, lastName.value, email.value, catwalk);
+   addCatwalk(firstName.value, lastName.value, email.value, catwalk.value);
   //reset form
   form.reset();
 }
