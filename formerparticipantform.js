@@ -63,7 +63,7 @@ export const addGarment = async function(firstName, lastName, inspiration, year,
   }  
 }
 
-const fileInput = document.getElementById('file');
+const fileInput = document.getElementById('final');
 
 // Listener to the change event on the <input> element
     fileInput.addEventListener('change', (event) => {
