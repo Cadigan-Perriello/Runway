@@ -224,7 +224,7 @@ export const showItems = async function(){
                     var row = document.createElement("div");
                     row.setAttribute('class', "row");
                       var name = document.createElement("h1");
-                      name.innerHTML = item.data().firstName + " " + item.data().lastName;
+                      name.innerHTML = item.data().firstName + " " + item.data().lastName.substring(0, 1);
                       name.for = item.id;
                       row.appendChild(name);
                       row.appendChild(document.createElement("br"));
