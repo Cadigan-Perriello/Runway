@@ -38,10 +38,17 @@ export const showItems = async function(){
         var email = document.createElement("a");
           email.innerHTML = item.data().email;
         email.for = item.id;
+        var catwalkLabel = document.createElement("p");
+          catwalkLabel.innerHTML = "Catwalk Song:";
+        var catwalk = document.createElement("p");
+          catwalk.innerHTML = item.data().catwalk;
+        catwalk.for = item.id;
           name.innerHTML = item.data().firstName + " " + item.data().lastName.substring(0,1) + "  ";
           name.for = item.id;
          info.appendChild(name);
         info.appendChild(email);
+        info.appendChild(catwalkLabel);
+        info.appendChild(catwalk);
         row.appendChild(info);
 
         // row.appendChild(document.createElement("br"));
