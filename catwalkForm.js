@@ -23,7 +23,8 @@ form.addEventListener("submit", (e) => {
 //sets js variables from the form
   let firstName = document.getElementById("firstNameC");
   let lastName = document.getElementById("lastNameC");
-  let catwalk = document.getElementById("catwalk");
+  let email = document.getElementById("emailC");
+  let catwalk = document.getElementById("catwalkC");
   //creates catwalk object from the above variables
   addCatwalk(firstName, lastName, catwalk);
   //reset inputs in form
@@ -31,12 +32,13 @@ form.addEventListener("submit", (e) => {
 }
 );
 //adds the catwalk song to the firebase
-export const addCatwalk = async function(firstName, lastName, catwalk){
+export const addCatwalk = async function(firstName, lastName, email, catwalk){
   try{
     console.log("adding document");
     const docRef = await addDoc(collection(db, "runway"), {
       firstName: firstName.value,
       lastName:lastName.value,
+      email: email.value,
       catwalk: catwalk.value,
       isPublic: false
     });
