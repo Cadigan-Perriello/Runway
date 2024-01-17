@@ -73,6 +73,7 @@ export const add25 = async function(firstName, lastName, email, photo25){
           photo25: photo25,
           photo50: "",
           photo75: "",
+          catwalk: "",
           isPublic: false
         });
       }
