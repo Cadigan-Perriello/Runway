@@ -225,7 +225,6 @@ export const showItems = async function(){
                     row.setAttribute('class', "row");
                       var name = document.createElement("h1");
                       name.innerHTML = item.data().firstName + " " + item.data().lastName.substring(0, 1);
-                      console.log(item.data().lastName.substring(0, 1));
                       name.for = item.id;
                       row.appendChild(name);
                       row.appendChild(document.createElement("br"));
