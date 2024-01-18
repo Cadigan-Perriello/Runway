@@ -82,7 +82,14 @@ export const displayEvents = async function(){
   const databaseItems = await getDocs(collection(db, "runway"));
   var Sidenav = document.getElementById("mySidenav");
     Sidenav.innerHTML="";
-
+    var closeButton = document.createElement('button');
+    closeButton.innerHTML = "TEST"
+    closeButton.setAttribute ('class', "close_button");
+    closeButton.addEventListener('click', () => {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main").style.marginLeft= "0";
+      
+    })
     //creates input for name and date and submit button for adding an Event
     var row = document.createElement("div");
     row.setAttribute('class', "sidenav_row");
@@ -102,7 +109,7 @@ export const displayEvents = async function(){
       console.log ("adding Event");
       addEvent(name_event, date_event, info_event);
     })
-
+    Sidenav.appendChild(closeButton);
     row.appendChild(description);
     row.appendChild(name_event);
     row.appendChild(date_event);
@@ -145,7 +152,6 @@ export const displayEvents = async function(){
     })
 
   }
-
 //changes particpant password
 export const changeParticipantPassword = async function(password){
   try{
