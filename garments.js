@@ -83,7 +83,7 @@ export const displayEvents = async function(){
   var Sidenav = document.getElementById("mySidenav");
     Sidenav.innerHTML="";
     var closeButton = document.createElement('button');
-    closeButton.innerHTML = "TEST"
+    closeButton.innerHTML = "close"
     closeButton.setAttribute ('class', "close_button");
     closeButton.addEventListener('click', () => {
         document.getElementById("mySidenav").style.width = "0";
