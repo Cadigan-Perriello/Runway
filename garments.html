@@ -10,16 +10,27 @@
 </head>
 <body>
   <!-- Codes the top navbar for navigation to various locations -->
-<nav>
+  <nav>
     <div class="navbar">
-      <div class="logo">St. Anne's-Belfield School</div>
-        <ul class="menu">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="garments.html">All Garments</a></li>
-          <li class="navbar_specific"><a href="participant.html">Submissions</a></li>
-        </ul>
-      </div>
-</nav>
+      <div class="logo">St. Anne's Belfield School</div>
+      <ul class="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="garments.html">All Garments</a></li>
+      </ul>
+        <div class="dropdown">
+          <button class="dropbtn">Student Submissions 
+            <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content">
+            <a href="currentparticipantform.html">I am a current runway participant.</a>
+            <a href="formerparticipantform.html">I am a former runway participant.</a>
+            <a href="annie.html">Annie</a>
+          </div>
+        </div> 
+        <!-- <li><a href="participant.html">Submissions</a></li> -->
+      
+    </div>
+  </nav>
 <!-- Calls the javascript functions that allow for the appearance of the garments -->
 <script type="module" src="garments.js"></script>
     <script type="module">
