@@ -229,7 +229,7 @@ export const showItems = async function(){
                   //create tile (row) with name, image, inspiration, and material
                     var row = document.createElement("div");
                     row.setAttribute('class', "row");
-                      var name = document.createElement("h1");
+                      var name = document.createElement("p");
                       name.innerHTML = item.data().firstName + " " + item.data().lastName.substring(0, 1) + ".";
                       name.for = item.id;
                       row.appendChild(name);
