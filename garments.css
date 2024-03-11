@@ -58,8 +58,8 @@ body{
 
 /* sets the size of the garment picture */
 #garments img{
-  width: 40%;
-  height:40%;
+  width: 80%;
+  height:80%;
   object-fit: cover;
   display: block;
   /* object-position: 25% 25%; */
