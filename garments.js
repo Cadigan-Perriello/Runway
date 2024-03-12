@@ -13,8 +13,77 @@ const firebaseConfig = {
   appId: "1:397910373324:web:b20e7f879fa8cfd9c3a369"
 };
 
+
+
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+var year_list = [];
+
+//creates filter by year checkboxes
+export const filterByYear = async function(){
+  const databaseItems = await getDocs(collection(db, "runway"));
+    var checkboxes = document.getElementById("checkboxes");
+    checkboxes.innerHTML="";
+    var years = [];
+    databaseItems.forEach((item) => {
+      if(item.data().year != null && !years.includes(item.data().year)) {
+        years.push(item.data().year);
+      }
+      console.log(years)
+    })
+    
+    years.sort();
+
+    years.forEach((item) => {
+      var row = document.createElement("input");
+      row.type = "checkbox";
+      row.className = "checkbox_class";
+      row.value = (item);
+      row.onclick = function(){
+        year_list = []
+        var checkboxes = document.getElementsByClassName("checkbox_class")
+        for (var i = 0; i < checkboxes.length; i++) {
+          console.log(checkboxes[i].value);
+
+          if (checkboxes[i].checked) {
+            year_list.push(checkboxes[i].value);
+          }
+        }
+        showItems();
+      }
+      var label = document.createElement("label");
+      label.innerHTML = (item);
+      
+      checkboxes.appendChild(label);
+      checkboxes.appendChild(row);
+      checkboxes.appendChild(document.createElement("br"));
+    })
+
+
+}
+
+filterByYear();
+
+
+//behind the scenes - checklist (creates a list that contains the clicked years)
+export const year_list_add = function(){
+  year_list = []
+  var checkboxes = document.getElementsByClassName("checkbox_class")
+  for (var i = 0; i < checkboxes.length; i++) {
+    if (checkboxes[i].checked) {
+      year_list.push(checkboxes[i].value);
+    }
+  }
+  
+  showItems();
+}
+
+
+
+var row = document.createElement("div");
+row.setAttribute('class', "deadline_tile");
 
 //changes date
 export const changeDate = async function(selectDate, selectInfo, id){
@@ -212,7 +281,7 @@ export const passCheck = async function(){
   }
 }
 
-var year_list = [];
+
 
 // show garments from firebase in the tiles on the screen
 export const showItems = async function(){
@@ -270,29 +339,5 @@ export const showItems = async function(){
 }
 
 
-
-//behind the scenes - checklist (creates a list that contains the clicked years)
-export const year_list_add = function(){
-    year_list = []
-    if (document.getElementById("2018").checked) {
-        year_list.push("2018")
-    }
-    if (document.getElementById("2019").checked) {
-        year_list.push("2019")
-    }
-    if (document.getElementById("2020").checked) {
-        year_list.push("2020")
-    }
-    if (document.getElementById("2021").checked) {
-        year_list.push("2021")
-    }
-    if (document.getElementById("2022").checked) {
-        year_list.push("2022")
-    }
-    if (document.getElementById("2023").checked) {
-        year_list.push("2023")
-    }
-  showItems();
-}
 
 
