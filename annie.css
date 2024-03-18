@@ -202,4 +202,15 @@ text-decoration: none;
   margin-top: 40px;
 }
 
+button { 
+  color:#050; 
+  font: old 84% 'trebuchet ms',helvetica,sans-serif; 
+  background-color:#fed; 
+  border:1px solid; 
+  border-color: #696 #363 #363 #696; 
+  float: right;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
 
