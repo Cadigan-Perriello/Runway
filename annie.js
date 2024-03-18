@@ -17,8 +17,6 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
-
-
 // show Participants from firebase in the tiles on the screen
 export const showItems = async function(){
     const databaseItems = await getDocs(collection(db, "runway"));
@@ -57,44 +55,105 @@ export const showItems = async function(){
         sketch.setAttribute('class', "tile");
         sketch.innerHTML = "Sketch:";
         if (item.data().sketch != "" ) {
+          var deleteSketch = document.createElement("button");
+          deleteSketch.setAttribute('id', "deleteSketch");
+          deleteSketch.innerText = "X";
+          deleteSketch.onclick = function() {
+            if(confirm("Remove " + item.data().firstName + 's sketch?') == true) {
+            console.log("removing");
+            const itemToComplete = doc(db, "runway", item.id);
+            updateDoc(itemToComplete, {
+              sketch: ""
+            });
+            showItems();
+          }
+          }
+          sketch.appendChild(deleteSketch);
           var sketch_img = document.createElement("img");
           sketch_img.src = item.data().sketch;
           sketch.appendChild(sketch_img);
         }
         row.appendChild(sketch);
+  
+
         // row.appendChild(document.createElement("br"));
         //creates a new div for the row containing the twenty five percent completion photo. We then check if there is an image submitted, and if so, it created a new image for the 25 photo and added it to the 25 photo div.
         var twenty_five  = document.createElement("div");
         twenty_five.setAttribute('class', "tile");
         twenty_five.innerHTML = "25% deadline photo:";
          if (item.data().photo25 != "" ) {
+          var delete25 = document.createElement("button");
+          delete25.setAttribute('id', "delete25");
+          delete25.innerText = "X"
+          delete25.onclick = function() {
+            if(confirm("Remove " + item.data().firstName + 's 25% photo?') == true) {
+            console.log("removing");
+            const itemToComplete = doc(db, "runway", item.id);
+            updateDoc(itemToComplete, {
+              photo25: ""
+            });
+            showItems();
+          }
+          }
+          twenty_five.appendChild(delete25);
           var twenty_five_img = document.createElement("img");
           twenty_five_img.src = item.data().photo25;
           twenty_five.appendChild(twenty_five_img);
          }
-        row.appendChild(twenty_five);
+         row.appendChild(twenty_five);
+      
         // row.appendChild(document.createElement("br"));
         //creates a new div for the row containing the fifty percent completion photo. We then check if there is an image submitted, and if so, it created a new image for the 50 photo and added it to the 25 photo div.
         var fifty  = document.createElement("div");
         fifty.setAttribute('class', "tile");
         fifty.innerHTML = "50% deadline photo:";
         if (item.data().photo50 != "" ) {
-        var fifty_img = document.createElement("img");
-        fifty_img.src = item.data().photo50;
+          var delete50 = document.createElement("button");
+          delete50.setAttribute('id', "delete50");
+          delete50.innerText = "X"
+          delete50.onclick = function() {
+            if(confirm("Remove " + item.data().firstName + 's 50% photo?') == true) {
+            console.log("removing");
+            const itemToComplete = doc(db, "runway", item.id);
+            updateDoc(itemToComplete, {
+              photo50: ""
+            });
+            showItems();
+          }
+          }
+          fifty.appendChild(delete50);
+          var fifty_img = document.createElement("img");
+          fifty_img.src = item.data().photo50;
           fifty.appendChild(fifty_img);
         }
         row.appendChild(fifty);
+    
         // row.appendChild(document.createElement("br"));
         //creates a new div for the row containing the seventy five percent completion photo. We then check if there is an image submitted, and if so, it created a new image for the 75 photo and added it to the 75 photo div.
         var seventy_five  = document.createElement("div");
         seventy_five.setAttribute('class', "tile");
         seventy_five.innerHTML = "75% deadline photo:";
         if (item.data().photo75 != "" ) {
+          var delete75 = document.createElement("button");
+          delete75.setAttribute('id', "delete75");
+          delete75.innerText = "X"
+          delete75.onclick = function() {
+            if(confirm("Remove " + item.data().firstName + 's 75% photo?') == true) {
+            console.log("removing");
+            const itemToComplete = doc(db, "runway", item.id);
+            updateDoc(itemToComplete, {
+              photo75: ""
+            });
+            showItems();
+          }
+          }
+          seventy_five.appendChild(delete75);
           var seventy_five_img = document.createElement("img");
           seventy_five_img.src = item.data().photo75;
           seventy_five.appendChild(seventy_five_img);
         }
         row.appendChild(seventy_five);
+    
         // row.appendChild(document.createElement("br"));
 
 
@@ -111,9 +170,25 @@ export const showItems = async function(){
 
         //  }
 
-        annie_garments.appendChild(row);
+       annie_garments.appendChild(row);
 
+         var deleteProfile = document.createElement("button");
+         deleteProfile.setAttribute('id', "deleteProfile");
+         deleteProfile.innerText = "X";
+         deleteProfile.onclick = function() {
+              if(confirm("Remove " + item.data().firstName + 's profile?') == true) {
+              console.log("removing");
+              deleteDoc(doc(db, "runway", item.id));
+              const itemToComplete = doc(db, "runway", item.id);
+            showItems();
+            }
+           }
+           row.appendChild(deleteProfile);
+
+  
             }
       }
     })
 }
+
+
