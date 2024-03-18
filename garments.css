@@ -108,3 +108,9 @@ body{
   /* object-position: 25% 25%; */
   /* margin-left: 25%; */
 }
+.row:active img{
+ 
+transform: scale(3);
+
+
+}
