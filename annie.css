@@ -113,6 +113,12 @@ display: flex;
 justify-content: center;
 flex-wrap: wrap;
 }
+.tile:active img{
+ 
+  transform: scale(3);
+  
+  
+  }
 
 
 /* sets the size of the garment picture */
