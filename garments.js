@@ -416,7 +416,7 @@ async function approval(itemId) {
   await updateDoc(doc(db, "runway", itemId), {
     isApproved : true
   });
-  location.reload();
+  //location.reload();
 }
 
 
