@@ -370,8 +370,8 @@ export const showItemsAdmin = async function(){
                     inspiration.innerHTML = "Inspiration: " + item.data().inspiration;
                     inspiration.for = item.id;
                 
-                    row.appendChild(inspiration);
-                    row.appendChild(document.createElement("br"));
+                    //row.appendChild(inspiration);
+                    //row.appendChild(document.createElement("br"));
             
                     var year = document.createElement("p");
                     year.innerHTML = "Year: " + item.data().year;
@@ -416,8 +416,5 @@ async function approval(itemId) {
   await updateDoc(doc(db, "runway", itemId), {
     isApproved : true
   });
-  //location.reload();
+  location.reload();
 }
-
-
-
