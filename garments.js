@@ -312,12 +312,12 @@ export const showItems = async function(){
 
                       row.appendChild(document.createElement("br"));
                   
-                      var inspiration = document.createElement("p");
-                      inspiration.innerHTML = "Inspiration: " + item.data().inspiration;
-                      inspiration.for = item.id;
+                      // var inspiration = document.createElement("p");
+                      // inspiration.innerHTML = "Inspiration: " + item.data().inspiration;
+                      // inspiration.for = item.id;
                   
-                      row.appendChild(inspiration);
-                      row.appendChild(document.createElement("br"));
+                      // row.appendChild(inspiration);
+                      // row.appendChild(document.createElement("br"));
               
                       var year = document.createElement("p");
                       year.innerHTML = "Year: " + item.data().year;
@@ -366,9 +366,9 @@ export const showItemsAdmin = async function(){
 
                     row.appendChild(document.createElement("br"));
                 
-                    var inspiration = document.createElement("p");
-                    inspiration.innerHTML = "Inspiration: " + item.data().inspiration;
-                    inspiration.for = item.id;
+                    // var inspiration = document.createElement("p");
+                    // inspiration.innerHTML = "Inspiration: " + item.data().inspiration;
+                    // inspiration.for = item.id;
                 
                     //row.appendChild(inspiration);
                     //row.appendChild(document.createElement("br"));
