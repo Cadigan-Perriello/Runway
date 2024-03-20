@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="garments.css" rel="stylesheet" type="text/css"/>
+    <link href="home.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <nav>
+        <div class="navbar">
+          <div class="logo">St. Anne's Belfield School</div>
+          <ul class="menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="garments.html">All Garments</a></li>
+          </ul>
+            <div class="dropdown">
+              <button class="dropbtn">Student Submissions 
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                <a href="currentparticipantform.html">I am a current runway participant.</a>
+                <a href="formerparticipantform.html">I am a former runway participant.</a>
+              </div>
+              
+            </div> 
+            <div class="dropdown">
+              <button class="dropbtn"> Admin 
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                <a href="annie.html">Main Admin Page</a>
+                <a href="SubmissionsCheck.html">Student Submission Portal</a>
+              </div>
+              
+            </div>    
+        </div>
+      </nav>
+
+    <script type="module" src="garments.js"></script>
+    <script type="module">
+        import{showItemsAdmin} from './garments.js';
+        window.showItemsAdmin = showItemsAdmin;
+        showItemsAdmin();
+  </script>
+    <div id="SubmissionsCheck">
+
+    </div>
+
+    
+</body>
+</html>
