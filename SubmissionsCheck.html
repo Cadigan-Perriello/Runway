@@ -6,8 +6,16 @@
     <title>Document</title>
     <link href="garments.css" rel="stylesheet" type="text/css"/>
     <link href="home.css" rel="stylesheet" type="text/css" />
+
+    <script type="module" src="garments.js"></script>
+    <script type="module">
+        import{showItemsAdmin, AnniePassCheck} from './garments.js';
+        window.showItemsAdmin = showItemsAdmin;
+        window.AnniePassCheck = AnniePassCheck;
+        showItemsAdmin();
+  </script>
 </head>
-<body>
+<body onload="AnniePassCheck()">
     <nav>
         <div class="navbar">
           <div class="logo">St. Anne's Belfield School</div>
@@ -37,13 +45,6 @@
             </div>    
         </div>
       </nav>
-
-    <script type="module" src="garments.js"></script>
-    <script type="module">
-        import{showItemsAdmin} from './garments.js';
-        window.showItemsAdmin = showItemsAdmin;
-        showItemsAdmin();
-  </script>
     <div id="SubmissionsCheck">
 
     </div>
