@@ -1,0 +1,110 @@
+/* sets the collage of past runway participants as the background */
+html{
+    background-image: url('pastrunway.png'); 
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    color: white;
+    font-size: 20px;
+  }
+  .dropdown {
+    float: center;
+    overflow: hidden;
+  }
+  
+  .navbar a:hover, .dropdown:hover .dropbtn {
+    background-color: gray;
+  }
+  .dropdown .dropbtn {
+    font-size: 16px;  
+    border: none;
+    outline: none;
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+  }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: black;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #ddd;
+  }
+  
+  .dropdown:hover .dropdown-content{
+    display: block;
+  }
+  
+  /* sets font, text alignment, padding, and display for the home page */
+  body{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
+    padding-bottom: 15px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: white;
+  }
+  
+  /* sets the position, size, color, border, and margins for each garment, or "row" */
+  .row{
+    /* margin: auto; */
+    /* aspect-ratio: 1 / 1; */
+    background-color: black;
+    width: 40%;
+    min-width: 300px;
+    min-height:400px;
+    /* padding: 2%; */
+    color: white;
+    border: 10px #793140 solid;
+    /* border-radius: 10px; */
+    margin-left: 4%;
+    margin-right: 4%;
+    margin-top: 3%; 
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+  }
+  
+  /* sets styling for tile headings */
+  .row h1{
+    font-family: monospace;
+    margin-top: 0%;
+  }
+  
+  /* sets positioning settings to the garment divs */
+  #garments{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  
+  }
+  
+  
+  /* sets the size of the garment picture */
+  #garments img{
+    width: 80%;
+    height:80%;
+    object-fit: cover;
+    display: block;
+    /* object-position: 25% 25%; */
+    /* margin-left: 25%; */
+  }
