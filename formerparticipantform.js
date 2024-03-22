@@ -55,7 +55,8 @@ export const addGarment = async function(firstName, lastName, inspiration, year,
       year: year.value,
       material: material.value,
       img: picture,
-      isPublic: true
+      isPublic: true,
+      isApproved: false
     });
   }
   catch(e){
