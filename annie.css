@@ -109,16 +109,15 @@ float: center;
 } 
 /* sets positioning settings to the garment divs */
 #garments{
-display: flex;
-justify-content: center;
-flex-wrap: wrap;
-}
-.tile:active img{
- 
-  transform: scale(3);
-  
-  
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   }
+  .tile img:active{
+   
+    transform: scale(3);
+    
+    }
 
 
 /* sets the size of the garment picture */
@@ -200,17 +199,6 @@ text-decoration: none;
 /*styles the close button on the sidenav*/
 .close_button{
   margin-top: 40px;
-}
-
-button { 
-  color:#050; 
-  font: old 84% 'trebuchet ms',helvetica,sans-serif; 
-  background-color:#fed; 
-  border:1px solid; 
-  border-color: #696 #363 #363 #696; 
-  float: right;
-  margin-top: 10px;
-  margin-right: 10px;
 }
 
 
