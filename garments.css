@@ -108,9 +108,11 @@ body{
   /* object-position: 25% 25%; */
   /* margin-left: 25%; */
 }
-.row:active img{
+
+#garments img:active {
  
-transform: scale(3);
+transform: scale(2);
+text-align: center;
 
 
 }
