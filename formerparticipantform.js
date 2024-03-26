@@ -55,8 +55,7 @@ export const addGarment = async function(firstName, lastName, inspiration, year,
       year: year.value,
       material: material.value,
       img: picture,
-      isPublic: true,
-      isApproved: false
+      isPublic: true
     });
   }
   catch(e){
@@ -66,25 +65,34 @@ export const addGarment = async function(firstName, lastName, inspiration, year,
 
 const fileInput = document.getElementById('final');
 
-// Listener to the change event on the <input> element
-    fileInput.addEventListener('change', (event) => {
-    // Get the selected image file
-    const imageFile = event.target.files[0];
-
-    if (imageFile) {
-        const reader = new FileReader();
-
-        // Convert the image file to a string
-        reader.readAsDataURL(imageFile);
-
-        // FileReader will emit the load event when the data URL is ready
-        // Access the string using result property inside the callback function
-        reader.addEventListener('load', () => {
-            // Get the data URL string
-            picture = reader.result
-        });
-    }
+fileInput.addEventListener('change', (event) => {
+ // Get the selected image file
+ const imageFile = event.target.files[0];
+ if (imageFile) {
+   document.getElementById('submit').setAttribute('disabled', 'true');
+   storeFile(imageFile);
+ }
 });
+
+
+async function storeFile(file) {
+         var name = "final" + Date.now();
+         console.log(name);
+         var storageRef = ref(storage, name);
+         await uploadBytes(storageRef, file).then((snapshot) => {
+           console.log("file uploaded");
+         });
+           var test = await getUrl(storageRef);
+           console.log(test);
+           picture = test;
+           document.getElementById("submit").disabled = false;
+     }
+
+
+ async function getUrl(storageRef){
+   return await getDownloadURL(storageRef);
+ }
+
 
 let final = document.getElementById("final");
 
