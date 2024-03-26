@@ -106,7 +106,7 @@ export const add25 = async function(firstName, lastName, email, photo25){
           });
             var test = await getUrl(storageRef);
             console.log(test);
-            sketch = test;
+            photo25 = test;
             document.getElementById("submit25").disabled = false;
       }
 
