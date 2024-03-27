@@ -3,6 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebas
 // TODO: import libraries for Cloud Firestore Database
 // https://firebase.google.com/docs/firestore
 import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDLCmQ9Wv-VJcczaPZlSKSDA-rYbxtDyt4",
@@ -15,6 +16,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 var photo75 = "";
 
@@ -85,22 +87,52 @@ export const add75 = async function(firstName, lastName, email, photo75){
 
 const fileInput = document.getElementById('photo75');
 
-// Lister to the change event on the <input> element
-    fileInput.addEventListener('change', (event) => {
-    // Get the selected image file
-    const imageFile = event.target.files[0];
-    if (imageFile) {
-        const reader = new FileReader();
-        // Convert the image file to a string
-        reader.readAsDataURL(imageFile);
-        // FileReader will emit the load event when the data URL is ready
-        // Access the string using result property inside the callback function
-        reader.addEventListener('load', () => {
-            // Get the data URL string
-            photo75 = reader.result
-        });
-    }
+fileInput.addEventListener('change', (event) => {
+ // Get the selected image file
+ const imageFile = event.target.files[0];
+ if (imageFile) {
+   document.getElementById('submit75').setAttribute('disabled', 'true');
+   storeFile(imageFile);
+ }
 });
+
+
+async function storeFile(file) {
+         var name = "75photo" + Date.now();
+         console.log(name);
+         var storageRef = ref(storage, name);
+         await uploadBytes(storageRef, file).then((snapshot) => {
+           console.log("file uploaded");
+         });
+           var test = await getUrl(storageRef);
+           console.log(test);
+           photo75 = test;
+           document.getElementById("submit75").disabled = false;
+     }
+
+
+ async function getUrl(storageRef){
+   return await getDownloadURL(storageRef);
+ }
+
+
+
+// // Lister to the change event on the <input> element
+//     fileInput.addEventListener('change', (event) => {
+//     // Get the selected image file
+//     const imageFile = event.target.files[0];
+//     if (imageFile) {
+//         const reader = new FileReader();
+//         // Convert the image file to a string
+//         reader.readAsDataURL(imageFile);
+//         // FileReader will emit the load event when the data URL is ready
+//         // Access the string using result property inside the callback function
+//         reader.addEventListener('load', () => {
+//             // Get the data URL string
+//             photo25 = reader.result
+//         });
+//     }
+// });
 
 
 
