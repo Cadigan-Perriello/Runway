@@ -24,30 +24,24 @@
           <div class="dropdown-content">
             <a href="currentparticipantform.html">I am a current runway participant.</a>
             <a href="formerparticipantform.html">I am a former runway participant.</a>
+            <a href="annie.html">Annie</a>
           </div>
-          
         </div> 
-        <div class="dropdown">
-          <button class="dropbtn"> Admin 
-            <i class="fa fa-caret-down"></i>
-          </button>
-          <div class="dropdown-content">
-            <a href="annie.html">Main Admin Page</a>
-            <a href="SubmissionsCheck.html">Student Submission Portal</a>
-          </div>
-          
-        </div>    
+        <!-- <li><a href="participant.html">Submissions</a></li> -->
+      
     </div>
   </nav>
 <!-- Calls the javascript functions that allow for the appearance of the garments -->
 <script type="module" src="garments.js"></script>
     <script type="module">
-        import{year_list_add, showItems} from './garments.js';
+        import{year_list_add, showItems, getGarmentData} from './garments.js';
         window.year_list_add = year_list_add;
         window.showItems = showItems;
+        window.getGarmentData = getGarmentData;
+      getGarmentData();
       year_list_add();
-      showItems();
   </script>
+
 
 
  <p style="padding-top:80px" id = "filter">Filter Garments By Year:</p>
@@ -59,7 +53,7 @@
   <br>
   <!-- Creates the searchbar to search for tutors -->
   <div id="searchbar">
-    <input type="text" id="filter_search" oninput="showItems()" placeholder="Search by Material/Name...">
+    <input type="text" id="filter_search" oninput="getGarmentData()" placeholder="Search by Material/Name...">
   </div>
 
 </div>  
