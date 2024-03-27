@@ -351,6 +351,7 @@ export const showItemsAdmin = async function(){
 //go through each firebase object that isn't a password
   databaseItems.forEach((item) => {
     if (item.id != "password" && item.id != "admin-password" && item.data().isPublic == true && item.data().isApproved == false){
+                  console.log("showing pending submission");
                 //create tile (row) with name, image, inspiration, and material
                   var row = document.createElement("div");
                   row.setAttribute('class', "row");
