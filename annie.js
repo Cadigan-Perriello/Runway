@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
 // TODO: import libraries for Cloud Firestore Database
 // https://firebase.google.com/docs/firestore
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDLCmQ9Wv-VJcczaPZlSKSDA-rYbxtDyt4",
@@ -15,6 +15,19 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+const docRef_25 = doc(db, "runway", "25% DeadlineDate");
+const docSnap_25 = await getDoc(docRef_25);
+
+const docRef_sketch = doc(db, "runway", "Sketch DeadlineDate");
+const docSnap_sketch = await getDoc(docRef_sketch);
+
+const docRef_50 = doc(db, "runway", "50% DeadlineDate");
+const docSnap_50 = await getDoc(docRef_50);
+
+const docRef_75 = doc(db, "runway", "75% DeadlineDate");
+const docSnap_75 = await getDoc(docRef_75);
+
 
 
 // show Participants from firebase in the tiles on the screen
@@ -53,7 +66,12 @@ export const showItems = async function(){
         //creates a new div for the row containing the sketch. We then check if there is an image submitted, and if so, it created a new image for the sketch and added it to the sketch div.
         var sketch  = document.createElement("div");
         sketch.setAttribute('class', "tile");
-        sketch.innerHTML = "Sketch:";
+        var sketch_date_deadline = "";
+        if (docSnap_sketch.exists()){
+          sketch_date_deadline = docSnap_sketch.data().date;
+        }
+
+        sketch.innerHTML = "Sketch:" + "Sketch deadline date:" + sketch_date_deadline;
         if (item.data().sketch != "" ) {
           var deleteSketch = document.createElement("button");
           deleteSketch.setAttribute('id', "deleteSketch");
@@ -80,7 +98,12 @@ export const showItems = async function(){
         //creates a new div for the row containing the twenty five percent completion photo. We then check if there is an image submitted, and if so, it created a new image for the 25 photo and added it to the 25 photo div.
         var twenty_five  = document.createElement("div");
         twenty_five.setAttribute('class', "tile");
-        twenty_five.innerHTML = "25% deadline photo:";
+        var twenty_five_date_deadline = "";
+        if (docSnap_25.exists()){
+          twenty_five_date_deadline = docSnap_25.data().date;
+        }
+        twenty_five.innerHTML = "25% deadline photo:" + "25% deadline date:" + twenty_five_date_deadline;
+
          if (item.data().photo25 != "" ) {
           var delete25 = document.createElement("button");
           delete25.setAttribute('id', "delete25");
@@ -106,7 +129,11 @@ export const showItems = async function(){
         //creates a new div for the row containing the fifty percent completion photo. We then check if there is an image submitted, and if so, it created a new image for the 50 photo and added it to the 25 photo div.
         var fifty  = document.createElement("div");
         fifty.setAttribute('class', "tile");
-        fifty.innerHTML = "50% deadline photo:";
+        var fifty_date_deadline = "";
+        if (docSnap_50.exists()){
+          fifty_date_deadline = docSnap_50.data().date;
+        }
+        fifty.innerHTML = "50% deadline photo:" + "50% deadline date:" + fifty_date_deadline;
         if (item.data().photo50 != "" ) {
           var delete50 = document.createElement("button");
           delete50.setAttribute('id', "delete50");
@@ -132,7 +159,11 @@ export const showItems = async function(){
         //creates a new div for the row containing the seventy five percent completion photo. We then check if there is an image submitted, and if so, it created a new image for the 75 photo and added it to the 75 photo div.
         var seventy_five  = document.createElement("div");
         seventy_five.setAttribute('class', "tile");
-        seventy_five.innerHTML = "75% deadline photo:";
+        var seventy_five_date_deadline = "";
+        if (docSnap_75.exists()){
+          seventy_five_date_deadline = docSnap_75.data().date;
+        }
+        seventy_five.innerHTML = "75% deadline photo:" + "75% deadline date:" + seventy_five_date_deadline;
         if (item.data().photo75 != "" ) {
           var delete75 = document.createElement("button");
           delete75.setAttribute('id', "delete75");
@@ -190,5 +221,3 @@ export const showItems = async function(){
       }
     })
 }
-
-
