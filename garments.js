@@ -14,28 +14,54 @@ const firebaseConfig = {
 };
 
 
-
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+export const getGarmentData = async function(){
+  console.log(localStorage.getItem("garment_data"));
+  //localStorage.clear();
+  if (localStorage.getItem("garment_data") !== null){
+    //console.log(localStorage.getItem("garment_data"));
+    var localGarments = JSON.parse(localStorage.getItem("garment_data"));
+    console.log("data already stored locally");
+    showItems(localGarments);
+    filterByYear(localGarments);
+  }else{
+    getFirebaseData();
+  }
+  }
+
+export const getFirebaseData = async function(){
+  const fullDatabase = await getDocs(collection(db, "runway"));
+  var localGarments = [];
+  fullDatabase.forEach((item) => {
+    if (item.id != "password" && item.id != "admin-password" && item.data().isPublic == true){
+      localGarments.push(item.data().firstName, item.data().lastName, item.data().img, item.data().inspiration, item.data().year, item.data().material);
+    }
+    })
+    console.log(JSON.stringify(localGarments));
+    localStorage.setItem("garment_data", JSON.stringify(localGarments));
+    console.log("data stored locally");
+    console.log(localGarments);
+    showItems(localGarments);
+    filterByYear(localGarments);
+}
+
 
 var year_list = [];
 
 //creates filter by year checkboxes
-export const filterByYear = async function(){
-  const databaseItems = await getDocs(collection(db, "runway"));
+export const filterByYear = async function(localGarments){
     var checkboxes = document.getElementById("checkboxes");
     checkboxes.innerHTML="";
     var years = [];
-    databaseItems.forEach((item) => {
-      if(item.data().year != null && !years.includes(item.data().year)) {
-        years.push(item.data().year);
+    for (let i = 0; i < localGarments.length; i+=6) {
+      if(localGarments[i+4] != null && !years.includes(localGarments[i+4])) {
+        years.push(localGarments[i+4]);
       }
       console.log(years)
-    })
-    
+    }
     years.sort();
-
     years.forEach((item) => {
       var row = document.createElement("input");
       row.type = "checkbox";
@@ -51,20 +77,16 @@ export const filterByYear = async function(){
             year_list.push(checkboxes[i].value);
           }
         }
-        showItems();
+        showItems(localGarments);
       }
       var label = document.createElement("label");
       label.innerHTML = (item);
-      
       checkboxes.appendChild(label);
       checkboxes.appendChild(row);
       checkboxes.appendChild(document.createElement("br"));
     })
-
-
 }
 
-filterByYear();
 
 
 //behind the scenes - checklist (creates a list that contains the clicked years)
@@ -76,8 +98,6 @@ export const year_list_add = function(){
       year_list.push(checkboxes[i].value);
     }
   }
-  
-  showItems();
 }
 
 
@@ -281,53 +301,48 @@ export const passCheck = async function(){
   }
 }
 
-
-
-
-
 // show garments from firebase in the tiles on the screen
-export const showItems = async function(){
-    const databaseItems = await getDocs(collection(db, "runway"));
-    var garments = document.getElementById("garments");
-    garments.innerHTML="";
-  //go through each firebase object that isn't a password
-    databaseItems.forEach((item) => {
-      if (item.id != "password" && item.id != "admin-password" && item.data().isPublic == true && item.data().isApproved == true){
-    //check search bar for matching first name, last name, or material
-      if (item.data().firstName.toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) || item.data().lastName.toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) || item.data().material.toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) ){
+export const showItems = async function(localGarments){
+    console.log(localGarments);
+     var garments = document.getElementById("garments");
+     garments.innerHTML="";
+  // //go through each firebase object that isn't a password
+     for (let i = 0; i < localGarments.length; i+=6) {
+      console.log(localGarments[i]);
+      if (localGarments[i].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) || localGarments[2].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) || localGarments[i+5].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) ){
         //check years that are clicked
-                if(year_list.includes(item.data().year) || year_list.length==0 ){ 
+                if(year_list.includes(localGarments[i+4]) || year_list.length==0 ){ 
                   //create tile (row) with name, image, inspiration, and material
                     var row = document.createElement("div");
                     row.setAttribute('class', "row");
                       var name = document.createElement("p");
-                      name.innerHTML = item.data().firstName + " " + item.data().lastName.substring(0, 1) + ".";
-                      name.for = item.id;
+                      name.innerHTML = localGarments[i] + " " + localGarments[i+1].substring(0, 1) + ".";
+                      //name.for = item.id;
                       row.appendChild(name);
                       row.appendChild(document.createElement("br"));
 
                       var image = document.createElement("img");
-                      image.src = item.data().img;
+                      image.src = localGarments[i+2];
                       row.appendChild(image);
 
                       row.appendChild(document.createElement("br"));
                   
-                      // var inspiration = document.createElement("p");
-                      // inspiration.innerHTML = "Inspiration: " + item.data().inspiration;
-                      // inspiration.for = item.id;
+                      var inspiration = document.createElement("p");
+                      inspiration.innerHTML = "Inspiration: " + localGarments[i+3];
+                      //inspiration.for = item.id;
                   
-                      // row.appendChild(inspiration);
-                      // row.appendChild(document.createElement("br"));
+                      row.appendChild(inspiration);
+                      row.appendChild(document.createElement("br"));
               
                       var year = document.createElement("p");
-                      year.innerHTML = "Year: " + item.data().year;
-                      year.for = item.id;
+                      year.innerHTML = "Year: " + localGarments[i+4];
+                      //year.for = item.id;
                       row.appendChild(year);
 
                                
                       var material = document.createElement("p");
-                      year.innerHTML = "Main Material: " + item.data().material;
-                      material.for = item.id;
+                      year.innerHTML = "Main Material: " + localGarments[i+5];
+                      //material.for = item.id;
                       row.appendChild(material);
 
                   //add tile to the garments div
@@ -335,13 +350,8 @@ export const showItems = async function(){
                 }
                 
             }
-        console.log(item.id + ", " + item.data().firstName.toLowerCase());
-      }
-    })
+           }
 }
-
-
-
 
 
 export const showItemsAdmin = async function(){
