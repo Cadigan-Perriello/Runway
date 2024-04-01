@@ -2,7 +2,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
 // TODO: import libraries for Cloud Firestore Database
 // https://firebase.google.com/docs/firestore
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyDLCmQ9Wv-VJcczaPZlSKSDA-rYbxtDyt4",
@@ -16,28 +17,37 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const docRef_25 = doc(db, "runway", "25% DeadlineDate");
-const docSnap_25 = await getDoc(docRef_25);
+export const getProgressData = async function(){
+  //localStorage.clear();
+  if (localStorage.getItem("progress_data") !== null){
+    var progressProfiles = JSON.parse(localStorage.getItem("progress_data"));
+    console.log("data already stored locally");
+    showItems(progressProfiles);
+  }else{
+    getFirebaseData();
+  }
+  }
 
-const docRef_sketch = doc(db, "runway", "Sketch DeadlineDate");
-const docSnap_sketch = await getDoc(docRef_sketch);
+export const getFirebaseData = async function(){
+  const fullDatabase = await getDocs(collection(db, "runway"));
+  var progressProfiles = [];
+  fullDatabase.forEach((item) => {
+    if (item.id != "password" && item.id != "admin-password" && item.data().isPublic == false){
+      progressProfiles.push(item.data().firstName, item.data().lastName, item.data().email, item.data().sketch, item.data().photo25, item.data().photo50, item.data().photo75, item.data().catwalk);
+    }
+    })
+    localStorage.setItem("progress_data", JSON.stringify(progressProfiles));
+    console.log("data stored locally");
+    showItems(progressProfiles);
+}
 
-const docRef_50 = doc(db, "runway", "50% DeadlineDate");
-const docSnap_50 = await getDoc(docRef_50);
 
-const docRef_75 = doc(db, "runway", "75% DeadlineDate");
-const docSnap_75 = await getDoc(docRef_75);
-
-
-
-// show Participants from firebase in the tiles on the screen
-export const showItems = async function(){
-    const databaseItems = await getDocs(collection(db, "runway"));
+// show Participants from firebase in the tiles on the screen 
+export const showItems = async function(progressProfiles){
     var annie_garments = document.getElementById("annie_garments");
-      annie_garments.innerHTML="";
-    databaseItems.forEach((item) => {
-      if (item.data().isPublic == false) {
-      if   (item.data().firstName.toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) || item.data().lastName.toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) ){ //search bar for Tutors
+    annie_garments.innerHTML="";
+    for (let i = 0; i < progressProfiles.length; i+=8) {
+      if (progressProfiles[i].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) || progressProfiles[i+1].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) ){ //search bar for Tutors
         
 //creates a new div for the row containing the name. We then added the name to the innerHTML of the div. 
         
@@ -47,16 +57,16 @@ export const showItems = async function(){
         info.setAttribute('class', "tile");
         var name = document.createElement("h1");
         var email = document.createElement("a");
-          email.innerHTML = item.data().email;
-        email.for = item.id;
+          email.innerHTML = progressProfiles[i+2];
+        //email.for = item.id;
         var catwalkLabel = document.createElement("p");
           catwalkLabel.innerHTML = "Catwalk Song:";
         var catwalk = document.createElement("p");
-          catwalk.innerHTML = item.data().catwalk;
-        catwalk.for = item.id;
-          name.innerHTML = item.data().firstName + " " + item.data().lastName.substring(0,1) + "  ";
-          name.for = item.id;
-         info.appendChild(name);
+          catwalk.innerHTML = progressProfiles[i+7];
+        //catwalk.for = item.id;
+          name.innerHTML = progressProfiles[i] + " " + progressProfiles[i+1].substring(0,1) + "  ";
+          //name.for = item.id;
+        info.appendChild(name);
         info.appendChild(email);
         info.appendChild(catwalkLabel);
         info.appendChild(catwalk);
@@ -66,29 +76,19 @@ export const showItems = async function(){
         //creates a new div for the row containing the sketch. We then check if there is an image submitted, and if so, it created a new image for the sketch and added it to the sketch div.
         var sketch  = document.createElement("div");
         sketch.setAttribute('class', "tile");
-        var sketch_date_deadline = "";
-        if (docSnap_sketch.exists()){
-          sketch_date_deadline = docSnap_sketch.data().date;
-        }
-
-        sketch.innerHTML = "Sketch:" + "Sketch deadline date:" + sketch_date_deadline;
-        if (item.data().sketch != "" ) {
+        sketch.innerHTML = "Sketch:";
+        if (progressProfiles[i+3] != "" ) {
           var deleteSketch = document.createElement("button");
           deleteSketch.setAttribute('id', "deleteSketch");
           deleteSketch.innerText = "X";
           deleteSketch.onclick = function() {
-            if(confirm("Remove " + item.data().firstName + 's sketch?') == true) {
-            console.log("removing");
-            const itemToComplete = doc(db, "runway", item.id);
-            updateDoc(itemToComplete, {
-              sketch: ""
-            });
-            showItems();
-          }
+            if(confirm("Remove " + progressProfiles[i] + "'s sketch?") == true) {
+            deleteSubmission(progressProfiles[i+3], i, progressProfiles);
+            }
           }
           sketch.appendChild(deleteSketch);
           var sketch_img = document.createElement("img");
-          sketch_img.src = item.data().sketch;
+          sketch_img.src = progressProfiles[i+3];
           sketch.appendChild(sketch_img);
         }
         row.appendChild(sketch);
@@ -98,29 +98,19 @@ export const showItems = async function(){
         //creates a new div for the row containing the twenty five percent completion photo. We then check if there is an image submitted, and if so, it created a new image for the 25 photo and added it to the 25 photo div.
         var twenty_five  = document.createElement("div");
         twenty_five.setAttribute('class', "tile");
-        var twenty_five_date_deadline = "";
-        if (docSnap_25.exists()){
-          twenty_five_date_deadline = docSnap_25.data().date;
-        }
-        twenty_five.innerHTML = "25% deadline photo:" + "25% deadline date:" + twenty_five_date_deadline;
-
-         if (item.data().photo25 != "" ) {
+        twenty_five.innerHTML = "25% deadline photo:";
+         if (progressProfiles[i+4] != "" ) {
           var delete25 = document.createElement("button");
           delete25.setAttribute('id', "delete25");
           delete25.innerText = "X"
           delete25.onclick = function() {
-            if(confirm("Remove " + item.data().firstName + 's 25% photo?') == true) {
-            console.log("removing");
-            const itemToComplete = doc(db, "runway", item.id);
-            updateDoc(itemToComplete, {
-              photo25: ""
-            });
-            showItems();
+            if(confirm("Remove " + progressProfiles[i] + "'s 25% photo?") == true) {
+              deleteSubmission(progressProfiles[i+4], i, progressProfiles);
           }
           }
           twenty_five.appendChild(delete25);
           var twenty_five_img = document.createElement("img");
-          twenty_five_img.src = item.data().photo25;
+          twenty_five_img.src = progressProfiles[i+4];
           twenty_five.appendChild(twenty_five_img);
          }
          row.appendChild(twenty_five);
@@ -129,28 +119,19 @@ export const showItems = async function(){
         //creates a new div for the row containing the fifty percent completion photo. We then check if there is an image submitted, and if so, it created a new image for the 50 photo and added it to the 25 photo div.
         var fifty  = document.createElement("div");
         fifty.setAttribute('class', "tile");
-        var fifty_date_deadline = "";
-        if (docSnap_50.exists()){
-          fifty_date_deadline = docSnap_50.data().date;
-        }
-        fifty.innerHTML = "50% deadline photo:" + "50% deadline date:" + fifty_date_deadline;
-        if (item.data().photo50 != "" ) {
+        fifty.innerHTML = "50% deadline photo:";
+        if (progressProfiles[i+5] != "" ) {
           var delete50 = document.createElement("button");
           delete50.setAttribute('id', "delete50");
           delete50.innerText = "X"
           delete50.onclick = function() {
-            if(confirm("Remove " + item.data().firstName + 's 50% photo?') == true) {
-            console.log("removing");
-            const itemToComplete = doc(db, "runway", item.id);
-            updateDoc(itemToComplete, {
-              photo50: ""
-            });
-            showItems();
+            if(confirm("Remove " + progressProfiles[i] + "'s 50% photo?") == true) {
+              deleteSubmission(progressProfiles[i+5], i, progressProfiles);
           }
           }
           fifty.appendChild(delete50);
           var fifty_img = document.createElement("img");
-          fifty_img.src = item.data().photo50;
+          fifty_img.src = progressProfiles[i+5];
           fifty.appendChild(fifty_img);
         }
         row.appendChild(fifty);
@@ -159,28 +140,19 @@ export const showItems = async function(){
         //creates a new div for the row containing the seventy five percent completion photo. We then check if there is an image submitted, and if so, it created a new image for the 75 photo and added it to the 75 photo div.
         var seventy_five  = document.createElement("div");
         seventy_five.setAttribute('class', "tile");
-        var seventy_five_date_deadline = "";
-        if (docSnap_75.exists()){
-          seventy_five_date_deadline = docSnap_75.data().date;
-        }
-        seventy_five.innerHTML = "75% deadline photo:" + "75% deadline date:" + seventy_five_date_deadline;
-        if (item.data().photo75 != "" ) {
+        seventy_five.innerHTML = "75% deadline photo:";
+        if (progressProfiles[i+6] != "" ) {
           var delete75 = document.createElement("button");
           delete75.setAttribute('id', "delete75");
           delete75.innerText = "X"
           delete75.onclick = function() {
-            if(confirm("Remove " + item.data().firstName + 's 75% photo?') == true) {
-            console.log("removing");
-            const itemToComplete = doc(db, "runway", item.id);
-            updateDoc(itemToComplete, {
-              photo75: ""
-            });
-            showItems();
+            if(confirm("Remove " + progressProfiles[i] + "'s 75% photo?") == true) {
+              deleteSubmission(progressProfiles[i+3], i, progressProfiles);
           }
           }
           seventy_five.appendChild(delete75);
           var seventy_five_img = document.createElement("img");
-          seventy_five_img.src = item.data().photo75;
+          seventy_five_img.src = progressProfiles[i+6];
           seventy_five.appendChild(seventy_five_img);
         }
         row.appendChild(seventy_five);
@@ -206,18 +178,64 @@ export const showItems = async function(){
          var deleteProfile = document.createElement("button");
          deleteProfile.setAttribute('id', "deleteProfile");
          deleteProfile.innerText = "X";
-         deleteProfile.onclick = function() {
-              if(confirm("Remove " + item.data().firstName + 's profile?') == true) {
-              console.log("removing");
-              deleteDoc(doc(db, "runway", item.id));
-              const itemToComplete = doc(db, "runway", item.id);
-            showItems();
-            }
-           }
+         deleteProfile.onclick = async function() {
+            
+          if(confirm("Remove " + progressProfiles[i] + "'s profile?") == true) {
+             console.log("removing profile");
+             const fullDatabase = await getDocs(collection(db, "runway"));
+             await fullDatabase.forEach((item) => {
+               if (item.id != "password" && item.id != "admin-password" && item.data().isPublic == false){
+                 if (item.data().firstName == progressProfiles[i] && item.data().lastName == progressProfiles[i+1]  && item.data().email == progressProfiles[i+2]){
+                   deleteDoc(doc(db, "runway", item.id));
+                   localStorage.clear();
+                   getProgressData();
+                   return;
+               }
+             }
+           })
+          }
+        }
            row.appendChild(deleteProfile);
-
   
-            }
+      }
+    }
+}
+
+async function deleteSubmission(submission){
+    console.log(submission);
+    const fullDatabase = await getDocs(collection(db, "runway"));
+    await fullDatabase.forEach((item) => {
+      if (item.id != "password" && item.id != "admin-password" && item.data().isPublic == false){
+        if (item.data().sketch == submission || item.data().photo25 == submission || item.data().photo50 == submission || item.data().photo75  == submission) {
+          console.log("removing submission...id: " + item.id);
+          const itemToComplete = doc(db, "runway", item.id);
+          if (item.data().sketch == submission){
+            console.log("deleting sketch..." + item.data().sketch);
+            updateDoc(itemToComplete, {
+              sketch: ""
+              });
+          } else if (item.data().photo25 == submission){
+            console.log("deleting 25..." + item.data().photo25);
+            updateDoc(itemToComplete, {
+              photo25: ""
+              });
+          } else if (item.data().photo50 == submission){
+            console.log("deleting 50..." + item.data().photo50);
+            updateDoc(itemToComplete, {
+              photo25: ""
+              });
+          } else if (item.data().photo75 == submission){
+            console.log("deleting 75..." + item.data().photo75);
+            updateDoc(itemToComplete, {
+              photo25: ""
+              });
+          }
+          localStorage.clear();
+          getProgressData();
+          return;
+        }
       }
     })
 }
+
+
