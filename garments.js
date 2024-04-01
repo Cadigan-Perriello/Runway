@@ -36,7 +36,7 @@ export const getFirebaseData = async function(){
   var localGarments = [];
   fullDatabase.forEach((item) => {
     if (item.id != "password" && item.id != "admin-password" && item.data().isPublic == true){
-      localGarments.push(item.data().firstName, item.data().lastName, item.data().img, item.data().inspiration, item.data().year, item.data().material);
+      localGarments.push(item.data().firstName, item.data().lastName, item.data().img, item.data().inspiration, item.data().year, item.data().material, item.id);
     }
     })
     console.log(JSON.stringify(localGarments));
@@ -55,7 +55,7 @@ export const filterByYear = async function(localGarments){
     var checkboxes = document.getElementById("checkboxes");
     checkboxes.innerHTML="";
     var years = [];
-    for (let i = 0; i < localGarments.length; i+=6) {
+    for (let i = 0; i < localGarments.length; i+=7) {
       if(localGarments[i+4] != null && !years.includes(localGarments[i+4])) {
         years.push(localGarments[i+4]);
       }
@@ -307,7 +307,7 @@ export const showItems = async function(localGarments){
      var garments = document.getElementById("garments");
      garments.innerHTML="";
   // //go through each firebase object that isn't a password
-     for (let i = 0; i < localGarments.length; i+=6) {
+     for (let i = 0; i < localGarments.length; i+=7) {
       console.log(localGarments[i]);
       if (localGarments[i].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) || localGarments[2].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) || localGarments[i+5].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) ){
         //check years that are clicked
