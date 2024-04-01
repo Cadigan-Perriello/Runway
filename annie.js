@@ -179,7 +179,6 @@ export const showItems = async function(progressProfiles){
          deleteProfile.setAttribute('id', "deleteProfile");
          deleteProfile.innerText = "X";
          deleteProfile.onclick = async function() {
-            
           if(confirm("Remove " + progressProfiles[i] + "'s profile?") == true) {
              console.log("removing profile");
              const fullDatabase = await getDocs(collection(db, "runway"));
@@ -222,12 +221,12 @@ async function deleteSubmission(submission){
           } else if (item.data().photo50 == submission){
             console.log("deleting 50..." + item.data().photo50);
             updateDoc(itemToComplete, {
-              photo25: ""
+              photo50: ""
               });
           } else if (item.data().photo75 == submission){
             console.log("deleting 75..." + item.data().photo75);
             updateDoc(itemToComplete, {
-              photo25: ""
+              photo75: ""
               });
           }
           localStorage.clear();
