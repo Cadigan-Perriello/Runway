@@ -33,7 +33,7 @@ export const getFirebaseData = async function(){
   var progressProfiles = [];
   fullDatabase.forEach((item) => {
     if (item.id != "password" && item.id != "admin-password" && item.data().isPublic == false){
-      progressProfiles.push(item.data().firstName, item.data().lastName, item.data().email, item.data().sketch, item.data().photo25, item.data().photo50, item.data().photo75, item.data().catwalk);
+      progressProfiles.push(item.data().firstName, item.data().lastName, item.data().email, item.data().sketch, item.data().photo25, item.data().photo50, item.data().photo75, item.data().catwalk, item.id);
     }
     })
     localStorage.setItem("progress_data", JSON.stringify(progressProfiles));
@@ -46,7 +46,7 @@ export const getFirebaseData = async function(){
 export const showItems = async function(progressProfiles){
     var annie_garments = document.getElementById("annie_garments");
     annie_garments.innerHTML="";
-    for (let i = 0; i < progressProfiles.length; i+=8) {
+    for (let i = 0; i < progressProfiles.length; i+=9) {
       if (progressProfiles[i].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) || progressProfiles[i+1].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) ){ //search bar for Tutors
         
 //creates a new div for the row containing the name. We then added the name to the innerHTML of the div. 
@@ -182,6 +182,7 @@ export const showItems = async function(progressProfiles){
           if(confirm("Remove " + progressProfiles[i] + "'s profile?") == true) {
              console.log("removing profile");
              const fullDatabase = await getDocs(collection(db, "runway"));
+            //query --> use i+8 to access id
              await fullDatabase.forEach((item) => {
                if (item.id != "password" && item.id != "admin-password" && item.data().isPublic == false){
                  if (item.data().firstName == progressProfiles[i] && item.data().lastName == progressProfiles[i+1]  && item.data().email == progressProfiles[i+2]){
@@ -203,6 +204,7 @@ export const showItems = async function(progressProfiles){
 async function deleteSubmission(submission){
     console.log(submission);
     const fullDatabase = await getDocs(collection(db, "runway"));
+    //query
     await fullDatabase.forEach((item) => {
       if (item.id != "password" && item.id != "admin-password" && item.data().isPublic == false){
         if (item.data().sketch == submission || item.data().photo25 == submission || item.data().photo50 == submission || item.data().photo75  == submission) {
