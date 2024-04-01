@@ -112,6 +112,7 @@ let final = document.getElementById("final");
     };
 
     reader.readAsDataURL(input.files[0]);
+    localStorage.clear();
   }
  }
 
