@@ -354,73 +354,86 @@ export const showItems = async function(localGarments){
 }
 
 
-export const showItemsAdmin = async function(){
-  const databaseItems = await getDocs(collection(db, "runway"));
+export const getGarmentDataAdmin = async function(){
+  console.log(localStorage.getItem("garment_data"));
+  //localStorage.clear();
+  if (localStorage.getItem("garment_data") !== null){
+    //console.log(localStorage.getItem("garment_data"));
+    var localGarments = JSON.parse(localStorage.getItem("garment_data"));
+    console.log("data already stored locally");
+    showItemsAdmin(localGarments);
+  }else{
+    getFirebaseData();
+  }
+  }
+
+
+//displays the unapproved tiles in the Admin Page so annie can approve them
+export const showItemsAdmin = async function(localGarments){
+  console.log(localGarments);
   var SubmissionsCheck = document.getElementById("SubmissionsCheck");
   SubmissionsCheck.innerHTML="";
-//go through each firebase object that isn't a password
-  databaseItems.forEach((item) => {
-    if (item.id != "password" && item.id != "admin-password" && item.data().isPublic == true && item.data().isApproved == false){
-                  console.log("showing pending submission");
+// //go through each firebase object that isn't a password
+   for (let i = 0; i < localGarments.length; i+=7) {
+    console.log(localGarments[i]);
+    if (localGarments[i+6] == false){
                 //create tile (row) with name, image, inspiration, and material
                   var row = document.createElement("div");
                   row.setAttribute('class', "row");
                     var name = document.createElement("p");
-                    name.innerHTML = item.data().firstName + " " + item.data().lastName.substring(0, 1) + ".";
-                    name.for = item.id;
+                    name.innerHTML = localGarments[i] + " " + localGarments[i+1].substring(0, 1) + ".";
+                    //name.for = item.id;
                     row.appendChild(name);
                     row.appendChild(document.createElement("br"));
 
                     var image = document.createElement("img");
-                    image.src = item.data().img;
+                    image.src = localGarments[i+2];
                     row.appendChild(image);
 
                     row.appendChild(document.createElement("br"));
                 
-                    // var inspiration = document.createElement("p");
-                    // inspiration.innerHTML = "Inspiration: " + item.data().inspiration;
-                    // inspiration.for = item.id;
+                    var inspiration = document.createElement("p");
+                    inspiration.innerHTML = "Inspiration: " + localGarments[i+3];
+                    //inspiration.for = item.id;
                 
-                    //row.appendChild(inspiration);
-                    //row.appendChild(document.createElement("br"));
+                    row.appendChild(inspiration);
+                    row.appendChild(document.createElement("br"));
             
                     var year = document.createElement("p");
-                    year.innerHTML = "Year: " + item.data().year;
-                    year.for = item.id;
+                    year.innerHTML = "Year: " + localGarments[i+4];
+                    //year.for = item.id;
                     row.appendChild(year);
-                    row.appendChild(document.createElement("br"));
 
+                             
                     var material = document.createElement("p");
-                    year.innerHTML = "Main Material: " + item.data().material;
-                    material.for = item.id;
+                    year.innerHTML = "Main Material: " + localGarments[i+5];
+                    //material.for = item.id;
                     row.appendChild(material);
-                    row.appendChild(document.createElement("br"));
 
-                    var approve_button = document.createElement("button");
-                    approve_button.innerHTML = "approve";
-                    row.appendChild(approve_button);
-                    approve_button.onclick =async function() {
-                      await approval(item.id);
-                      console.log(item.data().isApproved.value);
-                      console.log("Approved");
-                    };
+                var approve_button = document.createElement("button");
+                approve_button.innerHTML = "approve";
+                row.appendChild(approve_button);
+                approve_button.onclick =async function() {
+                  await approval(item.id);
+                  console.log(localGarments[i+6].isApproved.value);
+                  console.log("Approved");
+                };
 
-                    var decline_button = document.createElement("button");
-                    decline_button.innerHTML = "decline";
-                    row.appendChild(decline_button);
-                    decline_button.addEventListener('click', () => {
-                      deleteDoc(doc(db, "runway", (item.id)));
-                      console.log("declined");
-                    });
-
-                //add tile to the garments div
-                SubmissionsCheck.appendChild(row);
-    }
-    
-  })
+                var decline_button = document.createElement("button");
+                decline_button.innerHTML = "decline";
+                row.appendChild(decline_button);
+                decline_button.addEventListener('click', () => {
+                  deleteDoc(doc(db, "runway", localGarments[i+6]));
+                  console.log("declined");
+                });
+              
+            //add tile to the garments div
+            SubmissionsCheck.appendChild(row);
+          }
+         }
 }
 
-showItemsAdmin();
+
 
 
 async function approval(itemId) {
@@ -429,3 +442,4 @@ async function approval(itemId) {
   });
   location.reload();
 }
+
