@@ -16,7 +16,8 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
+//checks if the garments are loaded into local storage already, 
+//and if not, calls the function to get them from Firebase
 export const getGarmentData = async function(){
   console.log(localStorage.getItem("garment_data"));
   //localStorage.clear();
@@ -31,12 +32,28 @@ export const getGarmentData = async function(){
   }
   }
 
+
+  export const getGarmentDataAdmin = async function(){
+    console.log(localStorage.getItem("garment_data"));
+    //localStorage.clear();
+    if (localStorage.getItem("garment_data") !== null){
+      //console.log(localStorage.getItem("garment_data"));
+      var localGarments = JSON.parse(localStorage.getItem("garment_data"));
+      console.log("data already stored locally");
+      showUnapprovedFinalGarments(localGarments);
+    }else{
+      getFirebaseData();
+    }
+    }
+
+
+//retrieves the garment data from Firebase and saves it to local storage
 export const getFirebaseData = async function(){
   const fullDatabase = await getDocs(collection(db, "runway"));
   var localGarments = [];
   fullDatabase.forEach((item) => {
-    if (item.id != "password" && item.id != "admin-password" && item.data().isPublic == true){
-      localGarments.push(item.data().firstName, item.data().lastName, item.data().img, item.data().inspiration, item.data().year, item.data().material, item.id);
+    if (item.id != "password" && item.id != "admin-password"){
+      localGarments.push(item.data().firstName, item.data().lastName, item.data().img, item.data().inspiration, item.data().year, item.data().material, item.id, item.data().isPublic, item.data().isApproved);
     }
     })
     console.log(JSON.stringify(localGarments));
@@ -47,7 +64,7 @@ export const getFirebaseData = async function(){
     filterByYear(localGarments);
 }
 
-
+//will store the checked years
 var year_list = [];
 
 //creates filter by year checkboxes
@@ -55,7 +72,7 @@ export const filterByYear = async function(localGarments){
     var checkboxes = document.getElementById("checkboxes");
     checkboxes.innerHTML="";
     var years = [];
-    for (let i = 0; i < localGarments.length; i+=7) {
+    for (let i = 0; i < localGarments.length; i+=9) {
       if(localGarments[i+4] != null && !years.includes(localGarments[i+4])) {
         years.push(localGarments[i+4]);
       }
@@ -306,10 +323,11 @@ export const showItems = async function(localGarments){
     console.log(localGarments);
      var garments = document.getElementById("garments");
      garments.innerHTML="";
-  // //go through each firebase object that isn't a password
-     for (let i = 0; i < localGarments.length; i+=7) {
+  // //go through each firebase object that isn't a password, date, and is approved as final
+     for (let i = 0; i < localGarments.length; i+=9) {
       console.log(localGarments[i]);
-      if (localGarments[i].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) || localGarments[2].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) || localGarments[i+5].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) ){
+      if (localGarments[i+7] == true && localGarments[i+8] == true){
+      if (localGarments[i].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) || localGarments[i+3].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) || localGarments[i+5].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) ){
         //check years that are clicked
                 if(year_list.includes(localGarments[i+4]) || year_list.length==0 ){ 
                   //create tile (row) with name, image, inspiration, and material
@@ -350,33 +368,21 @@ export const showItems = async function(localGarments){
                 }
                 
             }
+          }
            }
 }
 
-
-export const getGarmentDataAdmin = async function(){
-  console.log(localStorage.getItem("garment_data"));
-  //localStorage.clear();
-  if (localStorage.getItem("garment_data") !== null){
-    //console.log(localStorage.getItem("garment_data"));
-    var localGarments = JSON.parse(localStorage.getItem("garment_data"));
-    console.log("data already stored locally");
-    showItemsAdmin(localGarments);
-  }else{
-    getFirebaseData();
-  }
-  }
-
-
 //displays the unapproved tiles in the Admin Page so annie can approve them
-export const showItemsAdmin = async function(localGarments){
+//localGarments.push(item.data().firstName, item.data().lastName, item.data().img, item.data().inspiration, item.data().year, item.data().material, item.id);
+
+export const showUnapprovedFinalGarments = async function(localGarments){
   console.log(localGarments);
   var SubmissionsCheck = document.getElementById("SubmissionsCheck");
   SubmissionsCheck.innerHTML="";
-// //go through each firebase object that isn't a password
-   for (let i = 0; i < localGarments.length; i+=7) {
+// //go through each firebase object that isn't a password or date, is a final submission, but is not approved yet by admin
+   for (let i = 0; i < localGarments.length; i+=9) {
     console.log(localGarments[i]);
-    if (localGarments[i+6] == false){
+    if (localGarments[i+7] == true && localGarments[i+7] == false){
                 //create tile (row) with name, image, inspiration, and material
                   var row = document.createElement("div");
                   row.setAttribute('class', "row");
@@ -414,18 +420,18 @@ export const showItemsAdmin = async function(localGarments){
                 approve_button.innerHTML = "approve";
                 row.appendChild(approve_button);
                 approve_button.onclick =async function() {
-                  await approval(item.id);
-                  console.log(localGarments[i+6].isApproved.value);
+                  await approval(localGarments[i+5]);
+                  // console.log(localGarments[i+6].isApproved.value);
                   console.log("Approved");
                 };
 
                 var decline_button = document.createElement("button");
                 decline_button.innerHTML = "decline";
                 row.appendChild(decline_button);
-                decline_button.addEventListener('click', () => {
+                decline_button.onclick =async function() {
                   deleteDoc(doc(db, "runway", localGarments[i+6]));
                   console.log("declined");
-                });
+                };
               
             //add tile to the garments div
             SubmissionsCheck.appendChild(row);
