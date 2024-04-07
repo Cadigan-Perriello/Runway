@@ -20,7 +20,7 @@ const db = getFirestore(app);
 //and if not, calls the function to get them from Firebase
 export const getGarmentData = async function(){
   // console.log(localStorage.getItem("garment_data"));
-  localStorage.clear();
+  //localStorage.clear();
   if (localStorage.getItem("garment_data") !== null){
     //console.log(localStorage.getItem("garment_data"));
     var localGarments = JSON.parse(localStorage.getItem("garment_data"));
