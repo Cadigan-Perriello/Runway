@@ -89,7 +89,7 @@ export const filterByYear = async function(localGarments){
     var checkboxes = document.getElementById("checkboxes");
     checkboxes.innerHTML="";
     var years = [];
-    for (let i = 0; i < localGarments.length; i+=9) {
+    for (let i = 0; i < localGarments.length; i+=6) {
       if(localGarments[i+4] != null && !years.includes(localGarments[i+4])) {
         years.push(localGarments[i+4]);
       }
