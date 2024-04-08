@@ -123,14 +123,14 @@
   
   <script type="module" src="annie.js"></script>
     <script type="module">
-        import{showItems} from './annie.js';
-        window.showItems = showItems;
-        showItems();
+        import{getProgressData} from './annie.js';
+        window.getProgressData = getProgressData;
+        getProgressData();
   </script>
 
   <!-- Creates the searchbar to search for tutors -->
   <div id="searchbar">
-    <input type="text" id="filter_search" oninput="showItems()" placeholder="Search by Name...">
+    <input type="text" id="filter_search" oninput="getProgressData()" placeholder="Search by Name...">
   </div>
 
   <div id = "annie_garments"></div>
