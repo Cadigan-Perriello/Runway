@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
 // TODO: import libraries for Cloud Firestore Database
 // https://firebase.google.com/docs/firestore
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, getDoc, setDoc, query, where } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDLCmQ9Wv-VJcczaPZlSKSDA-rYbxtDyt4",
@@ -67,18 +67,44 @@ export const getFirebaseData = async function(){
 
 //retrieves the garment data from Firebase and saves it to local storage
 export const getFirebaseDataAdminPage = async function(){
-  const fullDatabase = await getDocs(collection(db, "runway"));
-  var localGarments = [];
-  fullDatabase.forEach((item) => {
-    if (item.id != "password" && item.id != "admin-password"){
+  const q = query(collection(db, "runway"), where("isApproved", "==", false));
+    var localGarments = [];
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((item) => {
       localGarments.push(item.data().firstName, item.data().lastName, item.data().img, item.data().inspiration, item.data().year, item.data().material, item.id, item.data().isPublic, item.data().isApproved);
-    }
-    })
+    });
+   
     console.log(JSON.stringify(localGarments));
     localStorage.setItem("garment_data", JSON.stringify(localGarments));
     console.log("data stored locally");
     console.log(localGarments);
     showUnapprovedFinalGarments(localGarments);
+}
+
+
+export const getEventData = async function(){
+  if (localStorage.getItem("event_data") !== null){
+    var localEvents = JSON.parse(localStorage.getItem("event_data"));
+    console.log("data already stored locally");
+    displayEventsHome(localEvents);
+  }else{
+    getFirebaseDataEvents();
+  }
+  }
+
+//retrieves the events data from Firebase and saves it to local storage
+export const getFirebaseDataEvents = async function(){
+  const q = query(collection(db, "runway"), where("date", "!=", null));
+    var localEvents = [];
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((item) => {
+      localEvents.push(item.data().date, item.data().info, item.data().name);
+    });
+   
+    console.log(JSON.stringify(localEvents));
+    localStorage.setItem("event_data", JSON.stringify(localEvents));
+    console.log("data stored locally");
+    displayEventsHome(localEvents);
 }
 
 //will store the checked years
@@ -89,7 +115,7 @@ export const filterByYear = async function(localGarments){
     var checkboxes = document.getElementById("checkboxes");
     checkboxes.innerHTML="";
     var years = [];
-    for (let i = 0; i < localGarments.length; i+=6) {
+    for (let i = 0; i < localGarments.length; i+=9) {
       if(localGarments[i+4] != null && !years.includes(localGarments[i+4])) {
         years.push(localGarments[i+4]);
       }
@@ -166,35 +192,30 @@ export const addEvent = async function(EventName, SelectDate, EventInfo){
 
 
 //displays Events on Homepage
-export const displayEventsHome = async function (){
-    console.log("displaying events on homepage")
-    const databaseItems = await getDocs(collection(db, "runway"));
-    var homeEvents = document.getElementById("homepage_events");
-      homeEvents.innerHTML="";
+export const displayEventsHome = async function (localEvents){
+  console.log("displaying events on homepage")
+  var homeEvents = document.getElementById("homepage_events");
+    homeEvents.innerHTML="";
 
-    databaseItems.forEach((item) => {
-      if (item.id.toLowerCase().includes("date")) {
-      var row = document.createElement("div");
-      row.setAttribute('class', "deadline_tile");
-      var title = document.createElement("p");
-      title.innerHTML = item.data().name;
-      title.setAttribute('class', "deadline");
-      var date = document.createElement("p");
-      date.innerHTML = item.data().date;
-      date.setAttribute('class', "date");
-      var info = document.createElement("p");
-      info.innerHTML = item.data().info;
-      info.setAttribute('class', "date");
+    for (let i = 0; i < localEvents.length; i+=3) {
 
-      
-      
-      row.appendChild(title);
-      row.appendChild(date);
-      row.appendChild(info);
-      homeEvents.appendChild(row);
-    }
-    
-    })
+    var row = document.createElement("div");
+    row.setAttribute('class', "deadline_tile");
+    var title = document.createElement("p");
+    title.innerHTML = localEvents[i+2];
+    title.setAttribute('class', "deadline");
+    var date = document.createElement("p");
+    date.innerHTML = localEvents[i];
+    date.setAttribute('class', "date");
+    var info = document.createElement("p");
+    info.innerHTML = localEvents[i+1];
+    info.setAttribute('class', "date");
+
+    row.appendChild(title);
+    row.appendChild(date);
+    row.appendChild(info);
+    homeEvents.appendChild(row);
+  }
 }
 
 
@@ -438,9 +459,11 @@ export const showUnapprovedFinalGarments = async function(localGarments){
                 approve_button.innerHTML = "approve";
                 row.appendChild(approve_button);
                 approve_button.onclick =async function() {
-                  await approval(localGarments[i+5]);
+                  await approval(localGarments[i+6]);
                   // console.log(localGarments[i+6].isApproved.value);
                   console.log("Approved");
+                  //getFirebaseDataAdminPage();
+                  //getFirebaseData();
                 };
 
                 var decline_button = document.createElement("button");
@@ -449,6 +472,8 @@ export const showUnapprovedFinalGarments = async function(localGarments){
                 decline_button.onclick =async function() {
                   deleteDoc(doc(db, "runway", localGarments[i+6]));
                   console.log("declined");
+                  getFirebaseDataAdminPage();
+                  getFirebaseData();
                 };
               
             //add tile to the garments div
@@ -461,9 +486,11 @@ export const showUnapprovedFinalGarments = async function(localGarments){
 
 
 async function approval(itemId) {
+  console.log(itemId);
   await updateDoc(doc(db, "runway", itemId), {
     isApproved : true
   });
-  location.reload();
+  getFirebaseDataAdminPage();
+  getFirebaseData();
 }
 
