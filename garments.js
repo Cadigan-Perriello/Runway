@@ -36,9 +36,9 @@ export const getGarmentData = async function(){
   export const getGarmentDataAdmin = async function(){
     // console.log(localStorage.getItem("garment_data"));
     //localStorage.clear();
-    if (localStorage.getItem("garment_data") !== null){
+    if (localStorage.getItem("admin_data") !== null){
       //console.log(localStorage.getItem("garment_data"));
-      var localGarments = JSON.parse(localStorage.getItem("garment_data"));
+      var localGarments = JSON.parse(localStorage.getItem("admin_data"));
       console.log("data already stored locally");
       showUnapprovedFinalGarments(localGarments);
     }else{
@@ -49,9 +49,10 @@ export const getGarmentData = async function(){
    
 //retrieves the garment data from Firebase and saves it to local storage
 export const getFirebaseData = async function(){
-  const fullDatabase = await getDocs(collection(db, "runway"));
+  const q = query(collection(db, "runway"), where("isApproved", "==", true));
   var localGarments = [];
-  fullDatabase.forEach((item) => {
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((item) => {
     if (item.id != "password" && item.id != "admin-password"){
       localGarments.push(item.data().firstName, item.data().lastName, item.data().img, item.data().inspiration, item.data().year, item.data().material, item.id, item.data().isPublic, item.data().isApproved);
     }
@@ -75,7 +76,7 @@ export const getFirebaseDataAdminPage = async function(){
     });
    
     console.log(JSON.stringify(localGarments));
-    localStorage.setItem("garment_data", JSON.stringify(localGarments));
+    localStorage.setItem("admin_data", JSON.stringify(localGarments));
     console.log("data stored locally");
     console.log(localGarments);
     showUnapprovedFinalGarments(localGarments);
