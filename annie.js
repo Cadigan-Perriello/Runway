@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
 // TODO: import libraries for Cloud Firestore Database
 // https://firebase.google.com/docs/firestore
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
 
 const firebaseConfig = {
@@ -17,12 +17,24 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+const sketchRef = doc(db, "runway", "Sketch DeadlineDate");
+const sketchSnap = await getDoc(sketchRef);
+
+const twentyFiveRef = doc(db, "runway", "25% DeadlineDate");
+const twentyFiveSnap = await getDoc(twentyFiveRef);
+
+const fiftyRef = doc(db, "runway", "50% DeadlineDate");
+const fiftySnap = await getDoc(fiftyRef);
+
+const seventyFiveRef = doc(db, "runway", "75% DeadlineDate");
+const seventyFiveSnap = await getDoc(seventyFiveRef);
+
 export const getProgressData = async function(){
   //localStorage.clear();
   if (localStorage.getItem("progress_data") !== null){
     var progressProfiles = JSON.parse(localStorage.getItem("progress_data"));
     console.log("data already stored locally");
-    showItems(progressProfiles);
+    showProgressItems(progressProfiles);
   }else{
     getFirebaseData();
   }
@@ -38,16 +50,16 @@ export const getFirebaseData = async function(){
     })
     localStorage.setItem("progress_data", JSON.stringify(progressProfiles));
     console.log("data stored locally");
-    showItems(progressProfiles);
+    showProgressItems(progressProfiles);
 }
 
 
 // show Participants from firebase in the tiles on the screen 
-export const showItems = async function(progressProfiles){
+export const showProgressItems = async function(progressProfiles){
     var annie_garments = document.getElementById("annie_garments");
     annie_garments.innerHTML="";
     for (let i = 0; i < progressProfiles.length; i+=9) {
-      if (progressProfiles[i].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) || progressProfiles[i+1].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) ){ //search bar for Tutors
+    //  if (progressProfiles[i].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) || progressProfiles[i+1].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) ){ //search bar for Garments
         
 //creates a new div for the row containing the name. We then added the name to the innerHTML of the div. 
         
@@ -76,7 +88,7 @@ export const showItems = async function(progressProfiles){
         //creates a new div for the row containing the sketch. We then check if there is an image submitted, and if so, it created a new image for the sketch and added it to the sketch div.
         var sketch  = document.createElement("div");
         sketch.setAttribute('class', "tile");
-        sketch.innerHTML = "Sketch:";
+        sketch.innerHTML = "Sketch:" + "Sketch Deadline Date:" + sketchSnap.data().date;
         if (progressProfiles[i+3] != "" ) {
           var deleteSketch = document.createElement("button");
           deleteSketch.setAttribute('id', "deleteSketch");
@@ -98,7 +110,8 @@ export const showItems = async function(progressProfiles){
         //creates a new div for the row containing the twenty five percent completion photo. We then check if there is an image submitted, and if so, it created a new image for the 25 photo and added it to the 25 photo div.
         var twenty_five  = document.createElement("div");
         twenty_five.setAttribute('class', "tile");
-        twenty_five.innerHTML = "25% deadline photo:";
+        
+        twenty_five.innerHTML = "25% deadline photo:"+ "25% Deadline Date:" + twentyFiveSnap.data().date;
          if (progressProfiles[i+4] != "" ) {
           var delete25 = document.createElement("button");
           delete25.setAttribute('id', "delete25");
@@ -119,7 +132,7 @@ export const showItems = async function(progressProfiles){
         //creates a new div for the row containing the fifty percent completion photo. We then check if there is an image submitted, and if so, it created a new image for the 50 photo and added it to the 25 photo div.
         var fifty  = document.createElement("div");
         fifty.setAttribute('class', "tile");
-        fifty.innerHTML = "50% deadline photo:";
+        fifty.innerHTML = "50% deadline photo:"+ "50% Deadline Date:" + fiftySnap.data().date;
         if (progressProfiles[i+5] != "" ) {
           var delete50 = document.createElement("button");
           delete50.setAttribute('id', "delete50");
@@ -140,7 +153,7 @@ export const showItems = async function(progressProfiles){
         //creates a new div for the row containing the seventy five percent completion photo. We then check if there is an image submitted, and if so, it created a new image for the 75 photo and added it to the 75 photo div.
         var seventy_five  = document.createElement("div");
         seventy_five.setAttribute('class', "tile");
-        seventy_five.innerHTML = "75% deadline photo:";
+        seventy_five.innerHTML = "75% deadline photo:"+ "75% Deadline Date:" + seventyFiveSnap.data().date;
         if (progressProfiles[i+6] != "" ) {
           var delete75 = document.createElement("button");
           delete75.setAttribute('id', "delete75");
@@ -199,7 +212,7 @@ export const showItems = async function(progressProfiles){
   
       }
     }
-}
+//  }
 
 async function deleteSubmission(submission){
     console.log(submission);
