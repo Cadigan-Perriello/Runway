@@ -166,7 +166,7 @@ export const year_list_add = function(){
 var row = document.createElement("div");
 row.setAttribute('class', "deadline_tile");
 
-//changes date
+//changes date and info
 export const changeDate = async function(selectDate, selectInfo, id){
 
   console.log("changing date");
@@ -175,6 +175,7 @@ export const changeDate = async function(selectDate, selectInfo, id){
     date: String(selectDate.value),
     info: String(selectInfo.value)
   });
+  getEventData();
 }
 
 //adds Event
@@ -189,6 +190,7 @@ export const addEvent = async function(EventName, SelectDate, EventInfo){
     date: (SelectDate.value),
     info: (EventInfo.value)
   });
+  getEventData();
 }
 
 
@@ -295,6 +297,7 @@ export const displayEvents = async function(){
       }
  
     })
+  getEventData();
 
   }
 //changes particpant password
