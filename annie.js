@@ -29,6 +29,7 @@ const fiftySnap = await getDoc(fiftyRef);
 const seventyFiveRef = doc(db, "runway", "75% DeadlineDate");
 const seventyFiveSnap = await getDoc(seventyFiveRef);
 
+
 export const getProgressData = async function(){
   //localStorage.clear();
   if (localStorage.getItem("progress_data") !== null){
@@ -41,11 +42,12 @@ export const getProgressData = async function(){
   }
 
 export const getFirebaseData = async function(){
-  const fullDatabase = await getDocs(collection(db, "runway"));
+  const q = query(collection(db, "runway"), where("isPublic", "==", false));
   var progressProfiles = [];
-  fullDatabase.forEach((item) => {
-    if (item.id != "password" && item.id != "admin-password" && item.data().isPublic == false){
-      progressProfiles.push(item.data().firstName, item.data().lastName, item.data().email, item.data().sketch, item.data().photo25, item.data().photo50, item.data().photo75, item.data().catwalk, item.id);
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((item) => {
+    if (item.id != "password" && item.id != "admin-password"){
+      progressProfiles.push(item.data().firstName, item.data().lastName, item.data().email, item.data().sketch, item.data().photo25, item.data().photo50, item.data().photo75, item.data().catwalk, item.id, item.data().sketchDate, item.data().twentyFiveDate,item.data().fiftyDate,item.data().seventyFiveDate );
     }
     })
     localStorage.setItem("progress_data", JSON.stringify(progressProfiles));
@@ -58,7 +60,7 @@ export const getFirebaseData = async function(){
 export const showProgressItems = async function(progressProfiles){
     var annie_garments = document.getElementById("annie_garments");
     annie_garments.innerHTML="";
-    for (let i = 0; i < progressProfiles.length; i+=9) {
+    for (let i = 0; i < progressProfiles.length; i+=13) {
     //  if (progressProfiles[i].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) || progressProfiles[i+1].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) ){ //search bar for Garments
         
 //creates a new div for the row containing the name. We then added the name to the innerHTML of the div. 
@@ -88,7 +90,7 @@ export const showProgressItems = async function(progressProfiles){
         //creates a new div for the row containing the sketch. We then check if there is an image submitted, and if so, it created a new image for the sketch and added it to the sketch div.
         var sketch  = document.createElement("div");
         sketch.setAttribute('class', "tile");
-        sketch.innerHTML = "Sketch:" + "Sketch Deadline Date:" + sketchSnap.data().date;
+        sketch.innerHTML = "Sketch:" + "Sketch Deadline Date:" + sketchSnap.data().date + "Submission Date:" + progressProfiles[i+9];
         if (progressProfiles[i+3] != "" ) {
           var deleteSketch = document.createElement("button");
           deleteSketch.setAttribute('id', "deleteSketch");
@@ -111,7 +113,7 @@ export const showProgressItems = async function(progressProfiles){
         var twenty_five  = document.createElement("div");
         twenty_five.setAttribute('class', "tile");
         
-        twenty_five.innerHTML = "25% deadline photo:"+ "25% Deadline Date:" + twentyFiveSnap.data().date;
+        twenty_five.innerHTML = "25% deadline photo:"+ "25% Deadline Date:" + twentyFiveSnap.data().date + "Submission Date:" + progressProfiles[i+10];
          if (progressProfiles[i+4] != "" ) {
           var delete25 = document.createElement("button");
           delete25.setAttribute('id', "delete25");
@@ -132,7 +134,7 @@ export const showProgressItems = async function(progressProfiles){
         //creates a new div for the row containing the fifty percent completion photo. We then check if there is an image submitted, and if so, it created a new image for the 50 photo and added it to the 25 photo div.
         var fifty  = document.createElement("div");
         fifty.setAttribute('class', "tile");
-        fifty.innerHTML = "50% deadline photo:"+ "50% Deadline Date:" + fiftySnap.data().date;
+        fifty.innerHTML = "50% deadline photo:"+ "50% Deadline Date:" + fiftySnap.data().date + "Submission Date:" + progressProfiles[i+11];
         if (progressProfiles[i+5] != "" ) {
           var delete50 = document.createElement("button");
           delete50.setAttribute('id', "delete50");
@@ -153,7 +155,7 @@ export const showProgressItems = async function(progressProfiles){
         //creates a new div for the row containing the seventy five percent completion photo. We then check if there is an image submitted, and if so, it created a new image for the 75 photo and added it to the 75 photo div.
         var seventy_five  = document.createElement("div");
         seventy_five.setAttribute('class', "tile");
-        seventy_five.innerHTML = "75% deadline photo:"+ "75% Deadline Date:" + seventyFiveSnap.data().date;
+        seventy_five.innerHTML = "75% deadline photo:"+ "75% Deadline Date:" + seventyFiveSnap.data().date + "Submission Date:" + progressProfiles[i+12];
         if (progressProfiles[i+6] != "" ) {
           var delete75 = document.createElement("button");
           delete75.setAttribute('id', "delete75");
