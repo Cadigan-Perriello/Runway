@@ -175,6 +175,7 @@ export const changeDate = async function(selectDate, selectInfo, id){
     date: String(selectDate.value),
     info: String(selectInfo.value)
   });
+  getFirebaseDataEvents();
   getEventData();
 }
 
@@ -190,12 +191,14 @@ export const addEvent = async function(EventName, SelectDate, EventInfo){
     date: (SelectDate.value),
     info: (EventInfo.value)
   });
+  getFirebaseDataEvents();
   getEventData();
 }
 
 
 //displays Events on Homepage
 export const displayEventsHome = async function (localEvents){
+  
   console.log("displaying events on homepage")
   var homeEvents = document.getElementById("homepage_events");
     homeEvents.innerHTML="";
@@ -297,8 +300,9 @@ export const displayEvents = async function(){
       }
  
     })
+  
+ getFirebaseDataEvents();
   getEventData();
-
   }
 //changes particpant password
 export const changeParticipantPassword = async function(password){
