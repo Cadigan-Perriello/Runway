@@ -19,7 +19,8 @@
 
 <script type="module" src="garments.js"></script>
   <script type="module">
-    import {getEventData} from './garments.js';
+    import {getEventData, getFirebaseDataEvents} from './garments.js';
+    window.getFirebaseDataEvents = getFirebaseDataEvents();
     window.getEventData = getEventData; getEventData();
 
   </script>
