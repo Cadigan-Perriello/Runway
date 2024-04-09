@@ -212,6 +212,7 @@ export const showProgressItems = async function(progressProfiles){
     }
   }
 
+
 async function deleteSubmission(submission){
     console.log(submission);
     const q = query(collection(db, "runway"), where("isPublic", "==", false));
@@ -224,22 +225,26 @@ async function deleteSubmission(submission){
           if (item.data().sketch == submission){
             console.log("deleting sketch..." + item.data().sketch);
             updateDoc(itemToComplete, {
-              sketch: ""
+              sketch: "",
+              sketchDate: ""
               });
           } else if (item.data().photo25 == submission){
             console.log("deleting 25..." + item.data().photo25);
             updateDoc(itemToComplete, {
-              photo25: ""
+              photo25: "",
+              twentyFiveDate: ""
               });
           } else if (item.data().photo50 == submission){
             console.log("deleting 50..." + item.data().photo50);
             updateDoc(itemToComplete, {
-              photo50: ""
+              photo50: "",
+              fiftyDate: ""
               });
           } else if (item.data().photo75 == submission){
             console.log("deleting 75..." + item.data().photo75);
             updateDoc(itemToComplete, {
-              photo75: ""
+              photo75: "",
+              seventyFiveDate: ""
               });
           }
           localStorage.clear();
