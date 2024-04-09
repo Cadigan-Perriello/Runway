@@ -5,7 +5,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebas
 import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, getDoc, query, where } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
 
-const firebaseConfig = {
+const firebaseConfig = { 
   apiKey: "AIzaSyDLCmQ9Wv-VJcczaPZlSKSDA-rYbxtDyt4",
   authDomain: "runway-3afab.firebaseapp.com",
   projectId: "runway-3afab",
@@ -47,7 +47,7 @@ export const getFirebaseData = async function(){
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((item) => {
     if (item.id != "password" && item.id != "admin-password"){
-      progressProfiles.push(item.data().firstName, item.data().lastName, item.data().email, item.data().sketch, item.data().photo25, item.data().photo50, item.data().photo75, item.data().catwalk, item.id, item.data().sketchDate, item.data().twentyFiveDate, item.data().fiftyDate, item.data().seventyFiveDate );
+      progressProfiles.push(item.data().firstName, item.data().lastName, item.data().email, item.data().sketch, item.data().photo25, item.data().photo50, item.data().photo75, item.data().catwalk, item.id, item.data().sketchDate, item.data().twentyFiveDate,item.data().fiftyDate,item.data().seventyFiveDate );
     }
     })
     localStorage.setItem("progress_data", JSON.stringify(progressProfiles));
@@ -62,7 +62,7 @@ export const showProgressItems = async function(progressProfiles){
     annie_garments.innerHTML="";
     for (let i = 0; i < progressProfiles.length; i+=13) {
     //  if (progressProfiles[i].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) || progressProfiles[i+1].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) ){ //search bar for Garments
-        
+                    
 //creates a new div for the row containing the name. We then added the name to the innerHTML of the div. 
         
         var row = document.createElement("div");
@@ -196,32 +196,28 @@ export const showProgressItems = async function(progressProfiles){
          deleteProfile.onclick = async function() {
           if(confirm("Remove " + progressProfiles[i] + "'s profile?") == true) {
              console.log("removing profile");
-             const fullDatabase = await getDocs(collection(db, "runway"));
-            //query --> use i+8 to access id
-             await fullDatabase.forEach((item) => {
-               if (item.id != "password" && item.id != "admin-password" && item.data().isPublic == false){
-                 if (item.data().firstName == progressProfiles[i] && item.data().lastName == progressProfiles[i+1]  && item.data().email == progressProfiles[i+2]){
+            const q = query(collection(db, "runway"), where("isPublic", "==", false), where("firstName", "==", progressProfiles[i]), where("lastName", "==", progressProfiles[i+1]), where("email", "==", progressProfiles[i+2]));
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((item) => {
+               if (item.id != "password" && item.id != "admin-password"){
                    deleteDoc(doc(db, "runway", item.id));
                    localStorage.clear();
                    getProgressData();
                    return;
                }
-             }
-           })
+             })
+           }
           }
-        }
            row.appendChild(deleteProfile);
-  
-      }
     }
-//  }
+  }
 
 async function deleteSubmission(submission){
     console.log(submission);
-    const fullDatabase = await getDocs(collection(db, "runway"));
-    //query
-    await fullDatabase.forEach((item) => {
-      if (item.id != "password" && item.id != "admin-password" && item.data().isPublic == false){
+    const q = query(collection(db, "runway"), where("isPublic", "==", false));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((item) => {
+      if (item.id != "password" && item.id != "admin-password"){
         if (item.data().sketch == submission || item.data().photo25 == submission || item.data().photo50 == submission || item.data().photo75  == submission) {
           console.log("removing submission...id: " + item.id);
           const itemToComplete = doc(db, "runway", item.id);
@@ -253,5 +249,3 @@ async function deleteSubmission(submission){
       }
     })
 }
-
-
