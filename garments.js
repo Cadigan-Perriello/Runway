@@ -229,7 +229,6 @@ export const displayEventsHome = async function (localEvents){
 //displays Event on Navbar
 export const displayEvents = async function(){
   console.log("displayingEvents")
-  const databaseItems = await getDocs(collection(db, "runway"));
   var Sidenav = document.getElementById("mySidenav");
     Sidenav.innerHTML="";
     var closeButton = document.createElement('button');
@@ -268,8 +267,9 @@ export const displayEvents = async function(){
     Sidenav.appendChild(row);
 
     //goes through firebase and displays all items on the sidebar
-    databaseItems.forEach((item) => {
-      if (item.id.toLowerCase().includes("date")) {
+    const q = query(collection(db, "runway"), where("date", "!=", null));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((item) => {
         var text = document.createElement("p");
         text.innerHTML = item.data().name;
         var date = document.createElement("input");
@@ -297,7 +297,6 @@ export const displayEvents = async function(){
       row.appendChild(submitButton);
       row.appendChild(deleteButton);
       document.getElementById("mySidenav").appendChild(row);
-      }
  
     })
   
@@ -380,7 +379,7 @@ export const showItems = async function(localGarments){
                     var row = document.createElement("div");
                     row.setAttribute('class', "row");
                       var name = document.createElement("p");
-                      name.innerHTML = localGarments[i] + " " + localGarments[i+1].substring(0, 1) + ".";
+                      name.innerHTML =  localGarments[i] + " " + localGarments[i+1].substring(0, 1) + ".";
                       //name.for = item.id;
                       row.appendChild(name);
                       row.appendChild(document.createElement("br"));
@@ -501,4 +500,3 @@ async function approval(itemId) {
   getFirebaseDataAdminPage();
   getFirebaseData();
 }
-
