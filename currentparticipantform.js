@@ -43,6 +43,6 @@ let seventy_five = document.getElementById("photo75");
     };
 
     reader.readAsDataURL(input.files[0]);
-    localStorage.clear();
+    sessionStorage.clear();
   }
  }
