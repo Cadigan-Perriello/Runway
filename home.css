@@ -113,6 +113,9 @@ html {
   font-family:'Tilt Prism';
   color:#793140;
   font-weight: 800;
+  background-color: white;
+  border-radius: 41%;
+  padding: 11px;
 }
 
 .navbar a {
