@@ -14,10 +14,11 @@ font-size: 20px;
 #setDates{
   padding-top: 80px; 
   background-color: white;
+  font-size: 20px;
 }
 
 #setDates:hover{
-  background-color: #793140; 
+  background-color: gray; 
 }
 /* sets font, text alignment, padding, and display for the home page */
 body{
