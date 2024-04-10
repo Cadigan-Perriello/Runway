@@ -31,10 +31,10 @@ const seventyFiveSnap = await getDoc(seventyFiveRef);
 
 
 export const getProgressData = async function(){
-  //localStorage.clear();
-  if (localStorage.getItem("progress_data") !== null){
-    var progressProfiles = JSON.parse(localStorage.getItem("progress_data"));
-    console.log("data already stored locally");
+  //sessionStorage.clear();
+  if (sessionStorage.getItem("progress_data") !== null){
+    var progressProfiles = JSON.parse(sessionStorage.getItem("progress_data"));
+    console.log("data already stored sessionly");
     showProgressItems(progressProfiles);
   }else{
     getFirebaseData();
@@ -50,8 +50,8 @@ export const getFirebaseData = async function(){
       progressProfiles.push(item.data().firstName, item.data().lastName, item.data().email, item.data().sketch, item.data().photo25, item.data().photo50, item.data().photo75, item.data().catwalk, item.id, item.data().sketchDate, item.data().twentyFiveDate,item.data().fiftyDate,item.data().seventyFiveDate );
     }
     })
-    localStorage.setItem("progress_data", JSON.stringify(progressProfiles));
-    console.log("data stored locally");
+    sessionStorage.setItem("progress_data", JSON.stringify(progressProfiles));
+    console.log("data stored sessionly");
     showProgressItems(progressProfiles);
 }
 
@@ -201,7 +201,7 @@ export const showProgressItems = async function(progressProfiles){
             querySnapshot.forEach((item) => {
                if (item.id != "password" && item.id != "admin-password"){
                    deleteDoc(doc(db, "runway", item.id));
-                   localStorage.clear();
+                   sessionStorage.clear();
                    getProgressData();
                    return;
                }
@@ -247,7 +247,7 @@ async function deleteSubmission(submission){
               seventyFiveDate: ""
               });
           }
-          localStorage.clear();
+          sessionStorage.clear();
           getProgressData();
           return;
         }
