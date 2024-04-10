@@ -61,7 +61,7 @@ export const showProgressItems = async function(progressProfiles){
     var annie_garments = document.getElementById("annie_garments");
     annie_garments.innerHTML="";
     for (let i = 0; i < progressProfiles.length; i+=13) {
-    //  if (progressProfiles[i].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) || progressProfiles[i+1].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) ){ //search bar for Garments
+      if (progressProfiles[i].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) || progressProfiles[i+1].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) ){ //search bar for Garments
                     
 //creates a new div for the row containing the name. We then added the name to the innerHTML of the div. 
         
@@ -186,7 +186,7 @@ export const showProgressItems = async function(progressProfiles){
         //    final_row.appendChild(document.createElement("br"));
         //    garments.appendChild(final_row)
 
-        //  }
+          }
 
        annie_garments.appendChild(row);
 
