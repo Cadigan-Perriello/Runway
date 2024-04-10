@@ -16,17 +16,17 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-//checks if the garments are loaded into local storage already, 
+//checks if the garments are loaded into session storage already, 
 //and if not, calls the function to get them from Firebase
 export const getGarmentData = async function(){
-  // console.log(localStorage.getItem("garment_data"));
-  //localStorage.clear();
-  if (localStorage.getItem("garment_data") !== null){
-    //console.log(localStorage.getItem("garment_data"));
-    var localGarments = JSON.parse(localStorage.getItem("garment_data"));
-    console.log("data already stored locally");
-    showItems(localGarments);
-    filterByYear(localGarments);
+  // console.log(sessionStorage.getItem("garment_data"));
+  //sessionStorage.clear();
+  if (sessionStorage.getItem("garment_data") !== null){
+    //console.log(sessionStorage.getItem("garment_data"));
+    var sessionGarments = JSON.parse(sessionStorage.getItem("garment_data"));
+    console.log("data already stored sessionly");
+    showItems(sessionGarments);
+    filterByYear(sessionGarments);
   }else{
     getFirebaseData();
   }
@@ -34,91 +34,91 @@ export const getGarmentData = async function(){
 
 
   export const getGarmentDataAdmin = async function(){
-    // console.log(localStorage.getItem("garment_data"));
-    //localStorage.clear();
-    if (localStorage.getItem("admin_data") !== null){
-      //console.log(localStorage.getItem("garment_data"));
-      var localGarments = JSON.parse(localStorage.getItem("admin_data"));
-      console.log("data already stored locally");
-      showUnapprovedFinalGarments(localGarments);
+    // console.log(sessionStorage.getItem("garment_data"));
+    //sessionStorage.clear();
+    if (sessionStorage.getItem("admin_data") !== null){
+      //console.log(sessionStorage.getItem("garment_data"));
+      var sessionGarments = JSON.parse(sessionStorage.getItem("admin_data"));
+      console.log("data already stored sessionly");
+      showUnapprovedFinalGarments(sessionGarments);
     }else{
       getFirebaseDataAdminPage();
     }
     }
 
    
-//retrieves the garment data from Firebase and saves it to local storage
+//retrieves the garment data from Firebase and saves it to session storage
 export const getFirebaseData = async function(){
   const q = query(collection(db, "runway"), where("isApproved", "==", true));
-  var localGarments = [];
+  var sessionGarments = [];
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((item) => {
     if (item.id != "password" && item.id != "admin-password"){
-      localGarments.push(item.data().firstName, item.data().lastName, item.data().img, item.data().inspiration, item.data().year, item.data().material, item.id, item.data().isPublic, item.data().isApproved);
+      sessionGarments.push(item.data().firstName, item.data().lastName, item.data().img, item.data().inspiration, item.data().year, item.data().material, item.id, item.data().isPublic, item.data().isApproved);
     }
     })
-    console.log(JSON.stringify(localGarments));
-    localStorage.setItem("garment_data", JSON.stringify(localGarments));
-    console.log("data stored locally");
-    console.log(localGarments);
-    showItems(localGarments);
-    filterByYear(localGarments);
+    console.log(JSON.stringify(sessionGarments));
+    sessionStorage.setItem("garment_data", JSON.stringify(sessionGarments));
+    console.log("data stored sessionly");
+    console.log(sessionGarments);
+    showItems(sessionGarments);
+    filterByYear(sessionGarments);
 }
 
 
-//retrieves the garment data from Firebase and saves it to local storage
+//retrieves the garment data from Firebase and saves it to session storage
 export const getFirebaseDataAdminPage = async function(){
   const q = query(collection(db, "runway"), where("isApproved", "==", false));
-    var localGarments = [];
+    var sessionGarments = [];
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((item) => {
-      localGarments.push(item.data().firstName, item.data().lastName, item.data().img, item.data().inspiration, item.data().year, item.data().material, item.id, item.data().isPublic, item.data().isApproved);
+      sessionGarments.push(item.data().firstName, item.data().lastName, item.data().img, item.data().inspiration, item.data().year, item.data().material, item.id, item.data().isPublic, item.data().isApproved);
     });
    
-    console.log(JSON.stringify(localGarments));
-    localStorage.setItem("admin_data", JSON.stringify(localGarments));
-    console.log("data stored locally");
-    console.log(localGarments);
-    showUnapprovedFinalGarments(localGarments);
+    console.log(JSON.stringify(sessionGarments));
+    sessionStorage.setItem("admin_data", JSON.stringify(sessionGarments));
+    console.log("data stored sessionly");
+    console.log(sessionGarments);
+    showUnapprovedFinalGarments(sessionGarments);
 }
 
 
 export const getEventData = async function(){
-  if (localStorage.getItem("event_data") !== null){
-    var localEvents = JSON.parse(localStorage.getItem("event_data"));
-    console.log("data already stored locally");
-    displayEventsHome(localEvents);
+  if (sessionStorage.getItem("event_data") !== null){
+    var sessionEvents = JSON.parse(sessionStorage.getItem("event_data"));
+    console.log("data already stored sessionly");
+    displayEventsHome(sessionEvents);
   }else{
     getFirebaseDataEvents();
   }
   }
 
-//retrieves the events data from Firebase and saves it to local storage
+//retrieves the events data from Firebase and saves it to session storage
 export const getFirebaseDataEvents = async function(){
   const q = query(collection(db, "runway"), where("date", "!=", null));
-    var localEvents = [];
+    var sessionEvents = [];
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((item) => {
-      localEvents.push(item.data().date, item.data().info, item.data().name);
+      sessionEvents.push(item.data().date, item.data().info, item.data().name);
     });
    
-    console.log(JSON.stringify(localEvents));
-    localStorage.setItem("event_data", JSON.stringify(localEvents));
-    console.log("data stored locally");
-    displayEventsHome(localEvents);
+    console.log(JSON.stringify(sessionEvents));
+    sessionStorage.setItem("event_data", JSON.stringify(sessionEvents));
+    console.log("data stored sessionly");
+    displayEventsHome(sessionEvents);
 }
 
 //will store the checked years
 var year_list = [];
 
 //creates filter by year checkboxes
-export const filterByYear = async function(localGarments){
+export const filterByYear = async function(sessionGarments){
     var checkboxes = document.getElementById("checkboxes");
     checkboxes.innerHTML="";
     var years = [];
-    for (let i = 0; i < localGarments.length; i+=9) {
-      if(localGarments[i+4] != null && !years.includes(localGarments[i+4])) {
-        years.push(localGarments[i+4]);
+    for (let i = 0; i < sessionGarments.length; i+=9) {
+      if(sessionGarments[i+4] != null && !years.includes(sessionGarments[i+4])) {
+        years.push(sessionGarments[i+4]);
       }
       console.log(years)
     }
@@ -138,7 +138,7 @@ export const filterByYear = async function(localGarments){
             year_list.push(checkboxes[i].value);
           }
         }
-        showItems(localGarments);
+        showItems(sessionGarments);
       }
       var label = document.createElement("label");
       label.innerHTML = (item);
@@ -197,24 +197,24 @@ export const addEvent = async function(EventName, SelectDate, EventInfo){
 
 
 //displays Events on Homepage
-export const displayEventsHome = async function (localEvents){
+export const displayEventsHome = async function (sessionEvents){
   
   console.log("displaying events on homepage")
   var homeEvents = document.getElementById("homepage_events");
     homeEvents.innerHTML="";
 
-    for (let i = 0; i < localEvents.length; i+=3) {
+    for (let i = 0; i < sessionEvents.length; i+=3) {
 
     var row = document.createElement("div");
     row.setAttribute('class', "deadline_tile");
     var title = document.createElement("p");
-    title.innerHTML = localEvents[i+2];
+    title.innerHTML = sessionEvents[i+2];
     title.setAttribute('class', "deadline");
     var date = document.createElement("p");
-    date.innerHTML = localEvents[i];
+    date.innerHTML = sessionEvents[i];
     date.setAttribute('class', "date");
     var info = document.createElement("p");
-    info.innerHTML = localEvents[i+1];
+    info.innerHTML = sessionEvents[i+1];
     info.setAttribute('class', "date");
 
     row.appendChild(title);
@@ -364,47 +364,47 @@ export const passCheck = async function(){
 }
 
 // show garments from firebase in the tiles on the screen
-export const showItems = async function(localGarments){
-    console.log(localGarments);
+export const showItems = async function(sessionGarments){
+    console.log(sessionGarments);
      var garments = document.getElementById("garments");
      garments.innerHTML="";
   // //go through each firebase object that isn't a password, date, and is approved as final
-     for (let i = 0; i < localGarments.length; i+=9) {
-      console.log(localGarments[i]);
-      if (localGarments[i+7] == true && localGarments[i+8] == true){
-      if (localGarments[i].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) || localGarments[i+3].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) || localGarments[i+5].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) ){
+     for (let i = 0; i < sessionGarments.length; i+=9) {
+      console.log(sessionGarments[i]);
+      if (sessionGarments[i+7] == true && sessionGarments[i+8] == true){
+      if (sessionGarments[i].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) || sessionGarments[i+3].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) || sessionGarments[i+5].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) ){
         //check years that are clicked
-                if(year_list.includes(localGarments[i+4]) || year_list.length==0 ){ 
+                if(year_list.includes(sessionGarments[i+4]) || year_list.length==0 ){ 
                   //create tile (row) with name, image, inspiration, and material
                     var row = document.createElement("div");
                     row.setAttribute('class', "row");
                       var name = document.createElement("p");
-                      name.innerHTML =  localGarments[i] + " " + localGarments[i+1].substring(0, 1) + ".";
+                      name.innerHTML =  sessionGarments[i] + " " + sessionGarments[i+1].substring(0, 1) + ".";
                       //name.for = item.id;
                       row.appendChild(name);
                       row.appendChild(document.createElement("br"));
 
                       var image = document.createElement("img");
-                      image.src = localGarments[i+2];
+                      image.src = sessionGarments[i+2];
                       row.appendChild(image);
 
                       row.appendChild(document.createElement("br"));
                   
                       // var inspiration = document.createElement("p");
-                      // inspiration.innerHTML = "Inspiration: " + localGarments[i+3];
+                      // inspiration.innerHTML = "Inspiration: " + sessionGarments[i+3];
                       // //inspiration.for = item.id;
                   
                       // row.appendChild(inspiration);
                       // row.appendChild(document.createElement("br"));
               
                       var year = document.createElement("p");
-                      year.innerHTML = "Year: " + localGarments[i+4];
+                      year.innerHTML = "Year: " + sessionGarments[i+4];
                       //year.for = item.id;
                       row.appendChild(year);
 
                                
                       var material = document.createElement("p");
-                      year.innerHTML = "Main Material: " + localGarments[i+5];
+                      year.innerHTML = "Main Material: " + sessionGarments[i+5];
                       //material.for = item.id;
                       row.appendChild(material);
 
@@ -418,47 +418,47 @@ export const showItems = async function(localGarments){
 }
 
 //displays the unapproved tiles in the Admin Page so annie can approve them
-//localGarments.push(item.data().firstName, item.data().lastName, item.data().img, item.data().inspiration, item.data().year, item.data().material, item.id);
+//sessionGarments.push(item.data().firstName, item.data().lastName, item.data().img, item.data().inspiration, item.data().year, item.data().material, item.id);
 
-export const showUnapprovedFinalGarments = async function(localGarments){
-  // console.log(localGarments);
+export const showUnapprovedFinalGarments = async function(sessionGarments){
+  // console.log(sessionGarments);
   var SubmissionsCheck = document.getElementById("SubmissionsCheck");
   SubmissionsCheck.innerHTML="";
 // //go through each firebase object that isn't a password or date, is a final submission, but is not approved yet by admin
-   for (let i = 0; i < localGarments.length; i+=9) {
-    // console.log(localGarments[i+9]);
-    if (localGarments[i] != null && localGarments[i+7] == true && localGarments[i+8] == false){
+   for (let i = 0; i < sessionGarments.length; i+=9) {
+    // console.log(sessionGarments[i+9]);
+    if (sessionGarments[i] != null && sessionGarments[i+7] == true && sessionGarments[i+8] == false){
       
                 //create tile (row) with name, image, inspiration, and material
                   var row = document.createElement("div");
                   row.setAttribute('class', "row");
                     var name = document.createElement("p");
-                    name.innerHTML = localGarments[i] + " " + localGarments[i+1].substring(0, 1) + ".";
+                    name.innerHTML = sessionGarments[i] + " " + sessionGarments[i+1].substring(0, 1) + ".";
                     //name.for = item.id;
                     row.appendChild(name);
                     row.appendChild(document.createElement("br"));
 
                     var image = document.createElement("img");
-                    image.src = localGarments[i+2];
+                    image.src = sessionGarments[i+2];
                     row.appendChild(image);
 
                     row.appendChild(document.createElement("br"));
                 
                     var inspiration = document.createElement("p");
-                    inspiration.innerHTML = "Inspiration: " + localGarments[i+3];
+                    inspiration.innerHTML = "Inspiration: " + sessionGarments[i+3];
                     //inspiration.for = item.id;
                 
                     row.appendChild(inspiration);
                     row.appendChild(document.createElement("br"));
             
                     var year = document.createElement("p");
-                    year.innerHTML = "Year: " + localGarments[i+4];
+                    year.innerHTML = "Year: " + sessionGarments[i+4];
                     //year.for = item.id;
                     row.appendChild(year);
 
                              
                     var material = document.createElement("p");
-                    year.innerHTML = "Main Material: " + localGarments[i+5];
+                    year.innerHTML = "Main Material: " + sessionGarments[i+5];
                     //material.for = item.id;
                     row.appendChild(material);
 
@@ -466,8 +466,8 @@ export const showUnapprovedFinalGarments = async function(localGarments){
                 approve_button.innerHTML = "approve";
                 row.appendChild(approve_button);
                 approve_button.onclick =async function() {
-                  await approval(localGarments[i+6]);
-                  // console.log(localGarments[i+6].isApproved.value);
+                  await approval(sessionGarments[i+6]);
+                  // console.log(sessionGarments[i+6].isApproved.value);
                   console.log("Approved");
                   //getFirebaseDataAdminPage();
                   //getFirebaseData();
@@ -477,7 +477,7 @@ export const showUnapprovedFinalGarments = async function(localGarments){
                 decline_button.innerHTML = "decline";
                 row.appendChild(decline_button);
                 decline_button.onclick =async function() {
-                  deleteDoc(doc(db, "runway", localGarments[i+6]));
+                  deleteDoc(doc(db, "runway", sessionGarments[i+6]));
                   console.log("declined");
                   getFirebaseDataAdminPage();
                   getFirebaseData();
