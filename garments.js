@@ -390,12 +390,12 @@ export const showItems = async function(localGarments){
 
                       row.appendChild(document.createElement("br"));
                   
-                      var inspiration = document.createElement("p");
-                      inspiration.innerHTML = "Inspiration: " + localGarments[i+3];
-                      //inspiration.for = item.id;
+                      // var inspiration = document.createElement("p");
+                      // inspiration.innerHTML = "Inspiration: " + localGarments[i+3];
+                      // //inspiration.for = item.id;
                   
-                      row.appendChild(inspiration);
-                      row.appendChild(document.createElement("br"));
+                      // row.appendChild(inspiration);
+                      // row.appendChild(document.createElement("br"));
               
                       var year = document.createElement("p");
                       year.innerHTML = "Year: " + localGarments[i+4];
