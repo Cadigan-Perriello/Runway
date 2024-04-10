@@ -1,6 +1,10 @@
 /* sets the color of the background */
 html{
   background-image: url('pastrunway.png'); 
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
 }
 
 h1{
