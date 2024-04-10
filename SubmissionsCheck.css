@@ -1,3 +1,12 @@
+.logo{
+  font-family:'Tilt Prism';
+  color:#793140;
+  font-weight: 800;
+  background-color: white;
+  border-radius: 41%;
+  padding: 11px;
+}
+
 /* sets the collage of past runway participants as the background */
 html{
     background-image: url('pastrunway.png'); 
