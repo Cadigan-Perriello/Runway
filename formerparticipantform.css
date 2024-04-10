@@ -67,8 +67,8 @@ body{
 /* styles upload image button */
 #UploadImage{
   cursor: pointer;
-  background: maroon;
-  color: white;
+  background: white;
+  color: black;
   padding: 10px 15px;
   text-align: center;
   text-decoration: none;
@@ -79,8 +79,8 @@ body{
 /* styles submit button */
 #submit{
   cursor: pointer;
-  background: maroon;
-  color: white;
+  background: white;
+  color: black;
   padding: 10px 15px;
   text-align: center;
   text-decoration: none;
