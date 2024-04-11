@@ -90,7 +90,12 @@ export const showProgressItems = async function(progressProfiles){
         //creates a new div for the row containing the sketch. We then check if there is an image submitted, and if so, it created a new image for the sketch and added it to the sketch div.
         var sketch  = document.createElement("div");
         sketch.setAttribute('class', "tile");
-        sketch.innerHTML = "Sketch Deadline Date:" + "<br>" + sketchSnap.data().date + "<br>" + "Submission Date:" + "<br>" + progressProfiles[i+9].substring(0,21);
+        if (progressProfiles[i+9] != null){
+          var submissionDateSketch = progressProfiles[i+9].substring(0,21) 
+        } else {
+          submissionDateSketch = "";
+        }
+        sketch.innerHTML = "Sketch Deadline Date:" + "<br>" + sketchSnap.data().date + "<br>" + "Submission Date:" + "<br>" + submissionDateSketch;
         if (progressProfiles[i+3] != "" ) {
           var deleteSketch = document.createElement("button");
           deleteSketch.setAttribute('id', "deleteSketch");
@@ -112,8 +117,12 @@ export const showProgressItems = async function(progressProfiles){
         //creates a new div for the row containing the twenty five percent completion photo. We then check if there is an image submitted, and if so, it created a new image for the 25 photo and added it to the 25 photo div.
         var twenty_five  = document.createElement("div");
         twenty_five.setAttribute('class', "tile");
-        
-        twenty_five.innerHTML ="25% Deadline Date:" + "<br>" + twentyFiveSnap.data().date + "<br>" + "Submission Date:" + "<br>" + progressProfiles[i+10].substring(0,21);
+        if (progressProfiles[i+10] != null){
+          var submissionDate25 = progressProfiles[i+10].substring(0,21) 
+        } else {
+          submissionDate25 = "";
+        }
+        twenty_five.innerHTML ="25% Deadline Date:" + "<br>" + twentyFiveSnap.data().date + "<br>" + "Submission Date:" + "<br>" + submissionDate25;
          if (progressProfiles[i+4] != "" ) {
           var delete25 = document.createElement("button");
           delete25.setAttribute('id', "delete25");
@@ -134,7 +143,12 @@ export const showProgressItems = async function(progressProfiles){
         //creates a new div for the row containing the fifty percent completion photo. We then check if there is an image submitted, and if so, it created a new image for the 50 photo and added it to the 25 photo div.
         var fifty  = document.createElement("div");
         fifty.setAttribute('class', "tile");
-        fifty.innerHTML = "50% Deadline Date:" + "<br>" + fiftySnap.data().date + "<br>" + "Submission Date:" + "<br>" + progressProfiles[i+11].substring(0,21);
+        if (progressProfiles[i+11] != null){
+          var submissionDate50 = progressProfiles[i+11].substring(0,21) 
+        } else {
+          submissionDate50 = "";
+        }
+        fifty.innerHTML = "50% Deadline Date:" + "<br>" + fiftySnap.data().date + "<br>" + "Submission Date:" + "<br>" + submissionDate50;
         if (progressProfiles[i+5] != "" ) {
           var delete50 = document.createElement("button");
           delete50.setAttribute('id', "delete50");
@@ -155,7 +169,12 @@ export const showProgressItems = async function(progressProfiles){
         //creates a new div for the row containing the seventy five percent completion photo. We then check if there is an image submitted, and if so, it created a new image for the 75 photo and added it to the 75 photo div.
         var seventy_five  = document.createElement("div");
         seventy_five.setAttribute('class', "tile");
-        seventy_five.innerHTML = "75% Deadline Date:" + "<br>" + seventyFiveSnap.data().date + "<br>" + "Submission Date:" + "<br>" + progressProfiles[i+12].substring(0,21);
+        if (progressProfiles[i+12] != null){
+          var submissionDate75 = progressProfiles[i+12].substring(0,21) 
+        } else {
+          submissionDate75 = "";
+        }
+        seventy_five.innerHTML = "75% Deadline Date:" + "<br>" + seventyFiveSnap.data().date + "<br>" + "Submission Date:" + "<br>" + submissionDate75;
         if (progressProfiles[i+6] != "" ) {
           var delete75 = document.createElement("button");
           delete75.setAttribute('id', "delete75");
