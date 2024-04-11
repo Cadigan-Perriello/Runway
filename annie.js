@@ -47,7 +47,7 @@ export const getFirebaseData = async function(){
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((item) => {
     if (item.id != "password" && item.id != "admin-password"){
-      progressProfiles.push(item.data().firstName, item.data().lastName, item.data().email, item.data().sketch, item.data().photo25, item.data().photo50, item.data().photo75, item.data().catwalk, item.id, item.data().sketchDate, item.data().twentyFiveDate,item.data().fiftyDate,item.data().seventyFiveDate );
+      progressProfiles.push(item.data().firstName, item.data().lastName, item.data().email, item.data().sketch, item.data().photo25, item.data().photo50, item.data().photo75, item.data().catwalk, item.id, item.data().sketchDate, item.data().twentyFiveDate,item.data().fiftyDate, item.data().seventyFiveDate, item.data().catwalkTime, item.data().catwalkLink);
     }
     })
     sessionStorage.setItem("progress_data", JSON.stringify(progressProfiles));
@@ -60,7 +60,7 @@ export const getFirebaseData = async function(){
 export const showProgressItems = async function(progressProfiles){
     var annie_garments = document.getElementById("annie_garments");
     annie_garments.innerHTML="";
-    for (let i = 0; i < progressProfiles.length; i+=13) {
+    for (let i = 0; i < progressProfiles.length; i+=15) {
       if (progressProfiles[i].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) || progressProfiles[i+1].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) ){ //search bar for Garments
                     
 //creates a new div for the row containing the name. We then added the name to the innerHTML of the div. 
@@ -70,20 +70,42 @@ export const showProgressItems = async function(progressProfiles){
         var info = document.createElement("div");
         info.setAttribute('class', "tile");
         var name = document.createElement("h1");
+          name.innerHTML = progressProfiles[i] + " " + progressProfiles[i+1].substring(0,1) + "  ";
         var email = document.createElement("a");
           email.innerHTML = progressProfiles[i+2];
         //email.for = item.id;
         var catwalkLabel = document.createElement("p");
-          catwalkLabel.innerHTML = "Catwalk Song:";
-        var catwalk = document.createElement("p");
-          catwalk.innerHTML = progressProfiles[i+7];
+          catwalkLabel.innerHTML = "Song Choice:";
+        var catwalk = document.createElement("a");
+          catwalk.innerHTML = progressProfiles[i+7]; 
+        var timeLabel = document.createElement("p");
+          timeLabel.innerHTML = "Time:";
+        var catwalkTime = document.createElement("a");
+          if (progressProfiles[i+13] != null) {
+            catwalkTime.innerHTML = progressProfiles[i+13];
+          } else {
+            catwalkTime.innerHTML = "";
+          }
+        var linkLabel = document.createElement("p");
+        linkLabel.innerHTML = "Link:";
+          var catwalkLink = document.createElement("p");
+          if (progressProfiles[i+14] != null) {
+            catwalkLink.innerHTML = progressProfiles[i+14];
+          } else {
+            catwalkLink.innerHTML = "";
+          }
+
         //catwalk.for = item.id;
-          name.innerHTML = progressProfiles[i] + " " + progressProfiles[i+1].substring(0,1) + "  ";
+
           //name.for = item.id;
         info.appendChild(name);
         info.appendChild(email);
         info.appendChild(catwalkLabel);
         info.appendChild(catwalk);
+        info.appendChild(timeLabel);
+        info.appendChild(catwalkTime);
+        info.appendChild(linkLabel);
+        info.appendChild(catwalkLink);
         row.appendChild(info);
 
         // row.appendChild(document.createElement("br"));
