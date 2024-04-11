@@ -90,7 +90,7 @@ export const showProgressItems = async function(progressProfiles){
         //creates a new div for the row containing the sketch. We then check if there is an image submitted, and if so, it created a new image for the sketch and added it to the sketch div.
         var sketch  = document.createElement("div");
         sketch.setAttribute('class', "tile");
-        sketch.innerHTML = "Sketch Deadline Date:" + "<br>" + sketchSnap.data().date + "<br>" + "Submission Date:" + "<br>" + progressProfiles[i+9].substring(0,21);
+        sketch.innerHTML = "Sketch Deadline Date:" + "<br>" + sketchSnap.data().date + "<br>" + "Submission Date:" + "<br>" + progressProfiles[i+9];
         if (progressProfiles[i+3] != "" ) {
           var deleteSketch = document.createElement("button");
           deleteSketch.setAttribute('id', "deleteSketch");
