@@ -20,16 +20,20 @@ const storage = getStorage(app);
 
 var sketch = "";
 
+
+
 let form = document.getElementById("sketchForm");
 //runs the below code when form is submitted
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 //sets js variables from the form
   let firstName = document.getElementById("firstNameS");
+  var d = new Date();
+ 
   let lastName = document.getElementById("lastNameS");
   let email = document.getElementById("emailS");
   //creates sketch object from the above variables
-   addSketch(firstName.value, lastName.value, email.value, sketch);
+   addSketch(firstName.value, lastName.value, email.value, sketch,  d.toString());
   //reset form
   form.reset();
   let previewimg = document.getElementById("sketchimg");
@@ -37,7 +41,7 @@ form.addEventListener("submit", (e) => {
 }
 );
 //adds the sketch to the firebase
-export const addSketch = async function(firstName, lastName, email, sketch){
+export const addSketch = async function(firstName, lastName, email, sketch, date){
 
   const databaseItems = await getDocs(collection(db, "runway"));
   try {
@@ -55,7 +59,8 @@ export const addSketch = async function(firstName, lastName, email, sketch){
                     const itemToUpdate = doc(db, "runway", item.id);
                     console.log("updating doc");
                     updateDoc(itemToUpdate, {
-                      sketch: sketch
+                      sketch: sketch,
+                      sketchDate : date
                     });
                     added = true;
         }
@@ -70,6 +75,7 @@ export const addSketch = async function(firstName, lastName, email, sketch){
           lastName:lastName,
           email:email,
           sketch: sketch,
+          sketchDate:date,
           photo25: "",
           photo50: "",
           photo75: "",
