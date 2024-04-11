@@ -100,12 +100,12 @@ html{
   
   /* sets positioning settings to the garment divs */
   #garments{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-  
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+}
   
   
   /* sets the size of the garment picture */
