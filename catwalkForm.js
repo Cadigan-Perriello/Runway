@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
 // TODO: import libraries for Cloud Firestore Database
 // https://firebase.google.com/docs/firestore
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDLCmQ9Wv-VJcczaPZlSKSDA-rYbxtDyt4",
@@ -27,37 +27,38 @@ form.addEventListener("submit", (e) => {
   let lastName = document.getElementById("lastNameC");
   let email = document.getElementById("emailC");
   let catwalk = document.getElementById("catwalk");
-  //creates sketch object from the above variables
-   addCatwalk(firstName.value, lastName.value, email.value, catwalk.value);
+  let catwalkTime = document.getElementById("catwalkTime");
+    if (document.getElementById("catwalkTime") != null) {
+    let catwalkLink = document.getElementById("catwalkLink");
+    } else {
+      let catwalkLink = "";
+    }
+    //creates sketch object from the above variables
+   addCatwalk(firstName.value, lastName.value, email.value, catwalk.value, catwalkTime.value, catwalkLink.value);
   //reset form
   form.reset();
 }
 );
 //adds the sketch to the firebase
-export const addCatwalk = async function(firstName, lastName, email, catwalk){
-
-  const databaseItems = await getDocs(collection(db, "runway"));
+export const addCatwalk = async function(firstName, lastName, email, catwalk, catwalkTime, catwalkLink){
+  var firstNameLocal = firstName.toLowerCase();
+  var lastNameLocal = lastName.toLowerCase();
+  var emailLocal = email.toLowerCase();
+  console.log(firstNameLocal,lastNameLocal, emailLocal);
   try {
       var added = false;
-      databaseItems.forEach((item) => {
-        console.log(item.id);
-        if (item.id != "password" && item.id != "admin-password"  
-            && !item.id.includes("Date")){
-                if (item.data().isPublic == false) {
-                  console.log(item.data().lastName.toLowerCase(), item.data().firstName.toLowerCase(), item.data().email.toLowerCase());
-                  console.log(lastName.toLowerCase(), firstName.toLowerCase(), email.toLowerCase());
-                  if (item.data().firstName.toLowerCase().includes(firstName.toLowerCase()) &&
-                item.data().lastName.toLowerCase().includes(lastName.toLowerCase()) &&     
-                item.data().email.toLowerCase().includes(email.toLowerCase())){
+      const q = query(collection(db, "runway"), where("isPublic", "==", false), where("firstName", "==", firstNameLocal), where("lastName", "==", lastNameLocal), where("email", "==", emailLocal));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((item) => {
+        if (item.id != "password" && item.id != "admin-password"  ){
                     const itemToUpdate = doc(db, "runway", item.id);
                     console.log("updating doc");
                     updateDoc(itemToUpdate, {
-                      catwalk: catwalk
+                      catwalk: catwalk,
+                      catwalkTime: catwalkTime,
+                      catwalkLink: catwalkLink
                     });
                     added = true;
-
-        }
-      }
       }
       });
       console.log(added);
@@ -72,8 +73,11 @@ export const addCatwalk = async function(firstName, lastName, email, catwalk){
           photo50: "",
           photo75: "",
           catwalk: catwalk,
+          catwalkTime: catwalkTime,
+          catwalkLink: catwalkLink,
           isPublic: false
         });
+        sessionStorage.clear();
       }
   }
   catch(e){
