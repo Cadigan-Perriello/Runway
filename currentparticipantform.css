@@ -12,7 +12,12 @@ html {
   float: center;
   overflow: hidden;
 }
-
+.navbar.menu{
+  float: center;
+}
+.navbar.dropdown{
+  float: center;
+}
 .navbar a:hover, .dropdown:hover .dropbtn {
   background-color: gray;
 }
