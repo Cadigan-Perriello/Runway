@@ -26,10 +26,11 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
 //sets js variables from the form
   let firstName = document.getElementById("firstName75");
+  var d = new Date();
   let lastName = document.getElementById("lastName75");
   let email = document.getElementById("email75");
   //creates sketch object from the above variables
-   add75(firstName.value, lastName.value, email.value, photo75);
+   add75(firstName.value, lastName.value, email.value, photo75, d.toString());
   //reset form
   form.reset();
   let previewimg = document.getElementById("photo75img");
@@ -37,7 +38,7 @@ form.addEventListener("submit", (e) => {
 }
 );
 //adds the sketch to the firebase
-export const add75 = async function(firstName, lastName, email, photo75){
+export const add75 = async function(firstName, lastName, email, photo75, date){
 
   const databaseItems = await getDocs(collection(db, "runway"));
   try {
@@ -55,7 +56,8 @@ export const add75 = async function(firstName, lastName, email, photo75){
                     const itemToUpdate = doc(db, "runway", item.id);
                     console.log("updating doc");
                     updateDoc(itemToUpdate, {
-                      photo75: photo75
+                      photo75: photo75,
+                      seventyFiveDate : date
                     });
                     console.log("hello");
                     added = true;
@@ -73,6 +75,7 @@ export const add75 = async function(firstName, lastName, email, photo75){
           email:email,
           sketch: "",
           photo25: "",
+          seventyFiveDate : date,
           photo50: "",
           photo75: photo75,
           catwalk: "",
