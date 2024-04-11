@@ -1,8 +1,9 @@
+
 // Import Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
 // TODO: import libraries for Cloud Firestore Database
 // https://firebase.google.com/docs/firestore
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-storage.js";
 
 const firebaseConfig = {
@@ -42,30 +43,20 @@ form.addEventListener("submit", (e) => {
 );
 //adds the sketch to the firebase
 export const addSketch = async function(firstName, lastName, email, sketch, date){
-
-  const databaseItems = await getDocs(collection(db, "runway"));
+  const q = query(collection(db, "runway"), where("date", "==", null), where("isPublic", "==", false), where("firstName".toLowerCase(), "==", firstName.toLowerCase()), where("lastName".toLowerCase(), "==", lastName.toLowerCase()), where("email".toLowerCase(), "==", email.toLowerCase()));
+  const querySnapshot = await getDocs(q);
   try {
       var added = false;
-      databaseItems.forEach((item) => {
-        console.log(item.id);
-        if (item.id != "password" && item.id != "admin-password"  
-            && !item.id.includes("Date")){
-                if (item.data().isPublic == false) {
-                  console.log(item.data().lastName.toLowerCase(), item.data().firstName.toLowerCase(), item.data().email.toLowerCase());
-                  console.log(lastName.toLowerCase(), firstName.toLowerCase(), email.toLowerCase());
-                  if (item.data().firstName.toLowerCase().includes(firstName.toLowerCase()) &&
-                item.data().lastName.toLowerCase().includes(lastName.toLowerCase()) &&     
-                item.data().email.toLowerCase().includes(email.toLowerCase())){
-                    const itemToUpdate = doc(db, "runway", item.id);
-                    console.log("updating doc");
-                    updateDoc(itemToUpdate, {
-                      sketch: sketch,
-                      sketchDate : date
-                    });
-                    added = true;
+      querySnapshot.forEach((item) => {
+        if (item.id != "password" && item.id != "admin-password"  ){
+          const itemToUpdate = doc(db, "runway", item.id);
+          console.log("updating doc");
+          updateDoc(itemToUpdate, {
+            sketch: sketch,
+            sketchDate : date
+          });
+          added = true;
         }
-      }
-      }
       });
       console.log(added);
       if (added == false) {
@@ -146,4 +137,3 @@ fileInput.addEventListener('change', (event) => {
 //     databaseItems.forEach((item) => {
 //       deleteDoc(doc(db, "runway", item.id));
 //     });
-
