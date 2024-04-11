@@ -39,15 +39,19 @@ form.addEventListener("submit", (e) => {
 );
 //adds the sketch to the firebase
 export const add75 = async function(firstName, lastName, email, photo75, date){
-
-  const q = query(collection(db, "runway"), where("date", "==", null), where("isPublic", "==", false), where("firstName".toLowerCase(), "==", firstName.toLowerCase()), where("lastName".toLowerCase(), "==", lastName.toLowerCase()), where("email".toLowerCase(), "==", email.toLowerCase()));
-  const querySnapshot = await getDocs(q);
+ var firstNameLocal = firstName.toLowerCase();
+  var lastNameLocal = lastName.toLowerCase();
+  var emailLocal = email.toLowerCase();
+  console.log(firstNameLocal,lastNameLocal, emailLocal);
   try {
       var added = false;
+      const q = query(collection(db, "runway"), where("isPublic", "==", false), where("firstName", "==", firstNameLocal), where("lastName", "==", lastNameLocal), where("email", "==", emailLocal));
+      console.log(q);
+      const querySnapshot = await getDocs(q);
       querySnapshot.forEach((item) => {
         if (item.id != "password" && item.id != "admin-password"  ){
-                    const itemToUpdate = doc(db, "runway", item.id);
-                    console.log("updating doc");
+          const itemToUpdate = doc(db, "runway", item.id);
+          console.log("updating doc");
                     updateDoc(itemToUpdate, {
                       photo75: photo75,
                       seventyFiveDate : date
