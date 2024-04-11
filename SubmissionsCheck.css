@@ -99,7 +99,7 @@ html{
   }
   
   /* sets positioning settings to the garment divs */
-  #garments{
+  #SubmissionsCheck{
   display: flex;
   align-items: center;
   justify-content: center;
