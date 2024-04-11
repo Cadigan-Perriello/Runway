@@ -1,10 +1,7 @@
 /* sets the color of the background */
 html{
   background-image: url('pastrunway.png'); 
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  background-position: center;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 h1{
@@ -46,6 +43,13 @@ flex-direction: column;
   background-color: inherit;
   font-family: inherit;
   margin: 0;
+}
+
+.navbar.menu{
+  float: center;
+}
+.navbar.dropdown{
+  float: center;
 }
 .dropdown-content {
   display: none;
@@ -213,10 +217,7 @@ text-decoration: none;
 
 /*styles the close button on the sidenav*/
 .close_button{
-  width: 230px; 
-  padding-top: 25px; 
-  padding-bottom: 7px; 
-  background-color: white;
+  margin-top: 40px;
 }
 
 #filter_search {
