@@ -117,15 +117,15 @@ export const showProgressItems = async function(progressProfiles){
         } else {
           submissionDateSketch = "";
         }
-        sketch.innerHTML = "Sketch Deadline Date:" + "<br>" + sketchSnap.data().date + "<br>" + "Submission Date:" + "<br>" + submissionDateSketch;
+        // "Sketch Deadline Date:" + "<br>" + sketchSnap.data().date + "<br>" +
+        sketch.innerHTML = "Submission Date:" + "<br>" + submissionDateSketch;
         if (progressProfiles[i+3] != "" ) {
           var deleteSketch = document.createElement("button");
           deleteSketch.setAttribute('id', "deleteSketch");
-          deleteSketch.setAttribute("class", "submissionDelete");
           deleteSketch.innerText = "X";
           deleteSketch.onclick = function() {
             if(confirm("Remove " + progressProfiles[i] + "'s sketch?") == true) {
-            deleteSubmission(progressProfiles[i+3]);
+            deleteSubmission(progressProfiles[i+3], i, progressProfiles);
             }
           }
           sketch.appendChild(deleteSketch);
@@ -145,21 +145,21 @@ export const showProgressItems = async function(progressProfiles){
         } else {
           submissionDate25 = "";
         }
-        twenty_five.innerHTML ="25% Deadline Date:" + "<br>" + twentyFiveSnap.data().date + "<br>" + "Submission Date:" + "<br>" + submissionDate25;
+        // "25% Deadline Date:" + "<br>" + twentyFiveSnap.data().date + "<br>" + 
+        twenty_five.innerHTML ="Submission Date:" + "<br>" + submissionDate25;
          if (progressProfiles[i+4] != "" ) {
           var delete25 = document.createElement("button");
           delete25.setAttribute('id', "delete25");
-          delete25.setAttribute("class", "submissionDelete");
-          delete25.innerText = "Delete Submission:"
+          delete25.innerText = "X"
           delete25.onclick = function() {
             if(confirm("Remove " + progressProfiles[i] + "'s 25% photo?") == true) {
-              deleteSubmission(progressProfiles[i+4]);
+              deleteSubmission(progressProfiles[i+4], i, progressProfiles);
           }
           }
+          twenty_five.appendChild(delete25);
           var twenty_five_img = document.createElement("img");
           twenty_five_img.src = progressProfiles[i+4];
           twenty_five.appendChild(twenty_five_img);
-          twenty_five.appendChild(delete25);
          }
          row.appendChild(twenty_five);
       
@@ -172,16 +172,15 @@ export const showProgressItems = async function(progressProfiles){
         } else {
           submissionDate50 = "";
         }
-        fifty.innerHTML = "50% Deadline Date:" + "<br>" + fiftySnap.data().date + "<br>" + "Submission Date:" + "<br>" + submissionDate50;
+        // "50% Deadline Date:" + "<br>" + fiftySnap.data().date + "<br>" +
+        fifty.innerHTML = "Submission Date:" + "<br>" + submissionDate50;
         if (progressProfiles[i+5] != "" ) {
           var delete50 = document.createElement("button");
           delete50.setAttribute('id', "delete50");
-          delete50.setAttribute("class", "submissionDelete");
-
           delete50.innerText = "X"
           delete50.onclick = function() {
             if(confirm("Remove " + progressProfiles[i] + "'s 50% photo?") == true) {
-              deleteSubmission(progressProfiles[i+5]);
+              deleteSubmission(progressProfiles[i+5], i, progressProfiles);
           }
           }
           fifty.appendChild(delete50);
@@ -194,26 +193,24 @@ export const showProgressItems = async function(progressProfiles){
         // row.appendChild(document.createElement("br"));
         //creates a new div for the row containing the seventy five percent completion photo. We then check if there is an image submitted, and if so, it created a new image for the 75 photo and added it to the 75 photo div.
         var seventy_five  = document.createElement("div");
-        var tileText = document.createElement("p");
         seventy_five.setAttribute('class', "tile");
         if (progressProfiles[i+12] != null){
           var submissionDate75 = progressProfiles[i+12].substring(0,21) 
         } else {
-          submissionDate75 = ""; 
+          submissionDate75 = "";
         }
-        tileText.innerHTML = "Submission Date:" + "<br>" + submissionDate75;
+        // "75% Deadline Date:" + "<br>" + seventyFiveSnap.data().date + "<br>" + 
+        seventy_five.innerHTML = "Submission Date:" + "<br>" + submissionDate75;
         if (progressProfiles[i+6] != "" ) {
           var delete75 = document.createElement("button");
           delete75.setAttribute('id', "delete75");
-          delete75.setAttribute("class", "submissionDelete");
-          delete75.innerText = "Delete Submission";
+          delete75.innerText = "X"
           delete75.onclick = function() {
             if(confirm("Remove " + progressProfiles[i] + "'s 75% photo?") == true) {
-              deleteSubmission(progressProfiles[i+6]);
+              deleteSubmission(progressProfiles[i+6], i, progressProfiles);
           }
           }
           seventy_five.appendChild(delete75);
-          seventy_five.appendChild(tileText);
           var seventy_five_img = document.createElement("img");
           seventy_five_img.src = progressProfiles[i+6];
           seventy_five.appendChild(seventy_five_img);
@@ -240,8 +237,7 @@ export const showProgressItems = async function(progressProfiles){
 
          var deleteProfile = document.createElement("button");
          deleteProfile.setAttribute('id', "deleteProfile");
-         deleteProfile.setAttribute("class", "profileDelete");
-         deleteProfile.innerText = "Delete Profile";
+         deleteProfile.innerText = "X";
          deleteProfile.onclick = async function() {
           if(confirm("Remove " + progressProfiles[i] + "'s profile?") == true) {
              console.log("removing profile");
