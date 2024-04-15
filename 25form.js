@@ -49,7 +49,6 @@ export const add25 = async function(firstName, lastName, email, photo25, date){
       console.log(q);
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((item) => {
-        if (item.id != "password" && item.id != "admin-password"  ){
           const itemToUpdate = doc(db, "runway", item.id);
           console.log("updating doc");
                     updateDoc(itemToUpdate, {
@@ -57,15 +56,14 @@ export const add25 = async function(firstName, lastName, email, photo25, date){
                       twentyFiveDate : date
                     });
                     added = true;
-      }
       });
       console.log(added);
       if (added == false) {
         console.log("adding doc");
         const docRef = await addDoc(collection(db, "runway"), {
-          firstName: firstName,
-          lastName:lastName,
-          email:email,
+          firstName: firstNameLocal,
+          lastName:lastNameLocal,
+          email:emailLocal,
           sketch: "",
           photo25: photo25,
           twentyFiveDate : date,
