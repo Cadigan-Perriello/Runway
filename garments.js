@@ -243,7 +243,7 @@ export const displayEvents = async function(){
     var row = document.createElement("div");
     row.setAttribute('class', "sidenav_row");
     var description = document.createElement("p");
-    description.innerHTML = "add Event";
+    description.innerHTML = "Add Event";
     var name_event = document.createElement("input");
     name_event.placeholder = "event name";
     name_event.setAttribute ('type', "text");
