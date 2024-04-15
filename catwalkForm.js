@@ -50,7 +50,6 @@ export const addCatwalk = async function(firstName, lastName, email, catwalk, ca
       const q = query(collection(db, "runway"), where("isPublic", "==", false), where("firstName", "==", firstNameLocal), where("lastName", "==", lastNameLocal), where("email", "==", emailLocal));
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((item) => {
-        if (item.id != "password" && item.id != "admin-password"  ){
                     const itemToUpdate = doc(db, "runway", item.id);
                     console.log("updating doc");
                     updateDoc(itemToUpdate, {
@@ -59,15 +58,14 @@ export const addCatwalk = async function(firstName, lastName, email, catwalk, ca
                       catwalkLink: catwalkLink
                     });
                     added = true;
-      }
       });
       console.log(added);
       if (added == false) {
         console.log("adding doc");
         const docRef = await addDoc(collection(db, "runway"), {
-          firstName: firstName,
-          lastName:lastName,
-          email:email,
+          firstName: firstNameLocal,
+          lastName:lastNameLocal,
+          email:emailLocal,
           sketch: "",
           photo25: "",
           photo50: "",
