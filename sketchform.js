@@ -50,10 +50,8 @@ export const addSketch = async function(firstName, lastName, email, sketch, date
   try {
       var added = false;
       const q = query(collection(db, "runway"), where("isPublic", "==", false), where("firstName", "==", firstNameLocal), where("lastName", "==", lastNameLocal), where("email", "==", emailLocal));
-      console.log(q);
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((item) => {
-        if (item.id != "password" && item.id != "admin-password"  ){
           const itemToUpdate = doc(db, "runway", item.id);
           console.log("updating doc");
           updateDoc(itemToUpdate, {
@@ -61,15 +59,15 @@ export const addSketch = async function(firstName, lastName, email, sketch, date
             sketchDate : date
           });
           added = true;
-        }
+        
       });
       console.log(added);
       if (added == false) {
         console.log("adding doc");
         const docRef = await addDoc(collection(db, "runway"), {
-          firstName: firstName,
-          lastName:lastName,
-          email:email,
+          firstName: firstNameLocal,
+          lastName:lastNameLocal,
+          email: emailLocal,
           sketch: sketch,
           sketchDate:date,
           photo25: "",
