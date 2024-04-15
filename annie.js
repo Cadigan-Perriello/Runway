@@ -64,9 +64,11 @@ export const showProgressItems = async function(progressProfiles){
       if (progressProfiles[i].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) || progressProfiles[i+1].toLowerCase().includes(document.getElementById("filter_search").value.toLowerCase()) ){ //search bar for Garments
                     
 //creates a new div for the row containing the name. We then added the name to the innerHTML of the div. 
-        
+
         var row = document.createElement("div");
            row.setAttribute('class', "row");
+        
+           
         var info = document.createElement("div");
         info.setAttribute('class', "tile");
         var name = document.createElement("h1");
@@ -122,16 +124,17 @@ export const showProgressItems = async function(progressProfiles){
         if (progressProfiles[i+3] != "" ) {
           var deleteSketch = document.createElement("button");
           deleteSketch.setAttribute('id', "deleteSketch");
-          deleteSketch.innerText = "X";
+          deleteSketch.setAttribute("class", "submissionDelete");
+          deleteSketch.innerText = "Delete Submission";
           deleteSketch.onclick = function() {
             if(confirm("Remove " + progressProfiles[i] + "'s sketch?") == true) {
             deleteSubmission(progressProfiles[i+3], i, progressProfiles);
             }
           }
-          sketch.appendChild(deleteSketch);
           var sketch_img = document.createElement("img");
           sketch_img.src = progressProfiles[i+3];
           sketch.appendChild(sketch_img);
+          sketch.appendChild(deleteSketch);
         }
         row.appendChild(sketch);
   
@@ -150,16 +153,17 @@ export const showProgressItems = async function(progressProfiles){
          if (progressProfiles[i+4] != "" ) {
           var delete25 = document.createElement("button");
           delete25.setAttribute('id', "delete25");
-          delete25.innerText = "X"
+          delete25.setAttribute("class", "submissionDelete");
+          delete25.innerText = "Delete Submission"
           delete25.onclick = function() {
             if(confirm("Remove " + progressProfiles[i] + "'s 25% photo?") == true) {
               deleteSubmission(progressProfiles[i+4], i, progressProfiles);
           }
           }
-          twenty_five.appendChild(delete25);
           var twenty_five_img = document.createElement("img");
           twenty_five_img.src = progressProfiles[i+4];
           twenty_five.appendChild(twenty_five_img);
+          twenty_five.appendChild(delete25);
          }
          row.appendChild(twenty_five);
       
@@ -177,16 +181,17 @@ export const showProgressItems = async function(progressProfiles){
         if (progressProfiles[i+5] != "" ) {
           var delete50 = document.createElement("button");
           delete50.setAttribute('id', "delete50");
-          delete50.innerText = "X"
+          delete50.setAttribute("class", "submissionDelete");
+          delete50.innerText = "Delete Submission"
           delete50.onclick = function() {
             if(confirm("Remove " + progressProfiles[i] + "'s 50% photo?") == true) {
               deleteSubmission(progressProfiles[i+5], i, progressProfiles);
           }
           }
-          fifty.appendChild(delete50);
           var fifty_img = document.createElement("img");
           fifty_img.src = progressProfiles[i+5];
           fifty.appendChild(fifty_img);
+          fifty.appendChild(delete50);
         }
         row.appendChild(fifty);
     
@@ -204,16 +209,18 @@ export const showProgressItems = async function(progressProfiles){
         if (progressProfiles[i+6] != "" ) {
           var delete75 = document.createElement("button");
           delete75.setAttribute('id', "delete75");
-          delete75.innerText = "X"
+          delete75.setAttribute("class", "submissionDelete");
+          delete75.innerText = "Delete Submission";
           delete75.onclick = function() {
             if(confirm("Remove " + progressProfiles[i] + "'s 75% photo?") == true) {
               deleteSubmission(progressProfiles[i+6], i, progressProfiles);
           }
           }
-          seventy_five.appendChild(delete75);
+          //seventy_five.appendChild(delete75);
           var seventy_five_img = document.createElement("img");
           seventy_five_img.src = progressProfiles[i+6];
           seventy_five.appendChild(seventy_five_img);
+          seventy_five.appendChild(delete75);
         }
         row.appendChild(seventy_five);
     
@@ -233,11 +240,10 @@ export const showProgressItems = async function(progressProfiles){
 
           }
 
-       annie_garments.appendChild(row);
-
          var deleteProfile = document.createElement("button");
          deleteProfile.setAttribute('id', "deleteProfile");
-         deleteProfile.innerText = "X";
+         deleteProfile.setAttribute("class", "profileDelete");
+         deleteProfile.innerText = "Delete Profile";
          deleteProfile.onclick = async function() {
           if(confirm("Remove " + progressProfiles[i] + "'s profile?") == true) {
              console.log("removing profile");
@@ -254,6 +260,8 @@ export const showProgressItems = async function(progressProfiles){
            }
           }
            row.appendChild(deleteProfile);
+           
+           annie_garments.appendChild(row);
     }
   }
 
@@ -275,7 +283,7 @@ async function deleteSubmission(submission){
               });
           } else if (item.data().photo25 == submission){
             console.log("deleting 25..." + item.data().photo25);
-            updateDoc(itemToComplete, {
+            updateDoc(itemToComplete, { 
               photo25: "",
               twentyFiveDate: ""
               });
