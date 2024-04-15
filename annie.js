@@ -117,7 +117,8 @@ export const showProgressItems = async function(progressProfiles){
         } else {
           submissionDateSketch = "";
         }
-        sketch.innerHTML = "Sketch Deadline Date:" + "<br>" + sketchSnap.data().date + "<br>" + "Submission Date:" + "<br>" + submissionDateSketch;
+        // "Sketch Deadline Date:" + "<br>" + sketchSnap.data().date + "<br>" +
+        sketch.innerHTML = "Submission Date:" + "<br>" + submissionDateSketch;
         if (progressProfiles[i+3] != "" ) {
           var deleteSketch = document.createElement("button");
           deleteSketch.setAttribute('id', "deleteSketch");
@@ -144,7 +145,8 @@ export const showProgressItems = async function(progressProfiles){
         } else {
           submissionDate25 = "";
         }
-        twenty_five.innerHTML ="25% Deadline Date:" + "<br>" + twentyFiveSnap.data().date + "<br>" + "Submission Date:" + "<br>" + submissionDate25;
+        // "25% Deadline Date:" + "<br>" + twentyFiveSnap.data().date + "<br>" + 
+        twenty_five.innerHTML ="Submission Date:" + "<br>" + submissionDate25;
          if (progressProfiles[i+4] != "" ) {
           var delete25 = document.createElement("button");
           delete25.setAttribute('id', "delete25");
@@ -170,7 +172,8 @@ export const showProgressItems = async function(progressProfiles){
         } else {
           submissionDate50 = "";
         }
-        fifty.innerHTML = "50% Deadline Date:" + "<br>" + fiftySnap.data().date + "<br>" + "Submission Date:" + "<br>" + submissionDate50;
+        // "50% Deadline Date:" + "<br>" + fiftySnap.data().date + "<br>" +
+        fifty.innerHTML = "Submission Date:" + "<br>" + submissionDate50;
         if (progressProfiles[i+5] != "" ) {
           var delete50 = document.createElement("button");
           delete50.setAttribute('id', "delete50");
@@ -196,7 +199,8 @@ export const showProgressItems = async function(progressProfiles){
         } else {
           submissionDate75 = "";
         }
-        seventy_five.innerHTML = "75% Deadline Date:" + "<br>" + seventyFiveSnap.data().date + "<br>" + "Submission Date:" + "<br>" + submissionDate75;
+        // "75% Deadline Date:" + "<br>" + seventyFiveSnap.data().date + "<br>" + 
+        seventy_five.innerHTML = "Submission Date:" + "<br>" + submissionDate75;
         if (progressProfiles[i+6] != "" ) {
           var delete75 = document.createElement("button");
           delete75.setAttribute('id', "delete75");
