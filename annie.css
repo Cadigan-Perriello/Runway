@@ -234,7 +234,7 @@ text-decoration: none;
 /*styles the close button on the sidenav*/
 .close_button{
   width: 230px; 
-  padding-top: 25px; 
+  padding-top: 40px; 
   padding-bottom: 7px; 
   background-color: white;
  font-family:'Tilt Prism';
