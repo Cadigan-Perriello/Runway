@@ -1,5 +1,5 @@
 .logo{
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:'Tilt Prism';
   color:#793140;
   font-weight: 800;
   background-color: white;
@@ -16,7 +16,7 @@ html{
   background-position: center;
   color: white;
   font-size: 20px;
-    font-family: Arial, Helvetica, sans-serif;
+  font-family:'Tilt Prism';
 
 }
 .dropdown {
@@ -70,7 +70,7 @@ html{
 
 /* sets font, text alignment, padding, and display for the home page */
 body{
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family:'Tilt Prism';
   text-align: center;
   padding-bottom: 15px;
   min-height: 100vh;
