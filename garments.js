@@ -232,7 +232,7 @@ export const displayEvents = async function(){
   var Sidenav = document.getElementById("mySidenav");
     Sidenav.innerHTML="";
     var closeButton = document.createElement('button');
-    closeButton.innerHTML = "close"
+    closeButton.innerHTML = "Close"
     closeButton.setAttribute ('class', "close_button");
     closeButton.addEventListener('click', () => {
         document.getElementById("mySidenav").style.width = "0";
@@ -278,7 +278,7 @@ export const displayEvents = async function(){
         info.placeholder = "additional information";
         info.setAttribute('type', "text");
         const submitButton = document.createElement('button');
-        submitButton.textContent = 'submit';
+        submitButton.textContent = 'Submit';
         submitButton.addEventListener('click', () => {
           console.log("New button clicked!");
           changeDate(date, info, item.id);
