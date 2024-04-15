@@ -97,7 +97,7 @@ text-align: left;
 aspect-ratio: 1 / 1;
  width: 97%; 
 min-width: 300px;
-height: 400px;
+height: 425px;
 color: white;
 border: #793140;
 background-color: black;
@@ -118,7 +118,7 @@ margin-top: 4%;
 
 .tile{
 min-height: 5%;
-height: 350px;
+height: 325px;
 /* max-height: 10%; */
 width: 18%;
 border-radius: 5%;
