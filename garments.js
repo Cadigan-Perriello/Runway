@@ -245,15 +245,15 @@ export const displayEvents = async function(){
     var description = document.createElement("p");
     description.innerHTML = "Add Event";
     var name_event = document.createElement("input");
-    name_event.placeholder = "event name";
+    name_event.placeholder = "Event Name";
     name_event.setAttribute ('type', "text");
     var date_event = document.createElement("input");
     date_event.setAttribute ('type', "date");
     var info_event = document.createElement("input");
-    info_event.placeholder = "additional information"
+    info_event.placeholder = "Additional Information"
     info_event.setAttribute ('type', "text");
     const addEventButton = document.createElement('button');
-    addEventButton.textContent = 'addEvent';
+    addEventButton.textContent = 'Add Event';
     addEventButton.addEventListener('click', () => {
       console.log ("adding Event");
       addEvent(name_event, date_event, info_event);
@@ -284,7 +284,7 @@ export const displayEvents = async function(){
           changeDate(date, info, item.id);
         });
         const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'delete event';
+        deleteButton.textContent = 'Delete Event';
         deleteButton.addEventListener('click', () =>{
           console.log("deleting event");
           deleteDoc(doc(db, "runway", (item.id)))
