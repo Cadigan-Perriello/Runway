@@ -2,7 +2,7 @@ html {
   height: 100%;
   width: 100%;
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:'Tilt Prism';
 }
 .navbar.menu{
   float: center;
@@ -86,7 +86,7 @@ html {
   margin-top: 50%;
   margin-left: 12%;
   margin-bottom: 50%; 
-  font-family: Georgia;
+  font-family:'Tilt Prism';
   float: left;
   color: black;
   text-align: center;
