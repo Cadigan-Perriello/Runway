@@ -48,7 +48,7 @@ export const add50 = async function(firstName, lastName, email, photo50, date){
       //query for name and email that match will the submitted form  
       const q = query(collection(db, "runway"), where("isPublic", "==", false), where("firstName", "==", firstNameLocal), where("lastName", "==", lastNameLocal), where("email", "==", emailLocal));
       const querySnapshot = await getDocs(q);
-      //if there's a match, update the firebase document with the new 25% photo and date
+      //if there's a match, update the firebase document with the new 50% photo and date
       querySnapshot.forEach((item) => {
           const itemToUpdate = doc(db, "runway", item.id);
                     updateDoc(itemToUpdate, {
@@ -57,7 +57,7 @@ export const add50 = async function(firstName, lastName, email, photo50, date){
                     });
                     added = true;
       });
-      //if query returns no match (no matching name and email in the firebase), add a new document to the firebase with the submitted name, email, 25 image, and submission date
+      //if query returns no match (no matching name and email in the firebase), add a new document to the firebase with the submitted name, email, 50 image, and submission date
       if (added == false) {
         console.log("adding doc");
         const docRef = await addDoc(collection(db, "runway"), {
