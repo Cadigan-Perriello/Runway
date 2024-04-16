@@ -126,7 +126,6 @@ export const showProgressItems = async function(progressProfiles){
           var sketch_img = document.createElement("img");
           sketch_img.src = progressProfiles[i+3];
           sketch.appendChild(sketch_img);
-          sketch.appendChild(deleteSketch);
         }
         row.appendChild(sketch);
   
@@ -147,7 +146,6 @@ export const showProgressItems = async function(progressProfiles){
           var twenty_five_img = document.createElement("img");
           twenty_five_img.src = progressProfiles[i+4];
           twenty_five.appendChild(twenty_five_img);
-          twenty_five.appendChild(delete25);
          }
          row.appendChild(twenty_five);
       
@@ -166,7 +164,6 @@ export const showProgressItems = async function(progressProfiles){
           var fifty_img = document.createElement("img");
           fifty_img.src = progressProfiles[i+5];
           fifty.appendChild(fifty_img);
-          fifty.appendChild(delete50);
         }
         row.appendChild(fifty);
     
@@ -185,7 +182,6 @@ export const showProgressItems = async function(progressProfiles){
           var seventy_five_img = document.createElement("img");
           seventy_five_img.src = progressProfiles[i+6];
           seventy_five.appendChild(seventy_five_img);
-          seventy_five.appendChild(delete75);
         }
         row.appendChild(seventy_five);
     
