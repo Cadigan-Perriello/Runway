@@ -123,15 +123,6 @@ export const showProgressItems = async function(progressProfiles){
         // "Sketch Deadline Date:" + "<br>" + sketchSnap.data().date + "<br>" +
         sketch.innerHTML = "Sketch:";
         if (progressProfiles[i+3] != "" ) {
-          var deleteSketch = document.createElement("button");
-          deleteSketch.setAttribute('id', "deleteSketch");
-          deleteSketch.setAttribute("class", "submissionDelete");
-          deleteSketch.innerText = "Delete Submission";
-          deleteSketch.onclick = function() {
-            if(confirm("Remove " + progressProfiles[i] + "'s sketch?") == true) {
-            deleteSubmission(progressProfiles[i+3], i, progressProfiles);
-            }
-          }
           var sketch_img = document.createElement("img");
           sketch_img.src = progressProfiles[i+3];
           sketch.appendChild(sketch_img);
@@ -152,15 +143,7 @@ export const showProgressItems = async function(progressProfiles){
         // "25% Deadline Date:" + "<br>" + twentyFiveSnap.data().date + "<br>" + 
         twenty_five.innerHTML ="25% Photo";
          if (progressProfiles[i+4] != "" ) {
-          var delete25 = document.createElement("button");
-          delete25.setAttribute('id', "delete25");
-          delete25.setAttribute("class", "submissionDelete");
-          delete25.innerText = "Delete Submission"
-          delete25.onclick = function() {
-            if(confirm("Remove " + progressProfiles[i] + "'s 25% photo?") == true) {
-              deleteSubmission(progressProfiles[i+4], i, progressProfiles);
-          }
-          }
+      
           var twenty_five_img = document.createElement("img");
           twenty_five_img.src = progressProfiles[i+4];
           twenty_five.appendChild(twenty_five_img);
@@ -180,15 +163,6 @@ export const showProgressItems = async function(progressProfiles){
         // "50% Deadline Date:" + "<br>" + fiftySnap.data().date + "<br>" +
         fifty.innerHTML = "50% Photo";
         if (progressProfiles[i+5] != "" ) {
-          var delete50 = document.createElement("button");
-          delete50.setAttribute('id', "delete50");
-          delete50.setAttribute("class", "submissionDelete");
-          delete50.innerText = "Delete Submission"
-          delete50.onclick = function() {
-            if(confirm("Remove " + progressProfiles[i] + "'s 50% photo?") == true) {
-              deleteSubmission(progressProfiles[i+5], i, progressProfiles);
-          }
-          }
           var fifty_img = document.createElement("img");
           fifty_img.src = progressProfiles[i+5];
           fifty.appendChild(fifty_img);
@@ -208,16 +182,6 @@ export const showProgressItems = async function(progressProfiles){
         // "75% Deadline Date:" + "<br>" + seventyFiveSnap.data().date + "<br>" + 
         seventy_five.innerHTML = "75% Photo";
         if (progressProfiles[i+6] != "" ) {
-          var delete75 = document.createElement("button");
-          delete75.setAttribute('id', "delete75");
-          delete75.setAttribute("class", "submissionDelete");
-          delete75.innerText = "Delete Submission";
-          delete75.onclick = function() {
-            if(confirm("Remove " + progressProfiles[i] + "'s 75% photo?") == true) {
-              deleteSubmission(progressProfiles[i+6], i, progressProfiles);
-          }
-          }
-          //seventy_five.appendChild(delete75);
           var seventy_five_img = document.createElement("img");
           seventy_five_img.src = progressProfiles[i+6];
           seventy_five.appendChild(seventy_five_img);
