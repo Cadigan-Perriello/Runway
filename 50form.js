@@ -83,7 +83,7 @@ const fileInput = document.getElementById('photo50');
 
 //when a photo is uploaded on the 50 form
  fileInput.addEventListener('change', (event) => {
-  // Get the selected image file and disable it, so they can't submit the form until the photo is uploaded to firestore
+  // Get the selected image file and disable the submit button, so they can't submit the form until the photo is uploaded to firestore
   const imageFile = event.target.files[0];
   if (imageFile) {
     document.getElementById('submit50').setAttribute('disabled', 'true');
