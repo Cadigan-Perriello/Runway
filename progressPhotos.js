@@ -121,7 +121,7 @@ export const showProgressItems = async function(progressProfiles){
           submissionDateSketch = "";
         }
         // "Sketch Deadline Date:" + "<br>" + sketchSnap.data().date + "<br>" +
-        sketch.innerHTML = "Submission Date:" + "<br>" + submissionDateSketch;
+        sketch.innerHTML = "Sketch:";
         if (progressProfiles[i+3] != "" ) {
           var deleteSketch = document.createElement("button");
           deleteSketch.setAttribute('id', "deleteSketch");
@@ -150,7 +150,7 @@ export const showProgressItems = async function(progressProfiles){
           submissionDate25 = "";
         }
         // "25% Deadline Date:" + "<br>" + twentyFiveSnap.data().date + "<br>" + 
-        twenty_five.innerHTML ="Submission Date:" + "<br>" + submissionDate25;
+        twenty_five.innerHTML ="25% Photo";
          if (progressProfiles[i+4] != "" ) {
           var delete25 = document.createElement("button");
           delete25.setAttribute('id', "delete25");
@@ -178,7 +178,7 @@ export const showProgressItems = async function(progressProfiles){
           submissionDate50 = "";
         }
         // "50% Deadline Date:" + "<br>" + fiftySnap.data().date + "<br>" +
-        fifty.innerHTML = "Submission Date:" + "<br>" + submissionDate50;
+        fifty.innerHTML = "50% Photo";
         if (progressProfiles[i+5] != "" ) {
           var delete50 = document.createElement("button");
           delete50.setAttribute('id', "delete50");
@@ -206,7 +206,7 @@ export const showProgressItems = async function(progressProfiles){
           submissionDate75 = "";
         }
         // "75% Deadline Date:" + "<br>" + seventyFiveSnap.data().date + "<br>" + 
-        seventy_five.innerHTML = "Submission Date:" + "<br>" + submissionDate75;
+        seventy_five.innerHTML = "75% Photo";
         if (progressProfiles[i+6] != "" ) {
           var delete75 = document.createElement("button");
           delete75.setAttribute('id', "delete75");
@@ -240,71 +240,5 @@ export const showProgressItems = async function(progressProfiles){
         //    garments.appendChild(final_row)
 
           }
-
-         var deleteProfile = document.createElement("button");
-         deleteProfile.setAttribute('id', "deleteProfile");
-         deleteProfile.setAttribute("class", "profileDelete");
-         deleteProfile.innerText = "Delete Profile";
-         deleteProfile.onclick = async function() {
-          if(confirm("Remove " + progressProfiles[i] + "'s profile?") == true) {
-             console.log("removing profile");
-            const q = query(collection(db, "runway"), where("isPublic", "==", false), where("firstName", "==", progressProfiles[i]), where("lastName", "==", progressProfiles[i+1]), where("email", "==", progressProfiles[i+2]));
-            const querySnapshot = await getDocs(q);
-            querySnapshot.forEach((item) => {
-               if (item.id != "password" && item.id != "admin-password"){
-                   deleteDoc(doc(db, "runway", item.id));
-                   sessionStorage.clear();
-                   getProgressData();
-                   return;
-               }
-             })
-           }
-          }
-           row.appendChild(deleteProfile);
-           
-           annie_garments.appendChild(row);
-    }
-  }
-
-
-async function deleteSubmission(submission){
-    console.log(submission);
-    const q = query(collection(db, "runway"), where("isPublic", "==", false));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((item) => {
-      if (item.id != "password" && item.id != "admin-password"){
-        if (item.data().sketch == submission || item.data().photo25 == submission || item.data().photo50 == submission || item.data().photo75  == submission) {
-          console.log("removing submission...id: " + item.id);
-          const itemToComplete = doc(db, "runway", item.id);
-          if (item.data().sketch == submission){
-            console.log("deleting sketch..." + item.data().sketch);
-            updateDoc(itemToComplete, {
-              sketch: "",
-              sketchDate: ""
-              });
-          } else if (item.data().photo25 == submission){
-            console.log("deleting 25..." + item.data().photo25);
-            updateDoc(itemToComplete, { 
-              photo25: "",
-              twentyFiveDate: ""
-              });
-          } else if (item.data().photo50 == submission){
-            console.log("deleting 50..." + item.data().photo50);
-            updateDoc(itemToComplete, {
-              photo50: "",
-              fiftyDate: ""
-              });
-          } else if (item.data().photo75 == submission){
-            console.log("deleting 75..." + item.data().photo75);
-            updateDoc(itemToComplete, {
-              photo75: "",
-              seventyFiveDate: ""
-              });
-          }
-          sessionStorage.clear();
-          getProgressData();
-          return;
-        }
-      }
     })
 }
