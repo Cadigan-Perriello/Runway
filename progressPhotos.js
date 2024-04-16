@@ -240,5 +240,5 @@ export const showProgressItems = async function(progressProfiles){
         //    garments.appendChild(final_row)
 
           }
-    })
+    }
 }
