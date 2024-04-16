@@ -73,8 +73,9 @@ export const showProgressItems = async function(progressProfiles){
         info.setAttribute('class', "tile");
         var name = document.createElement("h1");
           name.innerHTML = progressProfiles[i] + " " + progressProfiles[i+1].substring(0,1) + "  ";
-        var email = document.createElement("p");
+        var email = document.createElement("a");
           email.innerHTML = progressProfiles[i+2];
+          email.href = "mailto:"+ progressProfiles[i+2];
         //email.for = item.id;
         var catwalkLabel = document.createElement("h3");
           catwalkLabel.innerHTML = "Song Choice:";

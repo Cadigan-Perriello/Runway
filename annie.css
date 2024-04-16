@@ -28,6 +28,12 @@ html{
     font-size: 14px;
      font-family:'Tilt Prism';
   }
+  .tile a {
+    cursor: pointer;
+      text-align: center;
+      font-size: 14px;
+       font-family:'Tilt Prism';
+  }
 
  #setDates{
    padding-top: 80px; 
