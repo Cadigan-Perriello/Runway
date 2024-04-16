@@ -19,7 +19,7 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 
 var photo50 = "";
-
+//create form
 let form = document.getElementById("50form");
 //runs the below code when form is submitted
 form.addEventListener("submit", (e) => {
@@ -29,36 +29,35 @@ form.addEventListener("submit", (e) => {
   var d = new Date();
   let lastName = document.getElementById("lastName50");
   let email = document.getElementById("email50");
-  //creates sketch object from the above variables
+  //run function that adds above variables to the firebase
    add50(firstName.value, lastName.value, email.value, photo50, d.toString());
-  //reset form
+  //reset form so information clears after submission
   form.reset();
+  //set picture that shows up under form
   let previewimg = document.getElementById("photo50img");
   previewimg.style.display = "none";
 }
 );
-//adds the sketch to the firebase
+//adds the image to the firebase
 export const add50 = async function(firstName, lastName, email, photo50, date){
  var firstNameLocal = firstName.toLowerCase();
   var lastNameLocal = lastName.toLowerCase();
   var emailLocal = email.toLowerCase();
-  console.log(firstNameLocal,lastNameLocal, emailLocal);
   try {
       var added = false;
+      //query for name and email that match will the submitted form  
       const q = query(collection(db, "runway"), where("isPublic", "==", false), where("firstName", "==", firstNameLocal), where("lastName", "==", lastNameLocal), where("email", "==", emailLocal));
-      console.log(q);
       const querySnapshot = await getDocs(q);
+      //if there's a match, update the firebase document with the new 25% photo and date
       querySnapshot.forEach((item) => {
           const itemToUpdate = doc(db, "runway", item.id);
-          console.log("updating doc");
                     updateDoc(itemToUpdate, {
                       photo50: photo50,
                       fiftyDate : date
                     });
-                    console.log("hello");
                     added = true;
       });
-      console.log(added);
+      //if query returns no match (no matching name and email in the firebase), add a new document to the firebase with the submitted name, email, 25 image, and submission date
       if (added == false) {
         console.log("adding doc");
         const docRef = await addDoc(collection(db, "runway"), {
@@ -82,61 +81,30 @@ export const add50 = async function(firstName, lastName, email, photo50, date){
 
 const fileInput = document.getElementById('photo50');
 
-fileInput.addEventListener('change', (event) => {
- // Get the selected image file
- const imageFile = event.target.files[0];
- if (imageFile) {
-   document.getElementById('submit50').setAttribute('disabled', 'true');
-   storeFile(imageFile);
- }
+//when a photo is uploaded on the 50 form
+ fileInput.addEventListener('change', (event) => {
+  // Get the selected image file and disable it, so they can't submit the form until the photo is uploaded to firestore
+  const imageFile = event.target.files[0];
+  if (imageFile) {
+    document.getElementById('submit50').setAttribute('disabled', 'true');
+    //run function that uploads image to Firebase
+    storeFile(imageFile);
+  }
 });
 
-
+//create unique name for the image, store it in Firestore, and get URL that will be uploaded to the Firebase
 async function storeFile(file) {
          var name = "50photo" + Date.now();
-         console.log(name);
          var storageRef = ref(storage, name);
          await uploadBytes(storageRef, file).then((snapshot) => {
            console.log("file uploaded");
          });
-           var test = await getUrl(storageRef);
-           console.log(test);
-           photo50 = test;
+           var photoURL = await getUrl(storageRef);
+           photo50 = photoURL;
            document.getElementById("submit50").disabled = false;
      }
 
-
+//return the URL to the image stored in Firestore
  async function getUrl(storageRef){
    return await getDownloadURL(storageRef);
  }
-
-
-
-// // Lister to the change event on the <input> element
-//     fileInput.addEventListener('change', (event) => {
-//     // Get the selected image file
-//     const imageFile = event.target.files[0];
-//     if (imageFile) {
-//         const reader = new FileReader();
-//         // Convert the image file to a string
-//         reader.readAsDataURL(imageFile);
-//         // FileReader will emit the load event when the data URL is ready
-//         // Access the string using result property inside the callback function
-//         reader.addEventListener('load', () => {
-//             // Get the data URL string
-//             photo25 = reader.result
-//         });
-//     }
-// });
-
-
-
-//WIPES FIREBASE
-//DO NOT RUN
-// const databaseItems = await getDocs(collection(db, "runway"));
-//     var garments = document.getElementById("garments");
-//     garments.innerHTML="";
-//     databaseItems.forEach((item) => {
-//       deleteDoc(doc(db, "runway", item.id));
-//     });
-
