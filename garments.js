@@ -234,6 +234,7 @@ export const displayEvents = async function(){
     var closeButton = document.createElement('button');
     closeButton.innerHTML = "Close"
     closeButton.setAttribute ('class', "close_button");
+    closeButton.setAttribute ('font-family', "Tilt Prism");
     closeButton.addEventListener('click', () => {
         document.getElementById("mySidenav").style.width = "0";
         document.getElementById("main").style.marginLeft= "0";

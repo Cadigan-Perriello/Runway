@@ -73,22 +73,22 @@ export const showProgressItems = async function(progressProfiles){
         info.setAttribute('class', "tile");
         var name = document.createElement("h1");
           name.innerHTML = progressProfiles[i] + " " + progressProfiles[i+1].substring(0,1) + "  ";
-        var email = document.createElement("a");
+        var email = document.createElement("p");
           email.innerHTML = progressProfiles[i+2];
         //email.for = item.id;
-        var catwalkLabel = document.createElement("p");
+        var catwalkLabel = document.createElement("h3");
           catwalkLabel.innerHTML = "Song Choice:";
-        var catwalk = document.createElement("a");
+        var catwalk = document.createElement("p");
           catwalk.innerHTML = progressProfiles[i+7]; 
-        var timeLabel = document.createElement("p");
+        var timeLabel = document.createElement("h3");
           timeLabel.innerHTML = "Time:";
-        var catwalkTime = document.createElement("a");
+        var catwalkTime = document.createElement("p");
           if (progressProfiles[i+13] != null) {
             catwalkTime.innerHTML = progressProfiles[i+13];
           } else {
             catwalkTime.innerHTML = "";
           }
-        var linkLabel = document.createElement("p");
+        var linkLabel = document.createElement("h3");
         linkLabel.innerHTML = "Link:";
           var catwalkLink = document.createElement("p");
           if (progressProfiles[i+14] != null) {
